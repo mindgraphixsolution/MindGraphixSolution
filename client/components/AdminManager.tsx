@@ -271,12 +271,10 @@ export const AdminManager: React.FC = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Téléphone
                         </label>
-                        <input
-                          type="tel"
+                        <PhoneInput
                           value={editForm.phone}
-                          onChange={(e) => setEditForm({...editForm, phone: e.target.value})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                          placeholder="+226 XX XX XX XX"
+                          onChange={(value) => setEditForm({...editForm, phone: value})}
+                          placeholder="XX XX XX XX"
                         />
                       </div>
 
