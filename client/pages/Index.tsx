@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Hero } from '../components/Hero';
 import { About } from '../components/About';
@@ -12,6 +13,19 @@ export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  const location = useLocation();
+
+  // Gérer le scroll vers les sections quand on arrive avec une ancre
+  useEffect(() => {
+    if (location.hash) {
+      setTimeout(() => {
+        const element = document.querySelector(location.hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100); // Petit délai pour s'assurer que le DOM est rendu
+    }
+  }, [location.hash]);
 
   return (
     <div className="min-h-screen">
