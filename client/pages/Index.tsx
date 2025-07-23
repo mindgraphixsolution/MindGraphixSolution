@@ -17,6 +17,8 @@ import { CustomStylesEditor } from '../components/CustomStylesEditor';
 import { ThemeManager } from '../components/ThemeManager';
 import { ContentManager } from '../components/ContentManager';
 import { LayoutEditor } from '../components/LayoutEditor';
+import { PriceManager } from '../components/PriceManager';
+import { AdminManager } from '../components/AdminManager';
 
 
 export default function Index() {
