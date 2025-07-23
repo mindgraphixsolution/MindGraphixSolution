@@ -746,10 +746,18 @@ export default function AdminDashboard() {
                       </h3>
 
                       <div className="grid grid-cols-1 gap-3">
-                        <AdminManager />
-                        <PriceManager />
-                        <ThemeManager />
-                        <CustomStylesEditor />
+                        <SafeAdminWrapper>
+                          <AdminManager />
+                        </SafeAdminWrapper>
+                        <SafeAdminWrapper>
+                          <PriceManager />
+                        </SafeAdminWrapper>
+                        <SafeAdminWrapper>
+                          <ThemeManager />
+                        </SafeAdminWrapper>
+                        <SafeAdminWrapper>
+                          <CustomStylesEditor />
+                        </SafeAdminWrapper>
                       </div>
                     </div>
                   )}
