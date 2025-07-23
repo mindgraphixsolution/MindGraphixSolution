@@ -350,6 +350,139 @@ export default function AdminDashboard() {
                 </div>
               )}
 
+              {activeTab === 'users' && (
+                <div className="space-y-6">
+                  <h2 className="text-xl font-bold text-gray-900">Gestion des Utilisateurs</h2>
+
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-blue-800 mb-2">Administrateurs Connectés</h3>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between bg-white p-3 rounded border">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                            <span className="text-white text-sm font-bold">PS</span>
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-900">Philippe Sanon</p>
+                            <p className="text-sm text-gray-500">Administrateur Supreme</p>
+                          </div>
+                        </div>
+                        <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded">En ligne</span>
+                      </div>
+
+                      <div className="flex items-center justify-between bg-white p-3 rounded border">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                            <span className="text-white text-sm font-bold">MG</span>
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-900">Mind Graphix Solution</p>
+                            <p className="text-sm text-gray-500">Administrateur</p>
+                          </div>
+                        </div>
+                        <span className="px-2 py-1 bg-gray-100 text-gray-800 text-xs font-bold rounded">Hors ligne</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-green-800 mb-2">Statistiques des Visites</h3>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="bg-white p-3 rounded">
+                        <p className="font-medium text-gray-900">Visiteurs aujourd'hui</p>
+                        <p className="text-2xl font-bold text-green-600">24</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <p className="font-medium text-gray-900">Visiteurs ce mois</p>
+                        <p className="text-2xl font-bold text-green-600">847</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-yellow-800 mb-2">Actions Utilisateur</h3>
+                    <div className="space-y-2">
+                      <button className="w-full flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+                        <Users size={16} />
+                        <span>Gérer les Administrateurs</span>
+                      </button>
+                      <button className="w-full flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+                        <BarChart3 size={16} />
+                        <span>Voir les Statistiques Détaillées</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'media' && (
+                <div className="space-y-6">
+                  <h2 className="text-xl font-bold text-gray-900">Gestion des Médias</h2>
+
+                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-purple-800 mb-2">Images du Site</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-white p-3 rounded border">
+                        <div className="w-full h-24 bg-gray-200 rounded mb-2 flex items-center justify-center">
+                          <Image size={24} className="text-gray-400" />
+                        </div>
+                        <p className="text-sm font-medium">Logo principal</p>
+                        <p className="text-xs text-gray-500">PNG • 2KB</p>
+                      </div>
+                      <div className="bg-white p-3 rounded border">
+                        <div className="w-full h-24 bg-gray-200 rounded mb-2 flex items-center justify-center">
+                          <Image size={24} className="text-gray-400" />
+                        </div>
+                        <p className="text-sm font-medium">Image hero</p>
+                        <p className="text-xs text-gray-500">JPG • 450KB</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-green-800 mb-2">Portfolio</h3>
+                    <div className="space-y-2">
+                      <div className="bg-white p-3 rounded border">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-medium text-gray-900">Projet E-commerce</p>
+                            <p className="text-sm text-gray-500">5 images • 2.3MB</p>
+                          </div>
+                          <button className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700">
+                            Gérer
+                          </button>
+                        </div>
+                      </div>
+                      <div className="bg-white p-3 rounded border">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-medium text-gray-900">App Mobile</p>
+                            <p className="text-sm text-gray-500">8 images • 4.1MB</p>
+                          </div>
+                          <button className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700">
+                            Gérer
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-blue-800 mb-2">Actions Médias</h3>
+                    <div className="space-y-2">
+                      <button className="w-full flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+                        <Image size={16} />
+                        <span>Ajouter des Images</span>
+                      </button>
+                      <button className="w-full flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
+                        <RefreshCw size={16} />
+                        <span>Optimiser les Images</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {activeTab === 'messages' && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-bold text-gray-900">Messages & Demandes</h2>
