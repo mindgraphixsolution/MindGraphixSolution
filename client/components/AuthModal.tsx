@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Mail, Lock, User, Eye, EyeOff, Phone, ShieldCheck } from 'lucide-react';
 import { Button } from './ui/button';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
@@ -70,9 +72,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         );
 
         if (isAdminLogin) {
-          alert('Connexion administrateur réussie ! Vous avez maintenant accès au panneau d\'administration.');
+          alert('Connexion administrateur réussie ! Redirection vers le tableau de bord...');
           onClose();
           resetForm();
+          setTimeout(() => {
+            navigate('/admin');
+          }, 500);
         } else {
           setError('Identifiants administrateur incorrects. Vérifiez vos informations.');
         }
