@@ -18,7 +18,7 @@ export const Team: React.FC = () => {
     {
       name: 'FAÏZ PHILLIPPE SANON',
       role: 'Développeur Full-Stack',
-      image: 'https://randomuser.me/api/portraits/men/45.jpg',
+      image: 'https://images.pexels.com/photos/6584748/pexels-photo-6584748.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
       bio: 'Spécialisé dans les technologies modernes et l\'architecture scalable des applications.',
       skills: ['TypeScript', 'Python', 'AWS', 'Docker'],
       social: {
