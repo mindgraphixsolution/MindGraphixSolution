@@ -204,7 +204,7 @@ export const AdminManager: React.FC = () => {
                     Gestionnaire d'Administrateurs
                   </h2>
                   <span className="px-2 py-1 bg-purple-800 rounded-full text-xs font-bold">
-                    ACCÈS SUPER ADMIN UNIQUEMENT
+                    ACCÈS SUPREME UNIQUEMENT
                   </span>
                 </div>
                 <button
