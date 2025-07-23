@@ -6,7 +6,7 @@ export const Team: React.FC = () => {
     {
       name: 'Badior OUATTARA',
       role: 'PROGRAMMEUR & GRAPHISTE',
-      image: 'https://images.pexels.com/photos/5952738/pexels-photo-5952738.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
+      image: 'https://images.pexels.com/photos/6584748/pexels-photo-6584748.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
       bio: 'Expert en développement full-stack et design graphique avec plus de 5 ans d\'expérience.',
       skills: ['React', 'Node.js', 'Photoshop', 'Illustrator'],
       social: {
@@ -18,7 +18,7 @@ export const Team: React.FC = () => {
     {
       name: 'FAÏZ PHILLIPPE SANON',
       role: 'Développeur Full-Stack',
-      image: 'https://images.pexels.com/photos/6584748/pexels-photo-6584748.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
+      image: 'https://images.pexels.com/photos/5952738/pexels-photo-5952738.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
       bio: 'Spécialisé dans les technologies modernes et l\'architecture scalable des applications.',
       skills: ['TypeScript', 'Python', 'AWS', 'Docker'],
       social: {
