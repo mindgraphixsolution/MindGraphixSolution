@@ -132,11 +132,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     });
 
+    // Normaliser le numéro de téléphone (supprimer espaces et caractères spéciaux)
+    const normalizePhone = (phoneNumber: string): string => {
+      return phoneNumber.replace(/[\s\-\(\)]/g, '').trim();
+    };
+
     // Rechercher l'administrateur correspondant
     const matchingAdmin = allAdmins.find(
       (admin) =>
         admin.email.toLowerCase() === email.toLowerCase() &&
-        admin.phone === phone &&
+        normalizePhone(admin.phone) === normalizePhone(phone) &&
         admin.password === password &&
         admin.securityAnswer.toLowerCase() === securityAnswer.toLowerCase() &&
         admin.isActive,
