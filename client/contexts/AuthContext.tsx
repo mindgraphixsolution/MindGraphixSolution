@@ -86,11 +86,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     ) {
       console.log('Connexion admin réussie !');
       setIsAdmin(true);
+      setIsLoggedIn(true);
+      setCurrentUser({ email, name: 'Administrateur' });
       localStorage.setItem('adminAuth', 'true');
+      localStorage.setItem('currentUser', JSON.stringify({ email, name: 'Administrateur' }));
       return true;
     }
 
     console.log('Connexion admin échouée');
+    return false;
+  };
+
+  const loginUser = async (email: string, password: string, name?: string): Promise<boolean> => {
+    // Simulation de connexion utilisateur normal
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Pour la démo, accepter toute combinaison email/password
+    if (email && password) {
+      const user = { email, name: name || email.split('@')[0] };
+      setIsLoggedIn(true);
+      setCurrentUser(user);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      return true;
+    }
+
     return false;
   };
 
