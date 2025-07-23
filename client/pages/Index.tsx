@@ -38,28 +38,6 @@ export default function Index() {
     }
   }, [location.hash]);
 
-  // Message d'accueil avec identifiants
-  useEffect(() => {
-    const hasShownWelcome = localStorage.getItem('welcomeShown');
-    if (!hasShownWelcome) {
-      setTimeout(() => {
-        info(
-          '🚀 Bienvenue sur Mind Graphix Solution !',
-          'Identifiants Super Admin - Email: philippefaizsanon@gmail.com | Mot de passe: Philius24648 | Téléphone: +226 54191605 | Réponse sécurité: Lil Nas X',
-          {
-            duration: 15000, // 15 secondes
-            actions: [
-              {
-                label: 'Ne plus afficher',
-                action: () => localStorage.setItem('welcomeShown', 'true')
-              }
-            ]
-          }
-        );
-      }, 2000);
-    }
-  }, [info]);
-
   return (
     <div className="min-h-screen">
       <Header
