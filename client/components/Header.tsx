@@ -104,25 +104,63 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
             ))}
           </ul>
 
-          {/* Auth Buttons - Desktop */}
+          {/* Auth Buttons / User Menu - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button
-              variant="outline"
-              onClick={onLoginClick}
-              className={`border-2 transition-all ${
-                isScrolled
-                  ? 'border-primary text-primary hover:bg-primary hover:text-white'
-                  : 'border-white text-white hover:bg-white hover:text-primary'
-              }`}
-            >
-              Connexion
-            </Button>
-            <Button
-              onClick={onRegisterClick}
-              className="bg-gradient-to-r from-accent to-orange-400 text-black font-semibold hover:from-orange-400 hover:to-accent transform hover:scale-105 transition-all"
-            >
-              Inscription
-            </Button>
+            {isLoggedIn ? (
+              <div className="flex items-center space-x-4">
+                <div className={`flex items-center space-x-2 ${isScrolled ? 'text-gray-700' : 'text-white'}`}>
+                  <User size={20} />
+                  <span className="font-medium">
+                    {isAdmin ? 'Admin' : currentUser?.name || 'Utilisateur'}
+                  </span>
+                </div>
+                {isAdmin && (
+                  <Button
+                    onClick={() => navigate('/admin')}
+                    variant="outline"
+                    className={`border-2 transition-all ${
+                      isScrolled
+                        ? 'border-primary text-primary hover:bg-primary hover:text-white'
+                        : 'border-white text-white hover:bg-white hover:text-primary'
+                    }`}
+                  >
+                    Vue Admin
+                  </Button>
+                )}
+                <Button
+                  onClick={logout}
+                  variant="outline"
+                  className={`border-2 transition-all ${
+                    isScrolled
+                      ? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
+                      : 'border-white text-white hover:bg-red-500 hover:text-white'
+                  }`}
+                >
+                  <LogOut size={16} />
+                  Déconnexion
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button
+                  variant="outline"
+                  onClick={onLoginClick}
+                  className={`border-2 transition-all ${
+                    isScrolled
+                      ? 'border-primary text-primary hover:bg-primary hover:text-white'
+                      : 'border-white text-white hover:bg-white hover:text-primary'
+                  }`}
+                >
+                  Connexion
+                </Button>
+                <Button
+                  onClick={onRegisterClick}
+                  className="bg-gradient-to-r from-accent to-orange-400 text-black font-semibold hover:from-orange-400 hover:to-accent transform hover:scale-105 transition-all"
+                >
+                  Inscription
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
