@@ -36,38 +36,39 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    
+
     if (mode === 'register') {
       // Simulation d'inscription
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       if (formData.password !== formData.confirmPassword) {
         setError('Les mots de passe ne correspondent pas');
         setIsLoading(false);
         return;
       }
-      
+
       alert('Inscription réussie !');
       setIsLoading(false);
       onClose();
       resetForm();
     } else {
       // Tentative de connexion
-      if (formData.email === 'mindgraphixsolution@gmail.com' && !showSecurityQuestion) {
+      if (formData.email === 'mindgraphixsolution@gmail.com' && formData.password === 'MINDSETGrapix2025' && !showSecurityQuestion) {
+        // Email et mot de passe admin corrects, demander maintenant téléphone + question sécurité
         setShowSecurityQuestion(true);
         setIsLoading(false);
         return;
       }
-      
+
       if (showSecurityQuestion) {
-        // Tentative de connexion admin
+        // Tentative de connexion admin avec téléphone + question sécurité
         const isAdminLogin = await login(
           formData.email,
           formData.phone,
           formData.password,
           formData.securityAnswer
         );
-        
+
         if (isAdminLogin) {
           alert('Connexion administrateur réussie ! Vous avez maintenant accès au panneau d\'administration.');
           onClose();
@@ -76,14 +77,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           setError('Identifiants administrateur incorrects. Vérifiez vos informations.');
         }
       } else {
-        // Connexion utilisateur normal
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        alert('Connexion utilisateur réussie !');
-        onClose();
-        resetForm();
+        // Connexion utilisateur normal ou email/mot de passe admin incorrects
+        if (formData.email === 'mindgraphixsolution@gmail.com') {
+          setError('Mot de passe administrateur incorrect.');
+        } else {
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          alert('Connexion utilisateur réussie !');
+          onClose();
+          resetForm();
+        }
       }
     }
-    
+
     setIsLoading(false);
   };
   
