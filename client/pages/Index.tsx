@@ -9,6 +9,7 @@ import { Team } from '../components/Team';
 import { Footer } from '../components/Footer';
 import { AuthModal } from '../components/AuthModal';
 import { AdminPanel } from '../components/AdminPanel';
+import { AdminGuide } from '../components/AdminGuide';
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -166,6 +167,7 @@ export default function Index() {
       />
 
       <AdminPanel />
+      <AdminGuide />
     </div>
   );
 }
