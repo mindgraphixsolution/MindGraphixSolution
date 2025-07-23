@@ -31,10 +31,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Charger l'état d'authentification au démarrage
   useEffect(() => {
     const savedAuth = localStorage.getItem('adminAuth');
+    const savedSuperAuth = localStorage.getItem('superAdminAuth');
     const savedUser = localStorage.getItem('currentUser');
     const savedContent = localStorage.getItem('siteContent');
 
-    if (savedAuth === 'true') {
+    if (savedSuperAuth === 'true') {
+      setIsSuperAdmin(true);
+      setIsAdmin(true);
+      setIsLoggedIn(true);
+    } else if (savedAuth === 'true') {
       setIsAdmin(true);
       setIsLoggedIn(true);
     }
