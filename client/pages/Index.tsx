@@ -176,6 +176,7 @@ export default function Index() {
       <AdminNotifications />
       <SuperAdminPanel />
       <CustomStylesEditor />
+      <ThemeManager />
     </div>
   );
 }
