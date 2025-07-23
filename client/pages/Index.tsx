@@ -14,6 +14,7 @@ import { AdminNotifications } from '../components/AdminNotifications';
 import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
 import { SuperAdminPanel } from '../components/SuperAdminPanel';
 import { CustomStylesEditor } from '../components/CustomStylesEditor';
+import { ThemeManager } from '../components/ThemeManager';
 
 
 export default function Index() {
