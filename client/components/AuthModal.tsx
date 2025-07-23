@@ -12,7 +12,6 @@ import {
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { PhoneInput } from "./PhoneInput";
 import { FormValidator, ValidationRules } from "./FormValidator";
 
 interface AuthModalProps {
@@ -67,11 +66,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     } else {
       // Tentative de connexion
       if (
-        formData.email === "mindgraphixsolution@gmail.com" &&
-        formData.password === "MINDSETGrapix2025" &&
+        (formData.email.toLowerCase() === "mindgraphixsolution@gmail.com" ||
+          formData.email.toLowerCase() === "philippefaizsanon@gmail.com") &&
         !showSecurityQuestion
       ) {
-        // Email et mot de passe admin corrects, demander maintenant téléphone + question sécurité
+        // Email admin détecté, demander téléphone + question sécurité
         setShowSecurityQuestion(true);
         setIsLoading(false);
         return;
@@ -79,30 +78,50 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
       if (showSecurityQuestion) {
         // Tentative de connexion admin avec téléphone + question sécurité
-        const isAdminLogin = await login(
-          formData.email,
-          formData.phone,
-          formData.password,
-          formData.securityAnswer,
-        );
+        try {
+          console.log("Tentative de connexion admin avec:", {
+            email: formData.email,
+            phone: formData.phone,
+            password: formData.password,
+            securityAnswer: formData.securityAnswer,
+          });
 
-        if (isAdminLogin) {
-          alert(
-            "Connexion administrateur réussie ! Redirection vers le tableau de bord...",
+          const isAdminLogin = await login(
+            formData.email,
+            formData.phone,
+            formData.password,
+            formData.securityAnswer,
           );
-          onClose();
-          resetForm();
-          setTimeout(() => {
-            navigate("/admin");
-          }, 500);
-        } else {
+
+          console.log("Résultat de la connexion:", isAdminLogin);
+
+          if (isAdminLogin) {
+            alert(
+              "Connexion administrateur réussie ! Redirection vers le tableau de bord...",
+            );
+            onClose();
+            resetForm();
+            setTimeout(() => {
+              navigate("/admin");
+            }, 500);
+          } else {
+            setError(
+              "Identifiants administrateur incorrects. Vérifiez vos informations.",
+            );
+          }
+        } catch (error) {
+          console.error("Erreur lors de la connexion admin:", error);
           setError(
-            "Identifiants administrateur incorrects. Vérifiez vos informations.",
+            "Erreur technique lors de la connexion. Veuillez réessayer.",
           );
         }
+        setIsLoading(false);
       } else {
         // Connexion utilisateur normal ou email/mot de passe admin incorrects
-        if (formData.email === "mindgraphixsolution@gmail.com") {
+        if (
+          formData.email.toLowerCase() === "mindgraphixsolution@gmail.com" ||
+          formData.email.toLowerCase() === "philippefaizsanon@gmail.com"
+        ) {
           setError("Mot de passe administrateur incorrect.");
         } else {
           // Connexion utilisateur normal
@@ -115,10 +134,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             setError("Erreur lors de la connexion. Veuillez réessayer.");
           }
         }
+        setIsLoading(false);
       }
     }
-
-    setIsLoading(false);
   };
 
   const getSecurityQuestion = (email: string): string => {
@@ -265,20 +283,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               />
             </div>
 
-            {showSecurityQuestion && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Téléphone
-                </label>
-                <PhoneInput
-                  value={formData.phone}
-                  onChange={(value) => handleInputChange("phone", value)}
-                  placeholder="01 51 11 46"
-                  required
-                />
-              </div>
-            )}
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Mot de passe
@@ -344,27 +348,43 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             )}
 
             {showSecurityQuestion && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Question de sécurité: {getSecurityQuestion(formData.email)}
-                </label>
-                <div className="relative">
-                  <ShieldCheck
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                    size={18}
-                  />
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Téléphone
+                  </label>
                   <input
-                    type="text"
-                    value={formData.securityAnswer}
-                    onChange={(e) =>
-                      handleInputChange("securityAnswer", e.target.value)
-                    }
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    placeholder="Votre réponse..."
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    placeholder="01 51 11 46"
                     required
                   />
                 </div>
-              </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Question de sécurité: {getSecurityQuestion(formData.email)}
+                  </label>
+                  <div className="relative">
+                    <ShieldCheck
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                      size={18}
+                    />
+                    <input
+                      type="text"
+                      value={formData.securityAnswer}
+                      onChange={(e) =>
+                        handleInputChange("securityAnswer", e.target.value)
+                      }
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      placeholder="Votre réponse..."
+                      required
+                    />
+                  </div>
+                </div>
+              </>
             )}
 
             {mode === "login" && !showSecurityQuestion && (
@@ -440,13 +460,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           )}
 
           {showSecurityQuestion && (
-            <div className="mt-6 text-center">
+            <div className="mt-6 text-center space-y-2">
               <button
                 onClick={resetForm}
                 className="text-primary hover:text-secondary font-semibold"
               >
                 ← Retour à la connexion normale
               </button>
+              <div className="text-xs text-gray-500">
+                <p>Test Philippe: 54191605 / Lil Nas X</p>
+                <p>Test Mind: 01 51 11 46 / Badiori</p>
+              </div>
             </div>
           )}
 

@@ -12,6 +12,7 @@ interface AuthContextType {
   isLoggedIn: boolean;
   currentUser: { email: string; name?: string } | null;
   isEditMode: boolean;
+  isInitialized: boolean;
   login: (
     email: string,
     phone: string,
@@ -45,15 +46,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   } | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [siteContent, setSiteContent] = useState<Record<string, any>>({});
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Charger l'état d'authentification au démarrage
   useEffect(() => {
     const savedAuth = localStorage.getItem("adminAuth");
     const savedSuperAuth = localStorage.getItem("superAdminAuth");
+    const savedSupremeAuth = localStorage.getItem("supremeAuth");
     const savedUser = localStorage.getItem("currentUser");
     const savedContent = localStorage.getItem("siteContent");
 
-    if (savedSuperAuth === "true") {
+    if (savedSupremeAuth === "true" || savedSuperAuth === "true") {
       setIsSuperAdmin(true);
       setIsAdmin(true);
       setIsLoggedIn(true);
@@ -79,6 +82,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         console.error("Erreur lors du chargement du contenu:", e);
       }
     }
+
+    // Marquer comme initialisé
+    setIsInitialized(true);
   }, []);
 
   const login = async (
@@ -94,6 +100,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       securityAnswer: securityAnswer.toLowerCase(),
     });
 
+    // Normaliser le numéro de téléphone (supprimer espaces, préfixes et caractères spéciaux)
+    const normalizePhone = (phoneNumber: string): string => {
+      return phoneNumber
+        .replace(/[\s\-\(\)\+]/g, "")
+        .replace(/^226/, "")
+        .trim();
+    };
+
     // Charger les administrateurs depuis le stockage
     const savedAdmins = JSON.parse(localStorage.getItem("siteContent") || "{}");
     const systemAdmins = savedAdmins["system.admins"] || [];
@@ -101,21 +115,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Administrateurs par défaut (toujours présents)
     const defaultAdmins = [
       {
-        email: "mindgraphixsolution@gmail.com",
-        phone: "+226 01 51 11 46",
-        password: "MINDSETGrapix2025",
-        securityAnswer: "Badiori",
-        name: "Administrateur Principal",
-        role: "admin",
+        email: "philippefaizsanon@gmail.com",
+        phone: "54191605",
+        password: "Philius24648",
+        securityAnswer: "Lil Nas X",
+        name: "Administrateur Supreme",
+        role: "supreme",
         isActive: true,
       },
       {
-        email: "philippefaizsanon@gmail.com",
-        phone: "+226 54191605",
-        password: "Philius24648",
-        securityAnswer: "Lil Nas X",
-        name: "Super Administrateur",
-        role: "super_admin",
+        email: "mindgraphixsolution@gmail.com",
+        phone: "01 51 11 46",
+        password: "MINDSETGrapix2025",
+        securityAnswer: "Badiori",
+        name: "Administrateur",
+        role: "admin",
         isActive: true,
       },
     ];
@@ -132,23 +146,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     });
 
+    console.log(
+      "Administrateurs disponibles:",
+      allAdmins.map((admin) => ({
+        email: admin.email,
+        phone: admin.phone,
+        normalizedPhone: normalizePhone(admin.phone),
+        isActive: admin.isActive,
+      })),
+    );
+
     // Rechercher l'administrateur correspondant
     const matchingAdmin = allAdmins.find(
       (admin) =>
         admin.email.toLowerCase() === email.toLowerCase() &&
-        admin.phone === phone &&
+        normalizePhone(admin.phone) === normalizePhone(phone) &&
         admin.password === password &&
         admin.securityAnswer.toLowerCase() === securityAnswer.toLowerCase() &&
         admin.isActive,
     );
 
+    console.log("Recherche d'admin avec les critères normalisés:", {
+      inputPhone: normalizePhone(phone),
+      inputEmail: email.toLowerCase(),
+      inputAnswer: securityAnswer.toLowerCase(),
+    });
+
     if (matchingAdmin) {
       console.log("Connexion admin réussie !", matchingAdmin);
 
-      if (matchingAdmin.role === "super_admin") {
+      if (matchingAdmin.role === "supreme") {
         setIsSuperAdmin(true);
         setIsAdmin(true);
         localStorage.setItem("superAdminAuth", "true");
+        localStorage.setItem("supremeAuth", "true");
       } else {
         setIsAdmin(true);
         localStorage.setItem("adminAuth", "true");
@@ -195,6 +226,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsEditMode(false);
     localStorage.removeItem("adminAuth");
     localStorage.removeItem("superAdminAuth");
+    localStorage.removeItem("supremeAuth");
     localStorage.removeItem("currentUser");
   };
 
@@ -203,12 +235,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const updateContent = (key: string, value: any) => {
+    if (!isInitialized) return;
     const newContent = { ...siteContent, [key]: value };
     setSiteContent(newContent);
     localStorage.setItem("siteContent", JSON.stringify(newContent));
   };
 
   const getContent = (key: string, defaultValue: any = "") => {
+    if (!isInitialized) return defaultValue;
     return siteContent[key] || defaultValue;
   };
 
@@ -220,6 +254,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         isLoggedIn,
         currentUser,
         isEditMode,
+        isInitialized,
         login,
         loginUser,
         logout,
@@ -236,7 +271,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    // Ne pas jeter d'erreur, mais retourner des valeurs par défaut sécurisées
+    return {
+      isAdmin: false,
+      isSuperAdmin: false,
+      isLoggedIn: false,
+      currentUser: null,
+      isEditMode: false,
+      isInitialized: false,
+      login: async () => false,
+      loginUser: async () => false,
+      logout: () => {},
+      toggleEditMode: () => {},
+      updateContent: () => {},
+      getContent: () => "",
+    };
   }
   return context;
 };

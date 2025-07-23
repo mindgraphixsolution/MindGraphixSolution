@@ -38,16 +38,7 @@ export const LayoutEditor: React.FC = () => {
     animations: true,
   });
 
-  useEffect(() => {
-    const savedSettings = getContent("layout.settings", null);
-    if (savedSettings) {
-      setSettings(savedSettings);
-      applyLayoutSettings(savedSettings);
-    }
-  }, []);
-
-  if (!isSuperAdmin) return null;
-
+  // Déclarer la fonction avant de l'utiliser
   const applyLayoutSettings = (layoutSettings: LayoutSettings) => {
     const root = document.documentElement;
 
@@ -80,6 +71,16 @@ export const LayoutEditor: React.FC = () => {
       root.style.setProperty("--animation-duration", "0.3s");
     }
   };
+
+  useEffect(() => {
+    const savedSettings = getContent("layout.settings", null);
+    if (savedSettings) {
+      setSettings(savedSettings);
+      applyLayoutSettings(savedSettings);
+    }
+  }, []);
+
+  if (!isSuperAdmin) return null;
 
   const toggleLayoutMode = () => {
     setIsLayoutMode(!isLayoutMode);
@@ -139,12 +140,18 @@ export const LayoutEditor: React.FC = () => {
           outline-offset: 1px;
         }
       `;
-      document.head.appendChild(style);
+      if (document.head) {
+        document.head.appendChild(style);
+      }
     } else {
       // Désactiver le mode édition
-      document.body.classList.remove("layout-edit-mode");
+      if (document.body) {
+        document.body.classList.remove("layout-edit-mode");
+      }
       const style = document.getElementById("layout-editor-styles");
-      if (style) style.remove();
+      if (style && style.parentNode) {
+        style.parentNode.removeChild(style);
+      }
     }
   };
 

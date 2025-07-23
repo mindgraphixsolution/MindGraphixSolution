@@ -22,7 +22,7 @@ interface AdminUser {
   password: string;
   securityQuestion: string;
   securityAnswer: string;
-  role: "admin" | "super_admin";
+  role: "admin" | "supreme";
   createdAt: string;
   createdBy: string;
   isActive: boolean;
@@ -30,27 +30,27 @@ interface AdminUser {
 
 const defaultAdmins: AdminUser[] = [
   {
+    id: "supreme-admin",
+    name: "Administrateur Supreme",
+    email: "philippefaizsanon@gmail.com",
+    phone: "+226 54191605",
+    password: "Philius24648",
+    securityQuestion: "Qui est ton artiste préféré ?",
+    securityAnswer: "Lil Nas X",
+    role: "supreme",
+    createdAt: "2024-01-01",
+    createdBy: "system",
+    isActive: true,
+  },
+  {
     id: "default-admin",
-    name: "Administrateur Principal",
+    name: "Administrateur",
     email: "mindgraphixsolution@gmail.com",
     phone: "+226 01 51 11 46",
     password: "MINDSETGrapix2025",
     securityQuestion: "Qui est le plus bête dans l'équipe ?",
     securityAnswer: "Badiori",
     role: "admin",
-    createdAt: "2024-01-01",
-    createdBy: "system",
-    isActive: true,
-  },
-  {
-    id: "super-admin",
-    name: "Super Administrateur",
-    email: "philippefaizsanon@gmail.com",
-    phone: "+226 54191605",
-    password: "Philius24648",
-    securityQuestion: "Qui est ton artiste préféré ?",
-    securityAnswer: "Lil Nas X",
-    role: "super_admin",
     createdAt: "2024-01-01",
     createdBy: "system",
     isActive: true,
@@ -122,7 +122,7 @@ export const AdminManager: React.FC = () => {
       securityAnswer: "",
       role: "admin",
       createdAt: new Date().toISOString().split("T")[0],
-      createdBy: currentUser?.email || "super_admin",
+      createdBy: currentUser?.email || "supreme",
       isActive: true,
     };
 
@@ -204,7 +204,7 @@ export const AdminManager: React.FC = () => {
                     Gestionnaire d'Administrateurs
                   </h2>
                   <span className="px-2 py-1 bg-purple-800 rounded-full text-xs font-bold">
-                    ACCÈS SUPER ADMIN UNIQUEMENT
+                    ACCÈS SUPREME UNIQUEMENT
                   </span>
                 </div>
                 <button
@@ -317,15 +317,15 @@ export const AdminManager: React.FC = () => {
                           onChange={(e) =>
                             setEditForm({
                               ...editForm,
-                              role: e.target.value as "admin" | "super_admin",
+                              role: e.target.value as "admin" | "supreme",
                             })
                           }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                           disabled={editForm.id === "super-admin"}
                         >
                           <option value="admin">Administrateur</option>
-                          <option value="super_admin">
-                            Super Administrateur
+                          <option value="supreme">
+                            Administrateur Supreme
                           </option>
                         </select>
                       </div>
@@ -444,14 +444,12 @@ export const AdminManager: React.FC = () => {
                           </h5>
                           <span
                             className={`px-2 py-1 rounded-full text-xs font-bold ${
-                              admin.role === "super_admin"
+                              admin.role === "supreme"
                                 ? "bg-red-100 text-red-800"
                                 : "bg-blue-100 text-blue-800"
                             }`}
                           >
-                            {admin.role === "super_admin"
-                              ? "SUPER ADMIN"
-                              : "ADMIN"}
+                            {admin.role === "supreme" ? "SUPREME" : "ADMIN"}
                           </span>
                           {!admin.isActive && (
                             <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">
@@ -537,8 +535,8 @@ export const AdminManager: React.FC = () => {
                 </h4>
                 <ul className="text-yellow-700 text-sm space-y-1">
                   <li>
-                    • Seuls les Super Administrateurs peuvent gérer les comptes
-                    administrateurs
+                    • Seuls les Administrateurs Supreme peuvent gérer les
+                    comptes administrateurs
                   </li>
                   <li>
                     • Les administrateurs système (par défaut) ne peuvent pas
@@ -548,7 +546,7 @@ export const AdminManager: React.FC = () => {
                     • Un administrateur désactivé ne peut plus se connecter
                   </li>
                   <li>
-                    • Gardez toujours au moins un Super Administrateur actif
+                    • Gardez toujours au moins un Administrateur Supreme actif
                   </li>
                   <li>
                     • Les mots de passe sont stockés en texte clair (pour demo

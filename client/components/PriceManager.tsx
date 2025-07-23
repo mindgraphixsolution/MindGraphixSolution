@@ -153,7 +153,7 @@ export const PriceManager: React.FC = () => {
                   <DollarSign size={24} />
                   <h2 className="text-2xl font-bold">Gestionnaire de Prix</h2>
                   <span className="px-2 py-1 bg-green-800 rounded-full text-xs font-bold">
-                    {isSuperAdmin ? "SUPER ADMIN" : "ADMIN"}
+                    {isSuperAdmin ? "SUPREME" : "ADMIN"}
                   </span>
                 </div>
                 <button

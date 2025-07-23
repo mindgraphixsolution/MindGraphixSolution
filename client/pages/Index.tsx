@@ -19,6 +19,7 @@ import { ContentManager } from "../components/ContentManager";
 import { LayoutEditor } from "../components/LayoutEditor";
 import { PriceManager } from "../components/PriceManager";
 import { AdminManager } from "../components/AdminManager";
+import { SafeAdminWrapper } from "../components/SafeAdminWrapper";
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -93,7 +94,7 @@ export default function Index() {
                       <span className="text-black font-bold">📞</span>
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-1">Téléphone</h4>
+                      <h4 className="font-semibold mb-1">T��léphone</h4>
                       <a
                         href="tel:+22601511146"
                         className="text-white/80 hover:text-accent transition-colors"
@@ -194,16 +195,18 @@ export default function Index() {
         defaultMode="register"
       />
 
-      <AdminViewSwitcher />
-      <AdminPanel />
-      <AdminNotifications />
-      <SuperAdminPanel />
-      <CustomStylesEditor />
-      <ThemeManager />
-      <ContentManager />
-      <LayoutEditor />
-      <PriceManager />
-      <AdminManager />
+      <SafeAdminWrapper>
+        <AdminViewSwitcher />
+        <AdminPanel />
+        <AdminNotifications />
+        <SuperAdminPanel />
+        <CustomStylesEditor />
+        <ThemeManager />
+        <ContentManager />
+        <LayoutEditor />
+        <PriceManager />
+        <AdminManager />
+      </SafeAdminWrapper>
     </div>
   );
 }
