@@ -155,11 +155,17 @@ export default function Index() {
 
       <Footer />
 
-      {/* Auth Modal */}
+      {/* Auth Modals */}
       <AuthModal
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
-        defaultMode={authMode}
+        defaultMode="login"
+      />
+
+      <AuthModal
+        isOpen={showRegisterModal}
+        onClose={() => setShowRegisterModal(false)}
+        defaultMode="register"
       />
 
       <AdminViewSwitcher />
