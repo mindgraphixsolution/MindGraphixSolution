@@ -554,6 +554,21 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
+                  {isSuperAdmin && (
+                    <div className="space-y-4">
+                      <h3 className="font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                        Outils Supreme
+                      </h3>
+
+                      <div className="grid grid-cols-1 gap-3">
+                        <AdminManager />
+                        <PriceManager />
+                        <ThemeManager />
+                        <CustomStylesEditor />
+                      </div>
+                    </div>
+                  )}
+
                   <div className="space-y-4">
                     <h3 className="font-semibold text-gray-800 border-b border-gray-200 pb-2">
                       Actions du Site
