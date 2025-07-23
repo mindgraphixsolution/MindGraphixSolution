@@ -81,6 +81,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         console.error("Erreur lors du chargement du contenu:", e);
       }
     }
+
+    // Marquer comme initialisé
+    setIsInitialized(true);
   }, []);
 
   const login = async (
