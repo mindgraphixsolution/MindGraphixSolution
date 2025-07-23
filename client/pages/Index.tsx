@@ -17,7 +17,6 @@ import { AdminUserGuide } from '../components/AdminUserGuide';
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const location = useLocation();
 
   // Gérer le scroll vers les sections quand on arrive avec une ancre
