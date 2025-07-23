@@ -381,14 +381,44 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <Button
+                  type="button"
                   variant="outline"
+                  onClick={async () => {
+                    setIsLoading(true);
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    const success = await loginUser('google.user@gmail.com', 'google_auth', 'Utilisateur Google');
+                    if (success) {
+                      alert('Connexion avec Google réussie !');
+                      onClose();
+                      resetForm();
+                    } else {
+                      setError('Erreur lors de la connexion avec Google');
+                    }
+                    setIsLoading(false);
+                  }}
+                  disabled={isLoading}
                   className="flex items-center justify-center space-x-2 py-3 hover:bg-gray-50"
                 >
                   <span className="text-lg">🌐</span>
                   <span>Google</span>
                 </Button>
                 <Button
+                  type="button"
                   variant="outline"
+                  onClick={async () => {
+                    setIsLoading(true);
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    const success = await loginUser('facebook.user@facebook.com', 'facebook_auth', 'Utilisateur Facebook');
+                    if (success) {
+                      alert('Connexion avec Facebook réussie !');
+                      onClose();
+                      resetForm();
+                    } else {
+                      setError('Erreur lors de la connexion avec Facebook');
+                    }
+                    setIsLoading(false);
+                  }}
+                  disabled={isLoading}
                   className="flex items-center justify-center space-x-2 py-3 hover:bg-gray-50"
                 >
                   <span className="text-lg">📘</span>
