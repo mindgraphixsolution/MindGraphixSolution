@@ -22,6 +22,10 @@ import {
 import { AdminNotifications } from '../components/AdminNotifications';
 import { LivePreview } from '../components/LivePreview';
 import { useAutoSave } from '../hooks/useAutoSave';
+import { AdminManager } from '../components/AdminManager';
+import { PriceManager } from '../components/PriceManager';
+import { ThemeManager } from '../components/ThemeManager';
+import { CustomStylesEditor } from '../components/CustomStylesEditor';
 
 export default function AdminDashboard() {
   const { isAdmin, logout, updateContent, getContent } = useAuth();
