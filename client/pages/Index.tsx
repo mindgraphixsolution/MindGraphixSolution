@@ -170,7 +170,6 @@ export default function Index() {
 
       <AdminViewSwitcher />
       <AdminPanel />
-      <AdminGuide />
       <AdminUserGuide />
       <AdminNotifications />
     </div>
