@@ -235,17 +235,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Téléphone
                 </label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                  <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    placeholder="+226 01 51 11 46"
-                    required
-                  />
-                </div>
+                <PhoneInput
+                  value={formData.phone}
+                  onChange={(value) => handleInputChange('phone', value)}
+                  placeholder="01 51 11 46"
+                  required
+                />
               </div>
             )}
 
