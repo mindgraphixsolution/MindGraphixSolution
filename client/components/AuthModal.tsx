@@ -29,7 +29,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [showSecurityQuestion, setShowSecurityQuestion] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { login, loginUser } = useAuth();
   const navigate = useNavigate();
 
   if (!isOpen) return null;
