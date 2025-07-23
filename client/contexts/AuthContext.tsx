@@ -115,8 +115,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setIsAdmin(false);
+    setIsLoggedIn(false);
+    setCurrentUser(null);
     setIsEditMode(false);
     localStorage.removeItem('adminAuth');
+    localStorage.removeItem('currentUser');
   };
 
   const toggleEditMode = () => {
