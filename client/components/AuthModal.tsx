@@ -78,26 +78,40 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
       if (showSecurityQuestion) {
         // Tentative de connexion admin avec téléphone + question sécurité
-        const isAdminLogin = await login(
-          formData.email,
-          formData.phone,
-          formData.password,
-          formData.securityAnswer,
-        );
+        try {
+          console.log("Tentative de connexion admin avec:", {
+            email: formData.email,
+            phone: formData.phone,
+            password: formData.password,
+            securityAnswer: formData.securityAnswer
+          });
 
-        if (isAdminLogin) {
-          alert(
-            "Connexion administrateur réussie ! Redirection vers le tableau de bord...",
+          const isAdminLogin = await login(
+            formData.email,
+            formData.phone,
+            formData.password,
+            formData.securityAnswer,
           );
-          onClose();
-          resetForm();
-          setTimeout(() => {
-            navigate("/admin");
-          }, 500);
-        } else {
-          setError(
-            "Identifiants administrateur incorrects. Vérifiez vos informations.",
-          );
+
+          console.log("Résultat de la connexion:", isAdminLogin);
+
+          if (isAdminLogin) {
+            alert(
+              "Connexion administrateur réussie ! Redirection vers le tableau de bord...",
+            );
+            onClose();
+            resetForm();
+            setTimeout(() => {
+              navigate("/admin");
+            }, 500);
+          } else {
+            setError(
+              "Identifiants administrateur incorrects. Vérifiez vos informations.",
+            );
+          }
+        } catch (error) {
+          console.error("Erreur lors de la connexion admin:", error);
+          setError("Erreur technique lors de la connexion. Veuillez réessayer.");
         }
         setIsLoading(false);
       } else {
