@@ -93,27 +93,66 @@ export const Services: React.FC = () => {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 overflow-hidden"
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 overflow-hidden"
             >
               {/* Background gradient overlay on hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-95 transition-opacity duration-500 rounded-2xl`}></div>
-              
+
               {/* Content */}
-              <div className="relative z-10">
-                <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-xl flex items-center justify-center mb-6 group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110`}>
-                  <service.icon className="w-8 h-8 text-white" />
+              <div className="relative z-10 p-6">
+                {/* Header avec icon et prix */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className={`w-14 h-14 bg-gradient-to-br ${service.gradient} rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110`}>
+                    <service.icon className="w-7 h-7 text-white" />
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-semibold text-gray-900 group-hover:text-white/90 transition-colors">
+                      {service.price}
+                    </div>
+                    <div className="text-xs text-gray-500 group-hover:text-white/70 transition-colors">
+                      {service.timeline}
+                    </div>
+                  </div>
                 </div>
-                
-                <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-white transition-colors duration-300">
+
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-white transition-colors duration-300">
                   {service.title}
                 </h3>
-                
-                <p className="text-gray-600 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
+
+                <p className="text-gray-600 leading-relaxed mb-4 group-hover:text-white/90 transition-colors duration-300 text-sm">
                   {service.description}
                 </p>
 
+                {/* Features */}
+                <div className="space-y-2 mb-6">
+                  {service.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-center space-x-2">
+                      <CheckCircle size={14} className="text-green-500 group-hover:text-white/80 transition-colors" />
+                      <span className="text-sm text-gray-600 group-hover:text-white/80 transition-colors">
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Action buttons */}
+                <div className="space-y-3">
+                  <Button
+                    onClick={() => handleQuoteRequest(service.id)}
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white group-hover:bg-white group-hover:text-primary transition-all duration-300"
+                  >
+                    Demander un devis
+                    <ArrowRight size={16} className="ml-2" />
+                  </Button>
+
+                  <div className="flex items-center justify-center space-x-1 text-xs text-gray-500 group-hover:text-white/70 transition-colors">
+                    <Star size={12} className="fill-current" />
+                    <span>Devis gratuit sous 24h</span>
+                  </div>
+                </div>
+
                 {/* Decorative element */}
-                <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full opacity-50 group-hover:opacity-20 transition-opacity duration-300"></div>
+                <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full opacity-30 group-hover:opacity-10 transition-opacity duration-300"></div>
               </div>
 
               {/* Hover effect border */}
