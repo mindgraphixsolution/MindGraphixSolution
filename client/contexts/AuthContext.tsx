@@ -263,7 +263,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    // Ne pas jeter d'erreur, mais retourner des valeurs par défaut sécurisées
+    return {
+      isAdmin: false,
+      isSuperAdmin: false,
+      isLoggedIn: false,
+      currentUser: null,
+      isEditMode: false,
+      login: async () => false,
+      loginUser: async () => false,
+      logout: () => {},
+      toggleEditMode: () => {},
+      updateContent: () => {},
+      getContent: () => "",
+    };
   }
   return context;
 };
