@@ -1,6 +1,7 @@
 import React from 'react';
 import { Lightbulb, Code, TrendingUp, Headphones } from 'lucide-react';
 import { EditableText } from './EditableText';
+import { EditableImage } from './EditableImage';
 
 export const About: React.FC = () => {
   const features = [
