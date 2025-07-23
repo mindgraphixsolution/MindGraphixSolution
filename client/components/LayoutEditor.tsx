@@ -130,7 +130,7 @@ export const LayoutEditor: React.FC = () => {
     }
   };
 
-  const setDeviceView = (device: 'desktop' | 'tablet' | 'mobile') => {
+  const changeDeviceView = (device: 'desktop' | 'tablet' | 'mobile') => {
     setDeviceView(device);
     const mainContent = document.querySelector('main') || document.body;
     
