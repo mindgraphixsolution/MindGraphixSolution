@@ -19,7 +19,6 @@ import { ContentManager } from '../components/ContentManager';
 import { LayoutEditor } from '../components/LayoutEditor';
 import { PriceManager } from '../components/PriceManager';
 import { AdminManager } from '../components/AdminManager';
-import { NotificationSystem, useNotifications } from '../components/NotificationSystem';
 
 
 export default function Index() {
