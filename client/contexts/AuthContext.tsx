@@ -21,6 +21,8 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<{ email: string; name?: string } | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [siteContent, setSiteContent] = useState<Record<string, any>>({});
 
