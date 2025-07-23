@@ -72,6 +72,16 @@ export const LayoutEditor: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const savedSettings = getContent("layout.settings", null);
+    if (savedSettings) {
+      setSettings(savedSettings);
+      applyLayoutSettings(savedSettings);
+    }
+  }, []);
+
+  if (!isSuperAdmin) return null;
+
   const toggleLayoutMode = () => {
     setIsLayoutMode(!isLayoutMode);
 
