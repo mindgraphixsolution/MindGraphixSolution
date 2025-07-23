@@ -537,7 +537,7 @@ export const AdminManager: React.FC = () => {
                 </h4>
                 <ul className="text-yellow-700 text-sm space-y-1">
                   <li>
-                    • Seuls les Super Administrateurs peuvent gérer les comptes
+                    • Seuls les Administrateurs Supreme peuvent gérer les comptes
                     administrateurs
                   </li>
                   <li>
