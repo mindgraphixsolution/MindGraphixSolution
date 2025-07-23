@@ -12,6 +12,7 @@ import { AdminPanel } from '../components/AdminPanel';
 
 import { AdminNotifications } from '../components/AdminNotifications';
 import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
+import { SuperAdminPanel } from '../components/SuperAdminPanel';
 
 
 export default function Index() {
