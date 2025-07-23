@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 interface AuthContextType {
   isAdmin: boolean;
+  isSuperAdmin: boolean;
   isLoggedIn: boolean;
   currentUser: { email: string; name?: string } | null;
   isEditMode: boolean;
