@@ -45,7 +45,7 @@ export const Team: React.FC = () => {
       name: 'Antoine Morel',
       role: 'Motion Designer',
       image: 'https://images.pexels.com/photos/3379937/pexels-photo-3379937.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
-      bio: 'Cr��ateur d\'animations captivantes et de contenus vidéo pour le marketing digital.',
+      bio: 'Créateur d\'animations captivantes et de contenus vidéo pour le marketing digital.',
       skills: ['After Effects', 'Cinema 4D', 'Premiere', 'Blender'],
       social: {
         linkedin: '#',
@@ -130,9 +130,13 @@ export const Team: React.FC = () => {
                   as="p"
                   className="text-primary font-semibold mb-3 text-sm uppercase tracking-wide"
                 />
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  {member.bio}
-                </p>
+                <EditableText
+                  contentKey={`team.member.${index}.bio`}
+                  defaultValue={member.bio}
+                  as="p"
+                  className="text-gray-600 text-sm leading-relaxed mb-4"
+                  multiline
+                />
                 
                 {/* Skills */}
                 <div className="flex flex-wrap gap-2">
