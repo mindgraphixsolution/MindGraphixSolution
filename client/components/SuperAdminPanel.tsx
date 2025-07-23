@@ -81,16 +81,16 @@ export const SuperAdminPanel: React.FC = () => {
 
   return (
     <>
-      {/* Super Admin Button */}
+      {/* Supreme Button */}
       <button
         onClick={() => setIsOpen(true)}
         className="fixed top-4 right-4 z-50 w-12 h-12 bg-gradient-to-br from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 animate-pulse"
-        title="Super Admin Panel"
+        title="Supreme Panel"
       >
         <Shield size={20} />
       </button>
 
-      {/* Super Admin Panel Modal */}
+      {/* Supreme Panel Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div
@@ -104,7 +104,7 @@ export const SuperAdminPanel: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <Shield size={24} />
-                  <h2 className="text-2xl font-bold">Super Admin Panel</h2>
+                  <h2 className="text-2xl font-bold">Supreme Panel</h2>
                   <span className="px-2 py-1 bg-red-800 rounded-full text-xs font-bold">
                     ACCÈS TOTAL
                   </span>
@@ -153,7 +153,7 @@ export const SuperAdminPanel: React.FC = () => {
                 <div className="space-y-6">
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                     <h3 className="text-lg font-semibold text-red-800 mb-2">
-                      Mode Super Admin Actif
+                      Mode Supreme Actif
                     </h3>
                     <p className="text-red-600 text-sm mb-4">
                       Vous avez un accès complet à toutes les fonctionnalités.
@@ -161,7 +161,7 @@ export const SuperAdminPanel: React.FC = () => {
 
                     <div className="bg-white rounded-lg p-4 border border-red-300">
                       <h4 className="font-semibold text-red-800 mb-3">
-                        🔐 Identifiants Super Admin
+                        🔐 Identifiants Supreme
                       </h4>
                       <div className="space-y-2 text-sm font-mono">
                         <div>
@@ -214,7 +214,7 @@ export const SuperAdminPanel: React.FC = () => {
                           : "Activer l'édition"}
                       </Button>
                       <p className="text-sm text-gray-600 mt-2">
-                        En tant que Super Admin, vous pouvez éditer même sans ce
+                        En tant que Supreme, vous pouvez éditer même sans ce
                         mode.
                       </p>
                     </div>
@@ -334,7 +334,7 @@ export const SuperAdminPanel: React.FC = () => {
                         </div>
                         <div className="flex justify-between items-center p-2 bg-red-50 rounded border border-red-200">
                           <span className="font-semibold">
-                            Super Admin (Vous)
+                            Supreme (Vous)
                           </span>
                           <span className="text-red-600 text-xs">ACTIF</span>
                         </div>
