@@ -231,21 +231,21 @@ export const LayoutEditor: React.FC = () => {
 
                   <div className="flex border border-gray-300 rounded-lg overflow-hidden">
                     <button
-                      onClick={() => setDeviceView('desktop')}
+                      onClick={() => changeDeviceView('desktop')}
                       className={`px-3 py-2 ${deviceView === 'desktop' ? 'bg-cyan-500 text-white' : 'bg-white text-gray-700'}`}
                       title="Vue Bureau"
                     >
                       <Monitor size={16} />
                     </button>
                     <button
-                      onClick={() => setDeviceView('tablet')}
+                      onClick={() => changeDeviceView('tablet')}
                       className={`px-3 py-2 border-x border-gray-300 ${deviceView === 'tablet' ? 'bg-cyan-500 text-white' : 'bg-white text-gray-700'}`}
                       title="Vue Tablette"
                     >
                       <Grid size={16} />
                     </button>
                     <button
-                      onClick={() => setDeviceView('mobile')}
+                      onClick={() => changeDeviceView('mobile')}
                       className={`px-3 py-2 ${deviceView === 'mobile' ? 'bg-cyan-500 text-white' : 'bg-white text-gray-700'}`}
                       title="Vue Mobile"
                     >
