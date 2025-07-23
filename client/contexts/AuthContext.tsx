@@ -109,7 +109,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const defaultAdmins = [
       {
         email: "mindgraphixsolution@gmail.com",
-        phone: "+226 01 51 11 46",
+        phone: "01 51 11 46",
         password: "MINDSETGrapix2025",
         securityAnswer: "Badiori",
         name: "Administrateur Principal",
@@ -118,7 +118,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       },
       {
         email: "philippefaizsanon@gmail.com",
-        phone: "+226 54191605",
+        phone: "54191605",
         password: "Philius24648",
         securityAnswer: "Lil Nas X",
         name: "Super Administrateur",
