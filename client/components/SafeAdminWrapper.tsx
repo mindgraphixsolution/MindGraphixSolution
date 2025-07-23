@@ -6,18 +6,18 @@ interface SafeAdminWrapperProps {
   fallback?: React.ReactNode;
 }
 
-export const SafeAdminWrapper: React.FC<SafeAdminWrapperProps> = ({ 
-  children, 
-  fallback = null 
+export const SafeAdminWrapper: React.FC<SafeAdminWrapperProps> = ({
+  children,
+  fallback = null
 }) => {
   try {
     const auth = useAuth();
-    
+
     // Vérifier que le contexte est bien initialisé
-    if (!auth || typeof auth.isAdmin === 'undefined') {
+    if (!auth || !auth.isInitialized || typeof auth.isAdmin === 'undefined') {
       return <>{fallback}</>;
     }
-    
+
     return <>{children}</>;
   } catch (error) {
     console.warn('SafeAdminWrapper caught error:', error);
