@@ -106,17 +106,17 @@ export const EditableText: React.FC<EditableTextProps> = ({
   return (
     <Component
       className={`${className} ${
-        isAdmin && isEditMode
+        isAdmin && (isEditMode || isSuperAdmin)
           ? 'relative group cursor-pointer hover:bg-blue-50 hover:outline hover:outline-2 hover:outline-blue-300 rounded-sm transition-all'
           : ''
       }`}
       onClick={startEditing}
     >
       {currentValue || placeholder}
-      {isAdmin && isEditMode && (
+      {isAdmin && (isEditMode || isSuperAdmin) && (
         <Edit
           size={16}
-          className="absolute -top-2 -right-2 bg-blue-500 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+          className={`absolute -top-2 -right-2 ${isSuperAdmin ? 'bg-red-500' : 'bg-blue-500'} text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity`}
         />
       )}
     </Component>
