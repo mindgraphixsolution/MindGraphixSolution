@@ -119,8 +119,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         setIsLoading(false);
       }
     }
-
-    setIsLoading(false);
   };
 
   const getSecurityQuestion = (email: string): string => {
