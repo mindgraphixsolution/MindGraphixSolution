@@ -139,10 +139,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setIsAdmin(false);
+    setIsSuperAdmin(false);
     setIsLoggedIn(false);
     setCurrentUser(null);
     setIsEditMode(false);
     localStorage.removeItem('adminAuth');
+    localStorage.removeItem('superAdminAuth');
     localStorage.removeItem('currentUser');
   };
 
