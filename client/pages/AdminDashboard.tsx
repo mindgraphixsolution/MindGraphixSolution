@@ -278,6 +278,35 @@ export default function AdminDashboard() {
                         <MessageSquare size={16} />
                         <span>Voir les messages</span>
                       </button>
+                      <button
+                        onClick={() => {
+                          // Créer une notification de test
+                          const testNotification = {
+                            id: `test-${Date.now()}`,
+                            timestamp: new Date(),
+                            clientName: 'Client Test',
+                            clientEmail: 'client@example.com',
+                            clientPhone: '+226 70 00 00 00',
+                            projectTitle: 'Site E-commerce',
+                            projectCategory: 'E-commerce',
+                            budget: '500000 - 1000000 FCFA',
+                            timeline: '2-3 mois',
+                            message: 'Je souhaite créer un site e-commerce pour vendre mes produits en ligne.',
+                            status: 'new' as const
+                          };
+
+                          const existing = JSON.parse(localStorage.getItem('adminNotifications') || '[]');
+                          existing.unshift(testNotification);
+                          localStorage.setItem('adminNotifications', JSON.stringify(existing));
+
+                          // Déclencher l'événement
+                          window.dispatchEvent(new CustomEvent('newQuoteRequest', { detail: testNotification }));
+                        }}
+                        className="w-full flex items-center space-x-3 px-4 py-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg transition-colors"
+                      >
+                        <Bell size={16} />
+                        <span>Test Notification</span>
+                      </button>
                     </div>
                   </div>
                 </div>
