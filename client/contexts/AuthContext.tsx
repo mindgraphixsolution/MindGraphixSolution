@@ -157,10 +157,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (matchingAdmin) {
       console.log("Connexion admin réussie !", matchingAdmin);
 
-      if (matchingAdmin.role === "super_admin") {
+      if (matchingAdmin.role === "supreme") {
         setIsSuperAdmin(true);
         setIsAdmin(true);
         localStorage.setItem("superAdminAuth", "true");
+        localStorage.setItem("supremeAuth", "true");
       } else {
         setIsAdmin(true);
         localStorage.setItem("adminAuth", "true");
