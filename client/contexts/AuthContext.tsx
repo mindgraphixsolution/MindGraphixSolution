@@ -12,6 +12,7 @@ interface AuthContextType {
   isLoggedIn: boolean;
   currentUser: { email: string; name?: string } | null;
   isEditMode: boolean;
+  isInitialized: boolean;
   login: (
     email: string,
     phone: string,
