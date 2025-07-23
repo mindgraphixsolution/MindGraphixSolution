@@ -209,6 +209,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsEditMode(false);
     localStorage.removeItem("adminAuth");
     localStorage.removeItem("superAdminAuth");
+    localStorage.removeItem("supremeAuth");
     localStorage.removeItem("currentUser");
   };
 
