@@ -34,7 +34,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
   }, [isEditing]);
 
   const startEditing = () => {
-    if (!isAdmin || !isEditMode) return;
+    if (!isAdmin || (!isEditMode && !isSuperAdmin)) return;
     setEditValue(currentValue);
     setIsEditing(true);
   };
