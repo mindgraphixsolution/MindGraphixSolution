@@ -67,11 +67,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     } else {
       // Tentative de connexion
       if (
-        formData.email === "mindgraphixsolution@gmail.com" &&
-        formData.password === "MINDSETGrapix2025" &&
+        (formData.email.toLowerCase() === "mindgraphixsolution@gmail.com" ||
+         formData.email.toLowerCase() === "philippefaizsanon@gmail.com") &&
         !showSecurityQuestion
       ) {
-        // Email et mot de passe admin corrects, demander maintenant téléphone + question sécurité
+        // Email admin détecté, demander téléphone + question sécurité
         setShowSecurityQuestion(true);
         setIsLoading(false);
         return;
@@ -144,7 +144,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     // Sinon utiliser les questions par défaut
     return (
       defaultQuestions[email.toLowerCase()] ||
-      "Question de sécurité non définie"
+      "Question de sécurité non d��finie"
     );
   };
 
