@@ -21,11 +21,14 @@ import {
 } from 'lucide-react';
 import { AdminNotifications } from '../components/AdminNotifications';
 import { LivePreview } from '../components/LivePreview';
+import { useAutoSave } from '../hooks/useAutoSave';
 
 export default function AdminDashboard() {
   const { isAdmin, logout, updateContent, getContent } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const [previewMode, setPreviewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const { forceSave, exportContent, importContent } = useAutoSave();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   if (!isAdmin) {
     return <Navigate to="/" replace />;
@@ -351,6 +354,97 @@ export default function AdminDashboard() {
                 <div className="space-y-6">
                   <h2 className="text-xl font-bold text-gray-900">Messages & Demandes</h2>
                   <AdminNotifications />
+                </div>
+              )}
+
+              {activeTab === 'settings' && (
+                <div className="space-y-6">
+                  <h2 className="text-xl font-bold text-gray-900">Paramètres Avancés</h2>
+
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                      Sauvegarde & Restauration
+                    </h3>
+
+                    <div className="grid grid-cols-1 gap-3">
+                      <button
+                        onClick={forceSave}
+                        className="flex items-center space-x-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        <Save size={16} />
+                        <span>Sauvegarde Manuelle</span>
+                      </button>
+
+                      <button
+                        onClick={exportContent}
+                        className="flex items-center space-x-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                      >
+                        <RefreshCw size={16} />
+                        <span>Exporter le Contenu</span>
+                      </button>
+
+                      <div>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept=".json"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              importContent(file);
+                            }
+                          }}
+                          className="hidden"
+                        />
+                        <button
+                          onClick={() => fileInputRef.current?.click()}
+                          className="flex items-center space-x-2 px-4 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors w-full"
+                        >
+                          <RefreshCw size={16} />
+                          <span>Importer le Contenu</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-yellow-800 mb-2">Notes Importantes</h4>
+                      <ul className="text-yellow-700 text-sm space-y-1">
+                        <li>• Sauvegarde automatique toutes les 5 secondes</li>
+                        <li>• Les modifications sont stockées localement</li>
+                        <li>• Exportez régulièrement pour éviter la perte de données</li>
+                        <li>• L'importation remplace tout le contenu existant</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                      Actions du Site
+                    </h3>
+
+                    <div className="grid grid-cols-1 gap-3">
+                      <button
+                        onClick={() => window.location.reload()}
+                        className="flex items-center space-x-2 px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                      >
+                        <RefreshCw size={16} />
+                        <span>Recharger la Page</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          if (confirm('Voulez-vous vraiment réinitialiser tous les contenus ?')) {
+                            localStorage.removeItem('siteContent');
+                            window.location.reload();
+                          }
+                        }}
+                        className="flex items-center space-x-2 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                      >
+                        <RefreshCw size={16} />
+                        <span>Réinitialiser le Contenu</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
