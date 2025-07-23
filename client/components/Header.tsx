@@ -14,6 +14,7 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoggedIn, currentUser, isAdmin, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
