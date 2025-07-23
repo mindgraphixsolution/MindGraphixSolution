@@ -42,7 +42,7 @@ export const Team: React.FC = () => {
     {
       name: 'Antoine Morel',
       role: 'Motion Designer',
-      image: 'https://randomuser.me/api/portraits/men/22.jpg',
+      image: 'https://images.pexels.com/photos/3379937/pexels-photo-3379937.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
       bio: 'Créateur d\'animations captivantes et de contenus vidéo pour le marketing digital.',
       skills: ['After Effects', 'Cinema 4D', 'Premiere', 'Blender'],
       social: {
