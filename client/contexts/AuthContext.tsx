@@ -278,6 +278,7 @@ export const useAuth = () => {
       isLoggedIn: false,
       currentUser: null,
       isEditMode: false,
+      isInitialized: false,
       login: async () => false,
       loginUser: async () => false,
       logout: () => {},
