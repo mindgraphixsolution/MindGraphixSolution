@@ -324,8 +324,8 @@ export const AdminManager: React.FC = () => {
                           disabled={editForm.id === "super-admin"}
                         >
                           <option value="admin">Administrateur</option>
-                          <option value="super_admin">
-                            Super Administrateur
+                          <option value="supreme">
+                            Administrateur Supreme
                           </option>
                         </select>
                       </div>
@@ -362,7 +362,7 @@ export const AdminManager: React.FC = () => {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Question de Sécurité
+                          Question de S��curité
                         </label>
                         <input
                           type="text"
