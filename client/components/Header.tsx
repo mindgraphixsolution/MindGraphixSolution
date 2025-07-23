@@ -111,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
                 <div className={`flex items-center space-x-2 ${isScrolled ? 'text-gray-700' : 'text-white'}`}>
                   <User size={20} />
                   <span className="font-medium">
-                    {isAdmin ? 'Admin' : currentUser?.name || 'Utilisateur'}
+                    {isSuperAdmin ? 'Super Admin' : isAdmin ? 'Admin' : currentUser?.name || 'Utilisateur'}
                   </span>
                 </div>
                 {isAdmin && (
@@ -206,7 +206,7 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
                     <div className="flex items-center space-x-2 text-gray-700 p-2">
                       <User size={20} />
                       <span className="font-medium">
-                        {isAdmin ? 'Admin' : currentUser?.name || 'Utilisateur'}
+                        {isSuperAdmin ? 'Super Admin' : isAdmin ? 'Admin' : currentUser?.name || 'Utilisateur'}
                       </span>
                     </div>
                     {isAdmin && (
