@@ -265,19 +265,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               />
             </div>
 
-            {showSecurityQuestion && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Téléphone
-                </label>
-                <PhoneInput
-                  value={formData.phone}
-                  onChange={(value) => handleInputChange("phone", value)}
-                  placeholder="01 51 11 46"
-                  required
-                />
-              </div>
-            )}
+
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
