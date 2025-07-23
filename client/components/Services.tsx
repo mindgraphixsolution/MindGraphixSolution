@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Palette, Code, Smartphone, Video, ShoppingCart, Search, ArrowRight, Star, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { QuoteRequest } from './QuoteRequest';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Services: React.FC = () => {
   const [showQuoteModal, setShowQuoteModal] = useState(false);
