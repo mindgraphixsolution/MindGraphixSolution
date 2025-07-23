@@ -74,6 +74,10 @@ export const Services: React.FC = () => {
     },
   ];
 
+  // Charger les prix depuis le stockage ou utiliser les prix par défaut
+  const savedPrices = getContent('services.prices', null);
+  const services = savedPrices || defaultServices;
+
   const handleQuoteRequest = (serviceId: string) => {
     setSelectedService(serviceId);
     setShowQuoteModal(true);
