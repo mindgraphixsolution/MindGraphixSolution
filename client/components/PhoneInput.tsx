@@ -26,14 +26,14 @@ const countries: Country[] = [
   { code: 'CD', name: 'RD Congo', flag: '🇨🇩', dialCode: '+243' },
   { code: 'ET', name: 'Éthiopie', flag: '🇪🇹', dialCode: '+251' },
   { code: 'UG', name: 'Ouganda', flag: '🇺🇬', dialCode: '+256' },
-  { code: 'TZ', name: 'Tanzanie', flag: '🇹🇿', dialCode: '+255' },
+  { code: 'TZ', name: 'Tanzanie', flag: '🇹���', dialCode: '+255' },
   { code: 'RW', name: 'Rwanda', flag: '🇷🇼', dialCode: '+250' },
   { code: 'US', name: 'États-Unis', flag: '🇺🇸', dialCode: '+1' },
   { code: 'CA', name: 'Canada', flag: '🇨🇦', dialCode: '+1' },
   { code: 'GB', name: 'Royaume-Uni', flag: '🇬🇧', dialCode: '+44' },
   { code: 'DE', name: 'Allemagne', flag: '🇩🇪', dialCode: '+49' },
   { code: 'IT', name: 'Italie', flag: '🇮🇹', dialCode: '+39' },
-  { code: 'ES', name: 'Espagne', flag: '��🇸', dialCode: '+34' },
+  { code: 'ES', name: 'Espagne', flag: '🇪🇸', dialCode: '+34' },
   { code: 'BE', name: 'Belgique', flag: '🇧🇪', dialCode: '+32' },
   { code: 'CH', name: 'Suisse', flag: '🇨🇭', dialCode: '+41' },
   { code: 'NL', name: 'Pays-Bas', flag: '🇳🇱', dialCode: '+31' },
@@ -86,10 +86,29 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
     onChange(fullNumber);
   };
 
+  const formatPhoneNumber = (value: string): string => {
+    // Supprimer tous les caractères non numériques
+    const digits = value.replace(/\D/g, '');
+
+    // Formater selon la longueur
+    if (digits.length <= 2) {
+      return digits;
+    } else if (digits.length <= 4) {
+      return `${digits.slice(0, 2)} ${digits.slice(2)}`;
+    } else if (digits.length <= 6) {
+      return `${digits.slice(0, 2)} ${digits.slice(2, 4)} ${digits.slice(4)}`;
+    } else if (digits.length <= 8) {
+      return `${digits.slice(0, 2)} ${digits.slice(2, 4)} ${digits.slice(4, 6)} ${digits.slice(6)}`;
+    } else {
+      return `${digits.slice(0, 2)} ${digits.slice(2, 4)} ${digits.slice(4, 6)} ${digits.slice(6, 8)}`;
+    }
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newNumber = e.target.value;
-    setPhoneNumber(newNumber);
-    const fullNumber = newNumber ? `${selectedCountry.dialCode} ${newNumber}` : selectedCountry.dialCode;
+    const rawValue = e.target.value;
+    const formattedNumber = formatPhoneNumber(rawValue);
+    setPhoneNumber(formattedNumber);
+    const fullNumber = formattedNumber ? `${selectedCountry.dialCode} ${formattedNumber}` : selectedCountry.dialCode;
     onChange(fullNumber);
   };
 
