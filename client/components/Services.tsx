@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Palette, Code, Smartphone, Video, ShoppingCart, Search } from 'lucide-react';
 
 export const Services: React.FC = () => {
@@ -96,15 +97,12 @@ export const Services: React.FC = () => {
             <p className="text-gray-600 mb-6">
               Contactez-nous pour discuter de vos besoins et obtenir un devis personnalisé
             </p>
-            <button 
-              onClick={() => {
-                const element = document.querySelector('#contact');
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+            <Link
+              to="/#contact"
+              className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 inline-block"
             >
               Démarrer un projet
-            </button>
+            </Link>
           </div>
         </div>
       </div>
