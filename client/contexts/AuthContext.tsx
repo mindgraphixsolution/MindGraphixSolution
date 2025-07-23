@@ -64,18 +64,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (email: string, phone: string, password: string, securityAnswer: string): Promise<boolean> => {
-    // Credentials d'administrateur suprême SECRET
-    const SUPER_ADMIN_EMAIL = 'philippefaizsanon@gmail.com';
-    const SUPER_ADMIN_PHONE = '+226 54191605';
-    const SUPER_ADMIN_PASSWORD = 'Philius24648';
-    const SUPER_SECURITY_ANSWER = 'Lil Nas X';
-
-    // Credentials d'administrateur normal
-    const ADMIN_EMAIL = 'mindgraphixsolution@gmail.com';
-    const ADMIN_PHONE = '+226 01 51 11 46';
-    const ADMIN_PASSWORD = 'MINDSETGrapix2025';
-    const SECURITY_ANSWER = 'Badiori';
-
     console.log('Tentative de connexion admin:', {
       email: email.toLowerCase(),
       phone,
@@ -83,37 +71,64 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       securityAnswer: securityAnswer.toLowerCase()
     });
 
-    // Vérification des identifiants SUPER ADMIN (SECRET)
-    if (
-      email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase() &&
-      phone === SUPER_ADMIN_PHONE &&
-      password === SUPER_ADMIN_PASSWORD &&
-      securityAnswer.toLowerCase() === SUPER_SECURITY_ANSWER.toLowerCase()
-    ) {
-      console.log('Connexion super admin réussie !');
-      setIsSuperAdmin(true);
-      setIsAdmin(true);
-      setIsLoggedIn(true);
-      setCurrentUser({ email, name: 'Super Administrateur' });
-      localStorage.setItem('superAdminAuth', 'true');
-      localStorage.setItem('adminAuth', 'true');
-      localStorage.setItem('currentUser', JSON.stringify({ email, name: 'Super Administrateur' }));
-      return true;
-    }
+    // Charger les administrateurs depuis le stockage
+    const savedAdmins = JSON.parse(localStorage.getItem('siteContent') || '{}');
+    const systemAdmins = savedAdmins['system.admins'] || [];
 
-    // Vérification des identifiants ADMIN NORMAL
-    if (
-      email.toLowerCase() === ADMIN_EMAIL.toLowerCase() &&
-      phone === ADMIN_PHONE &&
-      password === ADMIN_PASSWORD &&
-      securityAnswer.toLowerCase() === SECURITY_ANSWER.toLowerCase()
-    ) {
-      console.log('Connexion admin réussie !');
-      setIsAdmin(true);
+    // Administrateurs par défaut (toujours présents)
+    const defaultAdmins = [
+      {
+        email: 'mindgraphixsolution@gmail.com',
+        phone: '+226 01 51 11 46',
+        password: 'MINDSETGrapix2025',
+        securityAnswer: 'Badiori',
+        name: 'Administrateur Principal',
+        role: 'admin',
+        isActive: true
+      },
+      {
+        email: 'philippefaizsanon@gmail.com',
+        phone: '+226 54191605',
+        password: 'Philius24648',
+        securityAnswer: 'Lil Nas X',
+        name: 'Super Administrateur',
+        role: 'super_admin',
+        isActive: true
+      }
+    ];
+
+    // Fusionner avec les administrateurs créés dynamiquement
+    const allAdmins = [...defaultAdmins];
+    systemAdmins.forEach((admin: any) => {
+      if (!defaultAdmins.find(def => def.email.toLowerCase() === admin.email.toLowerCase())) {
+        allAdmins.push(admin);
+      }
+    });
+
+    // Rechercher l'administrateur correspondant
+    const matchingAdmin = allAdmins.find(admin =>
+      admin.email.toLowerCase() === email.toLowerCase() &&
+      admin.phone === phone &&
+      admin.password === password &&
+      admin.securityAnswer.toLowerCase() === securityAnswer.toLowerCase() &&
+      admin.isActive
+    );
+
+    if (matchingAdmin) {
+      console.log('Connexion admin réussie !', matchingAdmin);
+
+      if (matchingAdmin.role === 'super_admin') {
+        setIsSuperAdmin(true);
+        setIsAdmin(true);
+        localStorage.setItem('superAdminAuth', 'true');
+      } else {
+        setIsAdmin(true);
+        localStorage.setItem('adminAuth', 'true');
+      }
+
       setIsLoggedIn(true);
-      setCurrentUser({ email, name: 'Administrateur' });
-      localStorage.setItem('adminAuth', 'true');
-      localStorage.setItem('currentUser', JSON.stringify({ email, name: 'Administrateur' }));
+      setCurrentUser({ email, name: matchingAdmin.name });
+      localStorage.setItem('currentUser', JSON.stringify({ email, name: matchingAdmin.name }));
       return true;
     }
 
