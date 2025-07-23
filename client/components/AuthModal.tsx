@@ -102,14 +102,38 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setIsLoading(false);
   };
   
+  const getSecurityQuestion = (email: string): string => {
+    // Charger les administrateurs pour trouver la question de sécurité
+    const siteContent = JSON.parse(localStorage.getItem('siteContent') || '{}');
+    const systemAdmins = siteContent['system.admins'] || [];
+
+    // Questions par défaut
+    const defaultQuestions: { [key: string]: string } = {
+      'philippefaizsanon@gmail.com': 'Qui est ton artiste préféré ?',
+      'mindgraphixsolution@gmail.com': 'Qui est le plus bête dans l\'équipe ?'
+    };
+
+    // Chercher d'abord dans les admins créés dynamiquement
+    const dynamicAdmin = systemAdmins.find((admin: any) =>
+      admin.email.toLowerCase() === email.toLowerCase()
+    );
+
+    if (dynamicAdmin && dynamicAdmin.securityQuestion) {
+      return dynamicAdmin.securityQuestion;
+    }
+
+    // Sinon utiliser les questions par défaut
+    return defaultQuestions[email.toLowerCase()] || 'Question de sécurité non définie';
+  };
+
   const resetForm = () => {
-    setFormData({ 
-      name: '', 
-      email: '', 
-      password: '', 
-      confirmPassword: '', 
-      phone: '', 
-      securityAnswer: '' 
+    setFormData({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      phone: '',
+      securityAnswer: ''
     });
     setShowSecurityQuestion(false);
     setError('');
