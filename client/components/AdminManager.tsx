@@ -22,7 +22,7 @@ interface AdminUser {
   password: string;
   securityQuestion: string;
   securityAnswer: string;
-  role: "admin" | "super_admin";
+  role: "admin" | "supreme";
   createdAt: string;
   createdBy: string;
   isActive: boolean;
