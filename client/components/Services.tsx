@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Palette, Code, Smartphone, Video, ShoppingCart, Search } from 'lucide-react';
+import { Palette, Code, Smartphone, Video, ShoppingCart, Search, ArrowRight, Star, CheckCircle } from 'lucide-react';
+import { Button } from './ui/button';
+import { QuoteRequest } from './QuoteRequest';
 
 export const Services: React.FC = () => {
   const services = [
