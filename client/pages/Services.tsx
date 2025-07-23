@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { AuthModal } from '../components/AuthModal';
+import { AdminPanel } from '../components/AdminPanel';
 import { 
   Palette, Code, Smartphone, Video, ShoppingCart, Search, 
   Check, ArrowRight, Star, Clock, Users, Zap 
@@ -357,6 +358,8 @@ export default function Services() {
         onClose={() => setShowAuthModal(false)}
         defaultMode={authMode}
       />
+
+      <AdminPanel />
     </div>
   );
 }
