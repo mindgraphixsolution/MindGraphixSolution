@@ -4,30 +4,31 @@ import { useAuth } from '../contexts/AuthContext';
 export const useAutoSave = () => {
   const { isAdmin, getContent } = useAuth();
   const lastSaveRef = useRef<string>('');
+  const indicatorRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!isAdmin) return;
 
     const saveInterval = setInterval(() => {
       const currentContent = localStorage.getItem('siteContent') || '{}';
-      
+
       // Only save if content has changed
       if (currentContent !== lastSaveRef.current) {
         lastSaveRef.current = currentContent;
-        
-        // Show save indicator
-        const indicator = document.createElement('div');
-        indicator.className = 'fixed top-4 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg';
-        indicator.textContent = '✓ Sauvegardé automatiquement';
-        document.body.appendChild(indicator);
-        
-        setTimeout(() => {
-          document.body.removeChild(indicator);
-        }, 2000);
+
+        // Show save indicator safely
+        showSaveIndicator('✓ Sauvegardé automatiquement', 'bg-green-500');
       }
     }, 5000); // Save every 5 seconds
 
-    return () => clearInterval(saveInterval);
+    return () => {
+      clearInterval(saveInterval);
+      // Clean up any existing indicator on unmount
+      if (indicatorRef.current && document.body.contains(indicatorRef.current)) {
+        document.body.removeChild(indicatorRef.current);
+        indicatorRef.current = null;
+      }
+    };
   }, [isAdmin]);
 
   const forceSave = () => {
