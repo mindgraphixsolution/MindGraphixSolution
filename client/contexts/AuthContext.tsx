@@ -108,21 +108,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Administrateurs par défaut (toujours présents)
     const defaultAdmins = [
       {
-        email: "mindgraphixsolution@gmail.com",
-        phone: "01 51 11 46",
-        password: "MINDSETGrapix2025",
-        securityAnswer: "Badiori",
-        name: "Administrateur Principal",
-        role: "admin",
-        isActive: true,
-      },
-      {
         email: "philippefaizsanon@gmail.com",
         phone: "54191605",
         password: "Philius24648",
         securityAnswer: "Lil Nas X",
-        name: "Super Administrateur",
-        role: "super_admin",
+        name: "Administrateur Supreme",
+        role: "supreme",
+        isActive: true,
+      },
+      {
+        email: "mindgraphixsolution@gmail.com",
+        phone: "01 51 11 46",
+        password: "MINDSETGrapix2025",
+        securityAnswer: "Badiori",
+        name: "Administrateur",
+        role: "admin",
         isActive: true,
       },
     ];
