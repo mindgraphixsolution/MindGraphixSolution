@@ -176,16 +176,22 @@ export const Footer: React.FC = () => {
               <ul className="space-y-3">
                 {footerLinks.company.map((link) => (
                   <li key={link}>
-                    <button 
-                      onClick={() => {
-                        if (link === 'À propos') scrollToSection('#about');
-                        else if (link === 'Notre équipe') scrollToSection('#team');
-                        else if (link === 'Carrières') scrollToSection('#team');
-                      }}
-                      className="text-gray-400 hover:text-accent transition-colors text-left"
-                    >
-                      {link}
-                    </button>
+                    {link === 'À propos' ? (
+                      <Link to="/about" className="text-gray-400 hover:text-accent transition-colors">
+                        {link}
+                      </Link>
+                    ) : link === 'Notre équipe' || link === 'Carrières' ? (
+                      <button
+                        onClick={() => handleNavigation('#team')}
+                        className="text-gray-400 hover:text-accent transition-colors text-left"
+                      >
+                        {link}
+                      </button>
+                    ) : (
+                      <button className="text-gray-400 hover:text-accent transition-colors text-left">
+                        {link}
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
