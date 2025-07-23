@@ -229,6 +229,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   required
                 />
               </div>
+              <FormValidator
+                value={formData.email}
+                rules={[ValidationRules.email]}
+              />
             </div>
 
             {showSecurityQuestion && (
