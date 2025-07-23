@@ -50,10 +50,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const savedAuth = localStorage.getItem("adminAuth");
     const savedSuperAuth = localStorage.getItem("superAdminAuth");
+    const savedSupremeAuth = localStorage.getItem("supremeAuth");
     const savedUser = localStorage.getItem("currentUser");
     const savedContent = localStorage.getItem("siteContent");
 
-    if (savedSuperAuth === "true") {
+    if (savedSupremeAuth === "true" || savedSuperAuth === "true") {
       setIsSuperAdmin(true);
       setIsAdmin(true);
       setIsLoggedIn(true);
