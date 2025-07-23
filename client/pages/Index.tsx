@@ -15,6 +15,7 @@ import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
 import { SuperAdminPanel } from '../components/SuperAdminPanel';
 import { CustomStylesEditor } from '../components/CustomStylesEditor';
 import { ThemeManager } from '../components/ThemeManager';
+import { ContentManager } from '../components/ContentManager';
 
 
 export default function Index() {
