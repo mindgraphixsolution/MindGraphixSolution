@@ -95,12 +95,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       securityAnswer: securityAnswer.toLowerCase(),
     });
 
-    console.log("Administrateurs disponibles:", allAdmins.map(admin => ({
-      email: admin.email,
-      phone: admin.phone,
-      normalizedPhone: normalizePhone(admin.phone),
-      isActive: admin.isActive
-    })));
+    // Normaliser le numéro de téléphone (supprimer espaces, préfixes et caractères spéciaux)
+    const normalizePhone = (phoneNumber: string): string => {
+      return phoneNumber.replace(/[\s\-\(\)\+]/g, '').replace(/^226/, '').trim();
+    };
 
     // Charger les administrateurs depuis le stockage
     const savedAdmins = JSON.parse(localStorage.getItem("siteContent") || "{}");
@@ -140,10 +138,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     });
 
-    // Normaliser le numéro de téléphone (supprimer espaces, préfixes et caractères spéciaux)
-    const normalizePhone = (phoneNumber: string): string => {
-      return phoneNumber.replace(/[\s\-\(\)\+]/g, '').replace(/^226/, '').trim();
-    };
+    console.log("Administrateurs disponibles:", allAdmins.map(admin => ({
+      email: admin.email,
+      phone: admin.phone,
+      normalizedPhone: normalizePhone(admin.phone),
+      isActive: admin.isActive
+    })));
 
     // Rechercher l'administrateur correspondant
     const matchingAdmin = allAdmins.find(
