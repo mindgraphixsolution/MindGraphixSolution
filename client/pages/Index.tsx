@@ -12,7 +12,7 @@ import { AdminPanel } from '../components/AdminPanel';
 
 import { AdminNotifications } from '../components/AdminNotifications';
 import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
-import { AdminUserGuide } from '../components/AdminUserGuide';
+
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
