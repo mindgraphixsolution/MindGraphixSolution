@@ -25,7 +25,6 @@ export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const location = useLocation();
-  const { notifications, removeNotification, info } = useNotifications();
 
   // Gérer le scroll vers les sections quand on arrive avec une ancre
   useEffect(() => {
