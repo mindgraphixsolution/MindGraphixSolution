@@ -287,12 +287,10 @@ export const QuoteRequest: React.FC<QuoteRequestProps> = ({ isOpen, onClose, sel
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Téléphone
                   </label>
-                  <input
-                    type="tel"
+                  <PhoneInput
                     value={formData.clientInfo.phone}
-                    onChange={(e) => updateFormData('clientInfo', 'phone', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="+226 XX XX XX XX"
+                    onChange={(value) => updateFormData('clientInfo', 'phone', value)}
+                    placeholder="XX XX XX XX"
                   />
                 </div>
 
