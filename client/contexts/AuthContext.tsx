@@ -46,6 +46,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const ADMIN_PASSWORD = 'MINDSETGrapix2025';
     const SECURITY_ANSWER = 'Badiori';
 
+    console.log('Tentative de connexion admin:', {
+      email: email.toLowerCase(),
+      phone,
+      password,
+      securityAnswer: securityAnswer.toLowerCase()
+    });
+
+    console.log('Valeurs attendues:', {
+      expectedEmail: ADMIN_EMAIL.toLowerCase(),
+      expectedPhone: ADMIN_PHONE,
+      expectedPassword: ADMIN_PASSWORD,
+      expectedAnswer: SECURITY_ANSWER.toLowerCase()
+    });
+
     // Vérification des identifiants
     if (
       email.toLowerCase() === ADMIN_EMAIL.toLowerCase() &&
@@ -53,11 +67,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       password === ADMIN_PASSWORD &&
       securityAnswer.toLowerCase() === SECURITY_ANSWER.toLowerCase()
     ) {
+      console.log('Connexion admin réussie !');
       setIsAdmin(true);
       localStorage.setItem('adminAuth', 'true');
       return true;
     }
-    
+
+    console.log('Connexion admin échouée');
     return false;
   };
 
