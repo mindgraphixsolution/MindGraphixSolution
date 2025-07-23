@@ -277,10 +277,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             {showSecurityQuestion && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Question de sécurité: {formData.email === 'philippefaizsanon@gmail.com'
-                    ? 'Qui est ton artiste préféré ?'
-                    : 'Qui est le plus bête dans l\'équipe ?'
-                  }
+                  Question de sécurité: {getSecurityQuestion(formData.email)}
                 </label>
                 <div className="relative">
                   <ShieldCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
