@@ -19,7 +19,7 @@ import { ContentManager } from "../components/ContentManager";
 import { LayoutEditor } from "../components/LayoutEditor";
 import { PriceManager } from "../components/PriceManager";
 import { AdminManager } from "../components/AdminManager";
-import { AdminLoginHelp } from "../components/AdminLoginHelp";
+
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
