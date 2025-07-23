@@ -6,7 +6,7 @@ export const Team: React.FC = () => {
     {
       name: 'Badior OUATTARA',
       role: 'PROGRAMMEUR & GRAPHISTE',
-      image: 'https://randomuser.me/api/portraits/men/32.jpg',
+      image: 'https://images.pexels.com/photos/5952738/pexels-photo-5952738.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
       bio: 'Expert en développement full-stack et design graphique avec plus de 5 ans d\'expérience.',
       skills: ['React', 'Node.js', 'Photoshop', 'Illustrator'],
       social: {
