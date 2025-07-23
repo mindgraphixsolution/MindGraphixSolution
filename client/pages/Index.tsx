@@ -64,7 +64,7 @@ export default function Index() {
                 <h3 className="text-2xl font-bold mb-6">Travaillons ensemble</h3>
                 <p className="text-white/90 mb-8 leading-relaxed">
                   Que vous ayez un projet précis en tête ou que vous souhaitiez simplement 
-                  discuter des possibilités, nous sommes �� votre écoute.
+                  discuter des possibilités, nous sommes à votre écoute.
                 </p>
                 
                 <div className="space-y-6">
@@ -174,6 +174,7 @@ export default function Index() {
       <AdminPanel />
       <AdminNotifications />
       <SuperAdminPanel />
+      <CustomStylesEditor />
     </div>
   );
 }
