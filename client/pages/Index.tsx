@@ -13,6 +13,7 @@ import { AdminPanel } from '../components/AdminPanel';
 import { AdminNotifications } from '../components/AdminNotifications';
 import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
 import { SuperAdminPanel } from '../components/SuperAdminPanel';
+import { CustomStylesEditor } from '../components/CustomStylesEditor';
 
 
 export default function Index() {
@@ -63,7 +64,7 @@ export default function Index() {
                 <h3 className="text-2xl font-bold mb-6">Travaillons ensemble</h3>
                 <p className="text-white/90 mb-8 leading-relaxed">
                   Que vous ayez un projet précis en tête ou que vous souhaitiez simplement 
-                  discuter des possibilités, nous sommes à votre écoute.
+                  discuter des possibilités, nous sommes �� votre écoute.
                 </p>
                 
                 <div className="space-y-6">
