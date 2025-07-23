@@ -7,8 +7,10 @@ import { QuoteRequest } from './QuoteRequest';
 export const Services: React.FC = () => {
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const [selectedService, setSelectedService] = useState('');
+  const { getContent } = useAuth();
 
-  const services = [
+  // Services par défaut
+  const defaultServices = [
     {
       id: 'design',
       icon: Palette,
