@@ -1,29 +1,29 @@
-import React from 'react';
-import { Lightbulb, Code, TrendingUp, Headphones } from 'lucide-react';
-import { EditableText } from './EditableText';
-import { EditableImage } from './EditableImage';
+import React from "react";
+import { Lightbulb, Code, TrendingUp, Headphones } from "lucide-react";
+import { EditableText } from "./EditableText";
+import { EditableImage } from "./EditableImage";
 
 export const About: React.FC = () => {
   const features = [
     {
       icon: Lightbulb,
-      title: 'Design Innovant',
-      description: 'Des concepts uniques qui captivent votre audience',
+      title: "Design Innovant",
+      description: "Des concepts uniques qui captivent votre audience",
     },
     {
       icon: Code,
-      title: 'Développement Solide',
-      description: 'Des solutions techniques robustes et évolutives',
+      title: "Développement Solide",
+      description: "Des solutions techniques robustes et évolutives",
     },
     {
       icon: TrendingUp,
-      title: 'Stratégie Digitale',
-      description: 'Une approche orientée résultats pour votre business',
+      title: "Stratégie Digitale",
+      description: "Une approche orientée résultats pour votre business",
     },
     {
       icon: Headphones,
-      title: 'Support Premium',
-      description: 'Un accompagnement personnalisé à chaque étape',
+      title: "Support Premium",
+      description: "Un accompagnement personnalisé à chaque étape",
     },
   ];
 
@@ -71,16 +71,26 @@ export const About: React.FC = () => {
               </h3>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Mind Graphix Solution est spécialisée dans la{' '}
-                  <span className="text-primary font-semibold">création graphique</span> et le{' '}
-                  <span className="text-primary font-semibold">développement web</span> sur mesure. 
-                  Notre mission est de transformer vos idées en solutions digitales impactantes.
+                  Mind Graphix Solution est spécialisée dans la{" "}
+                  <span className="text-primary font-semibold">
+                    création graphique
+                  </span>{" "}
+                  et le{" "}
+                  <span className="text-primary font-semibold">
+                    développement web
+                  </span>{" "}
+                  sur mesure. Notre mission est de transformer vos idées en
+                  solutions digitales impactantes.
                 </p>
                 <p>
-                  Nous croyons en une approche holistique qui combine esthétique, fonctionnalité 
-                  et expérience utilisateur pour créer des produits qui non seulement impressionnent 
-                  visuellement mais qui délivrent également des{' '}
-                  <span className="text-accent font-semibold">résultats concrets</span>.
+                  Nous croyons en une approche holistique qui combine
+                  esthétique, fonctionnalité et expérience utilisateur pour
+                  créer des produits qui non seulement impressionnent
+                  visuellement mais qui délivrent également des{" "}
+                  <span className="text-accent font-semibold">
+                    résultats concrets
+                  </span>
+                  .
                 </p>
               </div>
             </div>

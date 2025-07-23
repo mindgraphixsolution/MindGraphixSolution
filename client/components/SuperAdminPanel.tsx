@@ -1,22 +1,40 @@
-import React, { useState } from 'react';
-import { Shield, Settings, Users, Database, Eye, Edit, Save, Download, Upload, Trash2, RefreshCw } from 'lucide-react';
-import { Button } from './ui/button';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useState } from "react";
+import {
+  Shield,
+  Settings,
+  Users,
+  Database,
+  Eye,
+  Edit,
+  Save,
+  Download,
+  Upload,
+  Trash2,
+  RefreshCw,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { useAuth } from "../contexts/AuthContext";
 
 export const SuperAdminPanel: React.FC = () => {
-  const { isSuperAdmin, isEditMode, toggleEditMode, updateContent, getContent } = useAuth();
+  const {
+    isSuperAdmin,
+    isEditMode,
+    toggleEditMode,
+    updateContent,
+    getContent,
+  } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('general');
+  const [activeTab, setActiveTab] = useState("general");
 
   if (!isSuperAdmin) return null;
 
   const exportSiteData = () => {
-    const siteData = localStorage.getItem('siteContent');
-    const blob = new Blob([siteData || '{}'], { type: 'application/json' });
+    const siteData = localStorage.getItem("siteContent");
+    const blob = new Blob([siteData || "{}"], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'site-data.json';
+    a.download = "site-data.json";
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -28,10 +46,10 @@ export const SuperAdminPanel: React.FC = () => {
       reader.onload = (e) => {
         try {
           const data = JSON.parse(e.target?.result as string);
-          localStorage.setItem('siteContent', JSON.stringify(data));
+          localStorage.setItem("siteContent", JSON.stringify(data));
           window.location.reload();
         } catch (error) {
-          alert('Erreur lors de l\'importation des données');
+          alert("Erreur lors de l'importation des données");
         }
       };
       reader.readAsText(file);
@@ -39,14 +57,22 @@ export const SuperAdminPanel: React.FC = () => {
   };
 
   const resetSiteData = () => {
-    if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les données du site ? Cette action est irréversible.')) {
-      localStorage.removeItem('siteContent');
+    if (
+      confirm(
+        "Êtes-vous sûr de vouloir réinitialiser toutes les données du site ? Cette action est irréversible.",
+      )
+    ) {
+      localStorage.removeItem("siteContent");
       window.location.reload();
     }
   };
 
   const clearAllData = () => {
-    if (confirm('ATTENTION : Ceci va supprimer TOUTES les données locales (utilisateurs, contenu, etc.). Êtes-vous absolument sûr ?')) {
+    if (
+      confirm(
+        "ATTENTION : Ceci va supprimer TOUTES les données locales (utilisateurs, contenu, etc.). Êtes-vous absolument sûr ?",
+      )
+    ) {
       localStorage.clear();
       sessionStorage.clear();
       window.location.reload();
@@ -67,8 +93,11 @@ export const SuperAdminPanel: React.FC = () => {
       {/* Super Admin Panel Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-          
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+
           <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-red-600 to-red-700 p-6 text-white">
@@ -76,7 +105,9 @@ export const SuperAdminPanel: React.FC = () => {
                 <div className="flex items-center space-x-3">
                   <Shield size={24} />
                   <h2 className="text-2xl font-bold">Super Admin Panel</h2>
-                  <span className="px-2 py-1 bg-red-800 rounded-full text-xs font-bold">ACCÈS TOTAL</span>
+                  <span className="px-2 py-1 bg-red-800 rounded-full text-xs font-bold">
+                    ACCÈS TOTAL
+                  </span>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
@@ -91,10 +122,10 @@ export const SuperAdminPanel: React.FC = () => {
             <div className="border-b border-gray-200">
               <nav className="flex">
                 {[
-                  { id: 'general', label: 'Général', icon: Settings },
-                  { id: 'content', label: 'Contenu', icon: Edit },
-                  { id: 'users', label: 'Utilisateurs', icon: Users },
-                  { id: 'data', label: 'Données', icon: Database },
+                  { id: "general", label: "Général", icon: Settings },
+                  { id: "content", label: "Contenu", icon: Edit },
+                  { id: "users", label: "Utilisateurs", icon: Users },
+                  { id: "data", label: "Données", icon: Database },
                 ].map((tab) => {
                   const Icon = tab.icon;
                   return (
@@ -103,8 +134,8 @@ export const SuperAdminPanel: React.FC = () => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`flex items-center space-x-2 px-6 py-4 font-medium border-b-2 transition-colors ${
                         activeTab === tab.id
-                          ? 'border-red-500 text-red-600'
-                          : 'border-transparent text-gray-600 hover:text-red-500'
+                          ? "border-red-500 text-red-600"
+                          : "border-transparent text-gray-600 hover:text-red-500"
                       }`}
                     >
                       <Icon size={16} />
@@ -118,20 +149,45 @@ export const SuperAdminPanel: React.FC = () => {
             {/* Content */}
             <div className="p-6 max-h-[60vh] overflow-y-auto">
               {/* General Tab */}
-              {activeTab === 'general' && (
+              {activeTab === "general" && (
                 <div className="space-y-6">
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-red-800 mb-2">Mode Super Admin Actif</h3>
-                    <p className="text-red-600 text-sm mb-4">Vous avez un accès complet à toutes les fonctionnalités.</p>
+                    <h3 className="text-lg font-semibold text-red-800 mb-2">
+                      Mode Super Admin Actif
+                    </h3>
+                    <p className="text-red-600 text-sm mb-4">
+                      Vous avez un accès complet à toutes les fonctionnalités.
+                    </p>
 
                     <div className="bg-white rounded-lg p-4 border border-red-300">
-                      <h4 className="font-semibold text-red-800 mb-3">🔐 Identifiants Super Admin</h4>
+                      <h4 className="font-semibold text-red-800 mb-3">
+                        🔐 Identifiants Super Admin
+                      </h4>
                       <div className="space-y-2 text-sm font-mono">
-                        <div><span className="text-gray-600">Email:</span> <span className="font-bold">philippefaizsanon@gmail.com</span></div>
-                        <div><span className="text-gray-600">Téléphone:</span> <span className="font-bold">+226 54191605</span></div>
-                        <div><span className="text-gray-600">Mot de passe:</span> <span className="font-bold">Philius24648</span></div>
-                        <div><span className="text-gray-600">Question:</span> <span className="font-bold">Qui est ton artiste préféré ?</span></div>
-                        <div><span className="text-gray-600">Réponse:</span> <span className="font-bold">Lil Nas X</span></div>
+                        <div>
+                          <span className="text-gray-600">Email:</span>{" "}
+                          <span className="font-bold">
+                            philippefaizsanon@gmail.com
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-gray-600">Téléphone:</span>{" "}
+                          <span className="font-bold">+226 54191605</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-600">Mot de passe:</span>{" "}
+                          <span className="font-bold">Philius24648</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-600">Question:</span>{" "}
+                          <span className="font-bold">
+                            Qui est ton artiste préféré ?
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-gray-600">Réponse:</span>{" "}
+                          <span className="font-bold">Lil Nas X</span>
+                        </div>
                       </div>
                       <div className="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800">
                         ⚠️ Gardez ces identifiants secrets et en sécurité !
@@ -148,15 +204,18 @@ export const SuperAdminPanel: React.FC = () => {
                       <Button
                         onClick={toggleEditMode}
                         className={`w-full ${
-                          isEditMode 
-                            ? 'bg-green-500 hover:bg-green-600' 
-                            : 'bg-blue-500 hover:bg-blue-600'
+                          isEditMode
+                            ? "bg-green-500 hover:bg-green-600"
+                            : "bg-blue-500 hover:bg-blue-600"
                         }`}
                       >
-                        {isEditMode ? 'Désactiver l\'édition' : 'Activer l\'édition'}
+                        {isEditMode
+                          ? "Désactiver l'édition"
+                          : "Activer l'édition"}
                       </Button>
                       <p className="text-sm text-gray-600 mt-2">
-                        En tant que Super Admin, vous pouvez éditer même sans ce mode.
+                        En tant que Super Admin, vous pouvez éditer même sans ce
+                        mode.
                       </p>
                     </div>
 
@@ -174,7 +233,7 @@ export const SuperAdminPanel: React.FC = () => {
                           Recharger la page
                         </Button>
                         <Button
-                          onClick={() => window.open('/admin', '_blank')}
+                          onClick={() => window.open("/admin", "_blank")}
                           variant="outline"
                           className="w-full"
                         >
@@ -187,12 +246,15 @@ export const SuperAdminPanel: React.FC = () => {
               )}
 
               {/* Content Tab */}
-              {activeTab === 'content' && (
+              {activeTab === "content" && (
                 <div className="space-y-6">
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-blue-800 mb-2">Édition de Contenu</h3>
+                    <h3 className="text-lg font-semibold text-blue-800 mb-2">
+                      Édition de Contenu
+                    </h3>
                     <p className="text-blue-600 text-sm">
-                      Cliquez sur n'importe quel texte de la page pour l'éditer directement.
+                      Cliquez sur n'importe quel texte de la page pour l'éditer
+                      directement.
                     </p>
                   </div>
 
@@ -202,10 +264,15 @@ export const SuperAdminPanel: React.FC = () => {
                       <div className="grid md:grid-cols-2 gap-2">
                         <Button
                           onClick={() => {
-                            const elements = document.querySelectorAll('[data-editable]');
-                            elements.forEach(el => el.classList.add('animate-bounce'));
+                            const elements =
+                              document.querySelectorAll("[data-editable]");
+                            elements.forEach((el) =>
+                              el.classList.add("animate-bounce"),
+                            );
                             setTimeout(() => {
-                              elements.forEach(el => el.classList.remove('animate-bounce'));
+                              elements.forEach((el) =>
+                                el.classList.remove("animate-bounce"),
+                              );
                             }, 2000);
                           }}
                           variant="outline"
@@ -215,8 +282,12 @@ export const SuperAdminPanel: React.FC = () => {
                         </Button>
                         <Button
                           onClick={() => {
-                            if (confirm('Réinitialiser tout le contenu personnalisé ?')) {
-                              localStorage.removeItem('siteContent');
+                            if (
+                              confirm(
+                                "Réinitialiser tout le contenu personnalisé ?",
+                              )
+                            ) {
+                              localStorage.removeItem("siteContent");
                               window.location.reload();
                             }
                           }}
@@ -232,10 +303,12 @@ export const SuperAdminPanel: React.FC = () => {
               )}
 
               {/* Users Tab */}
-              {activeTab === 'users' && (
+              {activeTab === "users" && (
                 <div className="space-y-6">
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-yellow-800 mb-2">Gestion des Utilisateurs</h3>
+                    <h3 className="text-lg font-semibold text-yellow-800 mb-2">
+                      Gestion des Utilisateurs
+                    </h3>
                     <p className="text-yellow-700 text-sm">
                       Contrôle total sur tous les comptes utilisateurs.
                     </p>
@@ -249,8 +322,8 @@ export const SuperAdminPanel: React.FC = () => {
                           <span>Admin Standard</span>
                           <Button
                             onClick={() => {
-                              localStorage.removeItem('adminAuth');
-                              alert('Session admin standard supprimée');
+                              localStorage.removeItem("adminAuth");
+                              alert("Session admin standard supprimée");
                             }}
                             size="sm"
                             variant="outline"
@@ -260,7 +333,9 @@ export const SuperAdminPanel: React.FC = () => {
                           </Button>
                         </div>
                         <div className="flex justify-between items-center p-2 bg-red-50 rounded border border-red-200">
-                          <span className="font-semibold">Super Admin (Vous)</span>
+                          <span className="font-semibold">
+                            Super Admin (Vous)
+                          </span>
                           <span className="text-red-600 text-xs">ACTIF</span>
                         </div>
                       </div>
@@ -270,10 +345,12 @@ export const SuperAdminPanel: React.FC = () => {
               )}
 
               {/* Data Tab */}
-              {activeTab === 'data' && (
+              {activeTab === "data" && (
                 <div className="space-y-6">
                   <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-purple-800 mb-2">Gestion des Données</h3>
+                    <h3 className="text-lg font-semibold text-purple-800 mb-2">
+                      Gestion des Données
+                    </h3>
                     <p className="text-purple-700 text-sm">
                       Import/Export et gestion complète des données système.
                     </p>

@@ -1,8 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Users, UserPlus, Shield, Trash2, Edit, Save, X, Key, Mail } from 'lucide-react';
-import { Button } from './ui/button';
-import { useAuth } from '../contexts/AuthContext';
-import { PhoneInput } from './PhoneInput';
+import React, { useState, useEffect } from "react";
+import {
+  Users,
+  UserPlus,
+  Shield,
+  Trash2,
+  Edit,
+  Save,
+  X,
+  Key,
+  Mail,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { useAuth } from "../contexts/AuthContext";
+import { PhoneInput } from "./PhoneInput";
 
 interface AdminUser {
   id: string;
@@ -12,7 +22,7 @@ interface AdminUser {
   password: string;
   securityQuestion: string;
   securityAnswer: string;
-  role: 'admin' | 'super_admin';
+  role: "admin" | "super_admin";
   createdAt: string;
   createdBy: string;
   isActive: boolean;
@@ -20,31 +30,31 @@ interface AdminUser {
 
 const defaultAdmins: AdminUser[] = [
   {
-    id: 'default-admin',
-    name: 'Administrateur Principal',
-    email: 'mindgraphixsolution@gmail.com',
-    phone: '+226 01 51 11 46',
-    password: 'MINDSETGrapix2025',
-    securityQuestion: 'Qui est le plus bête dans l\'équipe ?',
-    securityAnswer: 'Badiori',
-    role: 'admin',
-    createdAt: '2024-01-01',
-    createdBy: 'system',
-    isActive: true
+    id: "default-admin",
+    name: "Administrateur Principal",
+    email: "mindgraphixsolution@gmail.com",
+    phone: "+226 01 51 11 46",
+    password: "MINDSETGrapix2025",
+    securityQuestion: "Qui est le plus bête dans l'équipe ?",
+    securityAnswer: "Badiori",
+    role: "admin",
+    createdAt: "2024-01-01",
+    createdBy: "system",
+    isActive: true,
   },
   {
-    id: 'super-admin',
-    name: 'Super Administrateur',
-    email: 'philippefaizsanon@gmail.com',
-    phone: '+226 54191605',
-    password: 'Philius24648',
-    securityQuestion: 'Qui est ton artiste préféré ?',
-    securityAnswer: 'Lil Nas X',
-    role: 'super_admin',
-    createdAt: '2024-01-01',
-    createdBy: 'system',
-    isActive: true
-  }
+    id: "super-admin",
+    name: "Super Administrateur",
+    email: "philippefaizsanon@gmail.com",
+    phone: "+226 54191605",
+    password: "Philius24648",
+    securityQuestion: "Qui est ton artiste préféré ?",
+    securityAnswer: "Lil Nas X",
+    role: "super_admin",
+    createdAt: "2024-01-01",
+    createdBy: "system",
+    isActive: true,
+  },
 ];
 
 export const AdminManager: React.FC = () => {
@@ -56,12 +66,14 @@ export const AdminManager: React.FC = () => {
   const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
-    const savedAdmins = getContent('system.admins', null);
+    const savedAdmins = getContent("system.admins", null);
     if (savedAdmins) {
       // Fusionner avec les admins par défaut pour s'assurer qu'ils sont toujours présents
       const mergedAdmins = [...defaultAdmins];
       savedAdmins.forEach((savedAdmin: AdminUser) => {
-        const existingIndex = mergedAdmins.findIndex(admin => admin.id === savedAdmin.id);
+        const existingIndex = mergedAdmins.findIndex(
+          (admin) => admin.id === savedAdmin.id,
+        );
         if (existingIndex >= 0) {
           mergedAdmins[existingIndex] = savedAdmin;
         } else {
@@ -82,13 +94,13 @@ export const AdminManager: React.FC = () => {
       updatedAdmins = [...admins, { ...editForm, id: `admin-${Date.now()}` }];
       setIsCreating(false);
     } else {
-      updatedAdmins = admins.map(admin => 
-        admin.id === editForm.id ? editForm : admin
+      updatedAdmins = admins.map((admin) =>
+        admin.id === editForm.id ? editForm : admin,
       );
     }
-    
+
     setAdmins(updatedAdmins);
-    updateContent('system.admins', updatedAdmins);
+    updateContent("system.admins", updatedAdmins);
     setEditingId(null);
     setEditForm(null);
   };
@@ -101,21 +113,21 @@ export const AdminManager: React.FC = () => {
 
   const startCreating = () => {
     const newAdmin: AdminUser = {
-      id: '',
-      name: '',
-      email: '',
-      phone: '',
-      password: '',
-      securityQuestion: '',
-      securityAnswer: '',
-      role: 'admin',
-      createdAt: new Date().toISOString().split('T')[0],
-      createdBy: currentUser?.email || 'super_admin',
-      isActive: true
+      id: "",
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      securityQuestion: "",
+      securityAnswer: "",
+      role: "admin",
+      createdAt: new Date().toISOString().split("T")[0],
+      createdBy: currentUser?.email || "super_admin",
+      isActive: true,
     };
-    
+
     setEditForm(newAdmin);
-    setEditingId('new');
+    setEditingId("new");
     setIsCreating(true);
   };
 
@@ -126,34 +138,38 @@ export const AdminManager: React.FC = () => {
   };
 
   const toggleAdminStatus = (id: string) => {
-    if (['default-admin', 'super-admin'].includes(id)) {
-      alert('Impossible de désactiver les administrateurs système.');
+    if (["default-admin", "super-admin"].includes(id)) {
+      alert("Impossible de désactiver les administrateurs système.");
       return;
     }
 
-    const updatedAdmins = admins.map(admin => 
-      admin.id === id ? { ...admin, isActive: !admin.isActive } : admin
+    const updatedAdmins = admins.map((admin) =>
+      admin.id === id ? { ...admin, isActive: !admin.isActive } : admin,
     );
     setAdmins(updatedAdmins);
-    updateContent('system.admins', updatedAdmins);
+    updateContent("system.admins", updatedAdmins);
   };
 
   const deleteAdmin = (id: string) => {
-    if (['default-admin', 'super-admin'].includes(id)) {
-      alert('Impossible de supprimer les administrateurs système.');
+    if (["default-admin", "super-admin"].includes(id)) {
+      alert("Impossible de supprimer les administrateurs système.");
       return;
     }
 
-    if (confirm('Supprimer définitivement cet administrateur ?')) {
-      const updatedAdmins = admins.filter(admin => admin.id !== id);
+    if (confirm("Supprimer définitivement cet administrateur ?")) {
+      const updatedAdmins = admins.filter((admin) => admin.id !== id);
       setAdmins(updatedAdmins);
-      updateContent('system.admins', updatedAdmins);
+      updateContent("system.admins", updatedAdmins);
     }
   };
 
   const generatePassword = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
-    const password = Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+    const password = Array.from(
+      { length: 12 },
+      () => chars[Math.floor(Math.random() * chars.length)],
+    ).join("");
     if (editForm) {
       setEditForm({ ...editForm, password });
     }
@@ -173,15 +189,20 @@ export const AdminManager: React.FC = () => {
       {/* Admin Manager Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-          
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+
           <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-5xl mx-4 max-h-[95vh] overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-purple-600 to-purple-700 p-6 text-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <Users size={24} />
-                  <h2 className="text-2xl font-bold">Gestionnaire d'Administrateurs</h2>
+                  <h2 className="text-2xl font-bold">
+                    Gestionnaire d'Administrateurs
+                  </h2>
                   <span className="px-2 py-1 bg-purple-800 rounded-full text-xs font-bold">
                     ACCÈS SUPER ADMIN UNIQUEMENT
                   </span>
@@ -218,21 +239,24 @@ export const AdminManager: React.FC = () => {
                 <div className="bg-gray-50 rounded-lg p-6 mb-6">
                   <div className="flex items-center justify-between mb-6">
                     <h4 className="text-xl font-semibold text-gray-900">
-                      {isCreating ? 'Créer un Nouvel Administrateur' : `Modifier : ${editForm.name}`}
+                      {isCreating
+                        ? "Créer un Nouvel Administrateur"
+                        : `Modifier : ${editForm.name}`}
                     </h4>
                     <div className="flex space-x-2">
                       <Button
                         onClick={saveAdmin}
                         className="bg-green-500 hover:bg-green-600"
-                        disabled={!editForm.name || !editForm.email || !editForm.password}
+                        disabled={
+                          !editForm.name ||
+                          !editForm.email ||
+                          !editForm.password
+                        }
                       >
                         <Save size={16} className="mr-1" />
-                        {isCreating ? 'Créer' : 'Sauvegarder'}
+                        {isCreating ? "Créer" : "Sauvegarder"}
                       </Button>
-                      <Button
-                        onClick={cancelEditing}
-                        variant="outline"
-                      >
+                      <Button onClick={cancelEditing} variant="outline">
                         <X size={16} className="mr-1" />
                         Annuler
                       </Button>
@@ -248,7 +272,9 @@ export const AdminManager: React.FC = () => {
                         <input
                           type="text"
                           value={editForm.name}
-                          onChange={(e) => setEditForm({...editForm, name: e.target.value})}
+                          onChange={(e) =>
+                            setEditForm({ ...editForm, name: e.target.value })
+                          }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                           placeholder="Nom de l'administrateur"
                         />
@@ -261,7 +287,9 @@ export const AdminManager: React.FC = () => {
                         <input
                           type="email"
                           value={editForm.email}
-                          onChange={(e) => setEditForm({...editForm, email: e.target.value})}
+                          onChange={(e) =>
+                            setEditForm({ ...editForm, email: e.target.value })
+                          }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                           placeholder="email@example.com"
                         />
@@ -273,7 +301,9 @@ export const AdminManager: React.FC = () => {
                         </label>
                         <PhoneInput
                           value={editForm.phone}
-                          onChange={(value) => setEditForm({...editForm, phone: value})}
+                          onChange={(value) =>
+                            setEditForm({ ...editForm, phone: value })
+                          }
                           placeholder="XX XX XX XX"
                         />
                       </div>
@@ -284,12 +314,19 @@ export const AdminManager: React.FC = () => {
                         </label>
                         <select
                           value={editForm.role}
-                          onChange={(e) => setEditForm({...editForm, role: e.target.value as 'admin' | 'super_admin'})}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              role: e.target.value as "admin" | "super_admin",
+                            })
+                          }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                          disabled={editForm.id === 'super-admin'}
+                          disabled={editForm.id === "super-admin"}
                         >
                           <option value="admin">Administrateur</option>
-                          <option value="super_admin">Super Administrateur</option>
+                          <option value="super_admin">
+                            Super Administrateur
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -303,7 +340,12 @@ export const AdminManager: React.FC = () => {
                           <input
                             type="text"
                             value={editForm.password}
-                            onChange={(e) => setEditForm({...editForm, password: e.target.value})}
+                            onChange={(e) =>
+                              setEditForm({
+                                ...editForm,
+                                password: e.target.value,
+                              })
+                            }
                             className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                             placeholder="Mot de passe sécurisé"
                           />
@@ -325,7 +367,12 @@ export const AdminManager: React.FC = () => {
                         <input
                           type="text"
                           value={editForm.securityQuestion}
-                          onChange={(e) => setEditForm({...editForm, securityQuestion: e.target.value})}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              securityQuestion: e.target.value,
+                            })
+                          }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                           placeholder="ex: Quel est le nom de votre animal de compagnie ?"
                         />
@@ -338,7 +385,12 @@ export const AdminManager: React.FC = () => {
                         <input
                           type="text"
                           value={editForm.securityAnswer}
-                          onChange={(e) => setEditForm({...editForm, securityAnswer: e.target.value})}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              securityAnswer: e.target.value,
+                            })
+                          }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                           placeholder="Réponse à la question de sécurité"
                         />
@@ -349,10 +401,18 @@ export const AdminManager: React.FC = () => {
                           type="checkbox"
                           id="isActive"
                           checked={editForm.isActive}
-                          onChange={(e) => setEditForm({...editForm, isActive: e.target.checked})}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              isActive: e.target.checked,
+                            })
+                          }
                           className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
                         />
-                        <label htmlFor="isActive" className="text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="isActive"
+                          className="text-sm font-medium text-gray-700"
+                        >
                           Compte actif
                         </label>
                       </div>
@@ -363,13 +423,17 @@ export const AdminManager: React.FC = () => {
 
               {/* Liste des administrateurs */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-gray-900">Administrateurs Existants</h4>
-                
+                <h4 className="text-lg font-semibold text-gray-900">
+                  Administrateurs Existants
+                </h4>
+
                 {admins.map((admin) => (
                   <div
                     key={admin.id}
                     className={`border rounded-lg p-4 ${
-                      admin.isActive ? 'border-gray-200 bg-white' : 'border-red-200 bg-red-50'
+                      admin.isActive
+                        ? "border-gray-200 bg-white"
+                        : "border-red-200 bg-red-50"
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -378,12 +442,16 @@ export const AdminManager: React.FC = () => {
                           <h5 className="text-lg font-semibold text-gray-900">
                             {admin.name}
                           </h5>
-                          <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                            admin.role === 'super_admin' 
-                              ? 'bg-red-100 text-red-800' 
-                              : 'bg-blue-100 text-blue-800'
-                          }`}>
-                            {admin.role === 'super_admin' ? 'SUPER ADMIN' : 'ADMIN'}
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-bold ${
+                              admin.role === "super_admin"
+                                ? "bg-red-100 text-red-800"
+                                : "bg-blue-100 text-blue-800"
+                            }`}
+                          >
+                            {admin.role === "super_admin"
+                              ? "SUPER ADMIN"
+                              : "ADMIN"}
                           </span>
                           {!admin.isActive && (
                             <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">
@@ -396,16 +464,19 @@ export const AdminManager: React.FC = () => {
                             </span>
                           )}
                         </div>
-                        
+
                         <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
                           <div>
-                            <span className="font-medium">Email:</span> {admin.email}
+                            <span className="font-medium">Email:</span>{" "}
+                            {admin.email}
                           </div>
                           <div>
-                            <span className="font-medium">Téléphone:</span> {admin.phone || 'Non renseigné'}
+                            <span className="font-medium">Téléphone:</span>{" "}
+                            {admin.phone || "Non renseigné"}
                           </div>
                           <div>
-                            <span className="font-medium">Créé le:</span> {admin.createdAt}
+                            <span className="font-medium">Créé le:</span>{" "}
+                            {admin.createdAt}
                           </div>
                         </div>
                       </div>
@@ -416,23 +487,32 @@ export const AdminManager: React.FC = () => {
                           size="sm"
                           variant="outline"
                           title="Modifier"
-                          disabled={admin.id === 'super-admin' && admin.email !== currentUser?.email}
+                          disabled={
+                            admin.id === "super-admin" &&
+                            admin.email !== currentUser?.email
+                          }
                         >
                           <Edit size={16} />
                         </Button>
-                        
-                        {!['default-admin', 'super-admin'].includes(admin.id) && (
+
+                        {!["default-admin", "super-admin"].includes(
+                          admin.id,
+                        ) && (
                           <>
                             <Button
                               onClick={() => toggleAdminStatus(admin.id)}
                               size="sm"
                               variant="outline"
-                              className={admin.isActive ? 'text-red-600' : 'text-green-600'}
-                              title={admin.isActive ? 'Désactiver' : 'Activer'}
+                              className={
+                                admin.isActive
+                                  ? "text-red-600"
+                                  : "text-green-600"
+                              }
+                              title={admin.isActive ? "Désactiver" : "Activer"}
                             >
                               <Shield size={16} />
                             </Button>
-                            
+
                             <Button
                               onClick={() => deleteAdmin(admin.id)}
                               size="sm"
@@ -452,13 +532,28 @@ export const AdminManager: React.FC = () => {
 
               {/* Informations importantes */}
               <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <h4 className="font-semibold text-yellow-800 mb-2">⚠️ Informations Importantes</h4>
+                <h4 className="font-semibold text-yellow-800 mb-2">
+                  ⚠️ Informations Importantes
+                </h4>
                 <ul className="text-yellow-700 text-sm space-y-1">
-                  <li>• Seuls les Super Administrateurs peuvent gérer les comptes administrateurs</li>
-                  <li>• Les administrateurs système (par défaut) ne peuvent pas être supprimés</li>
-                  <li>• Un administrateur désactivé ne peut plus se connecter</li>
-                  <li>• Gardez toujours au moins un Super Administrateur actif</li>
-                  <li>• Les mots de passe sont stockés en texte clair (pour demo uniquement)</li>
+                  <li>
+                    • Seuls les Super Administrateurs peuvent gérer les comptes
+                    administrateurs
+                  </li>
+                  <li>
+                    • Les administrateurs système (par défaut) ne peuvent pas
+                    être supprimés
+                  </li>
+                  <li>
+                    • Un administrateur désactivé ne peut plus se connecter
+                  </li>
+                  <li>
+                    • Gardez toujours au moins un Super Administrateur actif
+                  </li>
+                  <li>
+                    • Les mots de passe sont stockés en texte clair (pour demo
+                    uniquement)
+                  </li>
                 </ul>
               </div>
             </div>

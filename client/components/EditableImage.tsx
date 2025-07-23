@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Image, Upload, Save, X } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import { Button } from './ui/button';
+import React, { useState } from "react";
+import { Image, Upload, Save, X } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import { Button } from "./ui/button";
 
 interface EditableImageProps {
   contentKey: string;
@@ -16,13 +16,13 @@ export const EditableImage: React.FC<EditableImageProps> = ({
   contentKey,
   defaultSrc,
   alt,
-  className = '',
+  className = "",
   width,
   height,
 }) => {
   const { isSuperAdmin, getContent, updateContent } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  const [newUrl, setNewUrl] = useState('');
+  const [newUrl, setNewUrl] = useState("");
 
   const currentSrc = getContent(contentKey, defaultSrc);
 
@@ -52,7 +52,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
             <Image size={16} className="mr-2" />
             Modifier l'image
           </h4>
-          
+
           <div className="space-y-3">
             <input
               type="url"
@@ -61,7 +61,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
               placeholder="URL de la nouvelle image"
               className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent"
             />
-            
+
             {newUrl && (
               <div className="relative">
                 <img
@@ -69,7 +69,8 @@ export const EditableImage: React.FC<EditableImageProps> = ({
                   alt="Aperçu"
                   className="max-w-full h-32 object-cover rounded border"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x200?text=Erreur+URL';
+                    (e.target as HTMLImageElement).src =
+                      "https://via.placeholder.com/300x200?text=Erreur+URL";
                   }}
                 />
                 <div className="absolute inset-0 bg-black/20 flex items-center justify-center text-white text-sm font-medium">
@@ -77,7 +78,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
                 </div>
               </div>
             )}
-            
+
             <div className="flex space-x-2">
               <Button
                 onClick={saveImage}
@@ -105,7 +106,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
 
   return (
     <div
-      className={`relative group ${isSuperAdmin ? 'cursor-pointer' : ''}`}
+      className={`relative group ${isSuperAdmin ? "cursor-pointer" : ""}`}
       onClick={startEditing}
     >
       <img
@@ -113,8 +114,8 @@ export const EditableImage: React.FC<EditableImageProps> = ({
         alt={alt}
         className={`${className} ${
           isSuperAdmin
-            ? 'hover:opacity-80 transition-opacity border-2 border-transparent hover:border-red-300'
-            : ''
+            ? "hover:opacity-80 transition-opacity border-2 border-transparent hover:border-red-300"
+            : ""
         }`}
         width={width}
         height={height}
@@ -122,7 +123,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
           (e.target as HTMLImageElement).src = defaultSrc;
         }}
       />
-      
+
       {isSuperAdmin && (
         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <div className="bg-red-500 text-white p-2 rounded-full">

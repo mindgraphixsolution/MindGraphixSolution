@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { DollarSign, Edit, Save, X, Plus, Trash2 } from 'lucide-react';
-import { Button } from './ui/button';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useState, useEffect } from "react";
+import { DollarSign, Edit, Save, X, Plus, Trash2 } from "lucide-react";
+import { Button } from "./ui/button";
+import { useAuth } from "../contexts/AuthContext";
 
 interface ServicePrice {
   id: string;
@@ -13,47 +13,47 @@ interface ServicePrice {
 
 const defaultPrices: ServicePrice[] = [
   {
-    id: 'design',
-    title: 'Design Graphique',
-    price: 'À partir de 800€',
-    timeline: '2-4 semaines',
-    description: 'Création d\'identités visuelles percutantes'
+    id: "design",
+    title: "Design Graphique",
+    price: "À partir de 800€",
+    timeline: "2-4 semaines",
+    description: "Création d'identités visuelles percutantes",
   },
   {
-    id: 'web-dev',
-    title: 'Développement Web',
-    price: 'À partir de 2000€',
-    timeline: '4-8 semaines',
-    description: 'Sites web et applications sur mesure'
+    id: "web-dev",
+    title: "Développement Web",
+    price: "À partir de 2000€",
+    timeline: "4-8 semaines",
+    description: "Sites web et applications sur mesure",
   },
   {
-    id: 'ui-ux',
-    title: 'UI/UX Design',
-    price: 'À partir de 1500€',
-    timeline: '3-6 semaines',
-    description: 'Interfaces intuitives et expériences optimisées'
+    id: "ui-ux",
+    title: "UI/UX Design",
+    price: "À partir de 1500€",
+    timeline: "3-6 semaines",
+    description: "Interfaces intuitives et expériences optimisées",
   },
   {
-    id: 'motion',
-    title: 'Motion Design',
-    price: 'À partir de 1200€',
-    timeline: '3-5 semaines',
-    description: 'Animations et vidéos captivantes'
+    id: "motion",
+    title: "Motion Design",
+    price: "À partir de 1200€",
+    timeline: "3-5 semaines",
+    description: "Animations et vidéos captivantes",
   },
   {
-    id: 'ecommerce',
-    title: 'E-commerce',
-    price: 'À partir de 3500€',
-    timeline: '6-10 semaines',
-    description: 'Solutions e-commerce complètes'
+    id: "ecommerce",
+    title: "E-commerce",
+    price: "À partir de 3500€",
+    timeline: "6-10 semaines",
+    description: "Solutions e-commerce complètes",
   },
   {
-    id: 'marketing',
-    title: 'SEO & Marketing',
-    price: 'À partir de 600€/mois',
-    timeline: 'En continu',
-    description: 'Stratégies digitales pour améliorer la visibilité'
-  }
+    id: "marketing",
+    title: "SEO & Marketing",
+    price: "À partir de 600€/mois",
+    timeline: "En continu",
+    description: "Stratégies digitales pour améliorer la visibilité",
+  },
 ];
 
 export const PriceManager: React.FC = () => {
@@ -64,7 +64,7 @@ export const PriceManager: React.FC = () => {
   const [editForm, setEditForm] = useState<ServicePrice | null>(null);
 
   useEffect(() => {
-    const savedPrices = getContent('services.prices', null);
+    const savedPrices = getContent("services.prices", null);
     if (savedPrices) {
       setPrices(savedPrices);
     }
@@ -75,12 +75,12 @@ export const PriceManager: React.FC = () => {
   const savePrice = () => {
     if (!editForm) return;
 
-    const updatedPrices = prices.map(price => 
-      price.id === editForm.id ? editForm : price
+    const updatedPrices = prices.map((price) =>
+      price.id === editForm.id ? editForm : price,
     );
-    
+
     setPrices(updatedPrices);
-    updateContent('services.prices', updatedPrices);
+    updateContent("services.prices", updatedPrices);
     setEditingId(null);
     setEditForm(null);
   };
@@ -99,30 +99,30 @@ export const PriceManager: React.FC = () => {
     const newId = `service-${Date.now()}`;
     const newService: ServicePrice = {
       id: newId,
-      title: 'Nouveau Service',
-      price: 'À définir',
-      timeline: 'À définir',
-      description: 'Description du nouveau service'
+      title: "Nouveau Service",
+      price: "À définir",
+      timeline: "À définir",
+      description: "Description du nouveau service",
     };
-    
+
     const updatedPrices = [...prices, newService];
     setPrices(updatedPrices);
-    updateContent('services.prices', updatedPrices);
+    updateContent("services.prices", updatedPrices);
     startEditing(newService);
   };
 
   const deleteService = (id: string) => {
-    if (confirm('Supprimer définitivement ce service ?')) {
-      const updatedPrices = prices.filter(price => price.id !== id);
+    if (confirm("Supprimer définitivement ce service ?")) {
+      const updatedPrices = prices.filter((price) => price.id !== id);
       setPrices(updatedPrices);
-      updateContent('services.prices', updatedPrices);
+      updateContent("services.prices", updatedPrices);
     }
   };
 
   const resetPrices = () => {
-    if (confirm('Réinitialiser tous les prix aux valeurs par défaut ?')) {
+    if (confirm("Réinitialiser tous les prix aux valeurs par défaut ?")) {
       setPrices(defaultPrices);
-      updateContent('services.prices', defaultPrices);
+      updateContent("services.prices", defaultPrices);
     }
   };
 
@@ -140,8 +140,11 @@ export const PriceManager: React.FC = () => {
       {/* Price Manager Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-          
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+
           <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-4 max-h-[95vh] overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-green-600 to-green-700 p-6 text-white">
@@ -150,7 +153,7 @@ export const PriceManager: React.FC = () => {
                   <DollarSign size={24} />
                   <h2 className="text-2xl font-bold">Gestionnaire de Prix</h2>
                   <span className="px-2 py-1 bg-green-800 rounded-full text-xs font-bold">
-                    {isSuperAdmin ? 'SUPER ADMIN' : 'ADMIN'}
+                    {isSuperAdmin ? "SUPER ADMIN" : "ADMIN"}
                   </span>
                 </div>
                 <button
@@ -232,7 +235,12 @@ export const PriceManager: React.FC = () => {
                             <input
                               type="text"
                               value={editForm.title}
-                              onChange={(e) => setEditForm({...editForm, title: e.target.value})}
+                              onChange={(e) =>
+                                setEditForm({
+                                  ...editForm,
+                                  title: e.target.value,
+                                })
+                              }
                               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                             />
                           </div>
@@ -244,7 +252,12 @@ export const PriceManager: React.FC = () => {
                             <input
                               type="text"
                               value={editForm.price}
-                              onChange={(e) => setEditForm({...editForm, price: e.target.value})}
+                              onChange={(e) =>
+                                setEditForm({
+                                  ...editForm,
+                                  price: e.target.value,
+                                })
+                              }
                               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                               placeholder="ex: À partir de 1500€"
                             />
@@ -257,7 +270,12 @@ export const PriceManager: React.FC = () => {
                             <input
                               type="text"
                               value={editForm.timeline}
-                              onChange={(e) => setEditForm({...editForm, timeline: e.target.value})}
+                              onChange={(e) =>
+                                setEditForm({
+                                  ...editForm,
+                                  timeline: e.target.value,
+                                })
+                              }
                               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                               placeholder="ex: 2-4 semaines"
                             />
@@ -270,7 +288,12 @@ export const PriceManager: React.FC = () => {
                             <input
                               type="text"
                               value={editForm.description}
-                              onChange={(e) => setEditForm({...editForm, description: e.target.value})}
+                              onChange={(e) =>
+                                setEditForm({
+                                  ...editForm,
+                                  description: e.target.value,
+                                })
+                              }
                               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                               placeholder="Description du service"
                             />
@@ -306,8 +329,15 @@ export const PriceManager: React.FC = () => {
                           >
                             <Edit size={16} />
                           </Button>
-                          
-                          {!['design', 'web-dev', 'ui-ux', 'motion', 'ecommerce', 'marketing'].includes(price.id) && (
+
+                          {![
+                            "design",
+                            "web-dev",
+                            "ui-ux",
+                            "motion",
+                            "ecommerce",
+                            "marketing",
+                          ].includes(price.id) && (
                             <Button
                               onClick={() => deleteService(price.id)}
                               size="sm"
@@ -327,12 +357,22 @@ export const PriceManager: React.FC = () => {
 
               {/* Information */}
               <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <h4 className="font-semibold text-green-800 mb-2">Information</h4>
+                <h4 className="font-semibold text-green-800 mb-2">
+                  Information
+                </h4>
                 <ul className="text-green-700 text-sm space-y-1">
-                  <li>• Les modifications sont appliquées immédiatement sur le site</li>
+                  <li>
+                    • Les modifications sont appliquées immédiatement sur le
+                    site
+                  </li>
                   <li>• Les prix sont affichés sur la page des services</li>
-                  <li>• Utilisez des formats comme "À partir de 1500€" ou "500€/mois"</li>
-                  <li>• Les services par défaut ne peuvent pas être supprimés</li>
+                  <li>
+                    • Utilisez des formats comme "À partir de 1500€" ou
+                    "500€/mois"
+                  </li>
+                  <li>
+                    • Les services par défaut ne peuvent pas être supprimés
+                  </li>
                 </ul>
               </div>
             </div>

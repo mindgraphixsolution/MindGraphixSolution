@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Edit, Check, X } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useState, useRef, useEffect } from "react";
+import { Edit, Check, X } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
 interface EditableTextProps {
   contentKey: string;
   defaultValue: string;
   className?: string;
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
   placeholder?: string;
   multiline?: boolean;
 }
@@ -14,14 +14,15 @@ interface EditableTextProps {
 export const EditableText: React.FC<EditableTextProps> = ({
   contentKey,
   defaultValue,
-  className = '',
-  as: Component = 'div',
+  className = "",
+  as: Component = "div",
   placeholder,
   multiline = false,
 }) => {
-  const { isAdmin, isSuperAdmin, isEditMode, getContent, updateContent } = useAuth();
+  const { isAdmin, isSuperAdmin, isEditMode, getContent, updateContent } =
+    useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState('');
+  const [editValue, setEditValue] = useState("");
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   const currentValue = getContent(contentKey, defaultValue);
@@ -50,12 +51,12 @@ export const EditableText: React.FC<EditableTextProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !multiline) {
+    if (e.key === "Enter" && !multiline) {
       e.preventDefault();
       saveEdit();
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       cancelEdit();
-    } else if (e.key === 'Enter' && e.ctrlKey && multiline) {
+    } else if (e.key === "Enter" && e.ctrlKey && multiline) {
       saveEdit();
     }
   };
@@ -107,8 +108,8 @@ export const EditableText: React.FC<EditableTextProps> = ({
     <Component
       className={`${className} ${
         isAdmin && (isEditMode || isSuperAdmin)
-          ? 'relative group cursor-pointer hover:bg-blue-50 hover:outline hover:outline-2 hover:outline-blue-300 rounded-sm transition-all'
-          : ''
+          ? "relative group cursor-pointer hover:bg-blue-50 hover:outline hover:outline-2 hover:outline-blue-300 rounded-sm transition-all"
+          : ""
       }`}
       onClick={startEditing}
     >
@@ -116,7 +117,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
       {isAdmin && (isEditMode || isSuperAdmin) && (
         <Edit
           size={16}
-          className={`absolute -top-2 -right-2 ${isSuperAdmin ? 'bg-red-500' : 'bg-blue-500'} text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity`}
+          className={`absolute -top-2 -right-2 ${isSuperAdmin ? "bg-red-500" : "bg-blue-500"} text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity`}
         />
       )}
     </Component>

@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Palette, Save, RefreshCw, Eye, Download, Upload, Wand2 } from 'lucide-react';
-import { Button } from './ui/button';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useState, useEffect } from "react";
+import {
+  Palette,
+  Save,
+  RefreshCw,
+  Eye,
+  Download,
+  Upload,
+  Wand2,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { useAuth } from "../contexts/AuthContext";
 
 interface ThemeColors {
   primary: string;
@@ -15,75 +23,77 @@ interface ThemeColors {
 
 const presetThemes = {
   default: {
-    name: 'Défaut',
+    name: "Défaut",
     colors: {
-      primary: 'hsl(256, 77%, 48%)',
-      secondary: 'hsl(237, 57%, 42%)',
-      accent: 'hsl(45, 100%, 55%)',
-      background: 'hsl(0, 0%, 100%)',
-      foreground: 'hsl(222.2, 84%, 4.9%)',
-      muted: 'hsl(210, 40%, 96.1%)',
-      destructive: 'hsl(0, 84.2%, 60.2%)'
-    }
+      primary: "hsl(256, 77%, 48%)",
+      secondary: "hsl(237, 57%, 42%)",
+      accent: "hsl(45, 100%, 55%)",
+      background: "hsl(0, 0%, 100%)",
+      foreground: "hsl(222.2, 84%, 4.9%)",
+      muted: "hsl(210, 40%, 96.1%)",
+      destructive: "hsl(0, 84.2%, 60.2%)",
+    },
   },
   dark: {
-    name: 'Sombre',
+    name: "Sombre",
     colors: {
-      primary: 'hsl(256, 77%, 58%)',
-      secondary: 'hsl(237, 57%, 52%)',
-      accent: 'hsl(45, 100%, 65%)',
-      background: 'hsl(222.2, 84%, 4.9%)',
-      foreground: 'hsl(210, 40%, 98%)',
-      muted: 'hsl(217.2, 32.6%, 17.5%)',
-      destructive: 'hsl(0, 62.8%, 30.6%)'
-    }
+      primary: "hsl(256, 77%, 58%)",
+      secondary: "hsl(237, 57%, 52%)",
+      accent: "hsl(45, 100%, 65%)",
+      background: "hsl(222.2, 84%, 4.9%)",
+      foreground: "hsl(210, 40%, 98%)",
+      muted: "hsl(217.2, 32.6%, 17.5%)",
+      destructive: "hsl(0, 62.8%, 30.6%)",
+    },
   },
   ocean: {
-    name: 'Océan',
+    name: "Océan",
     colors: {
-      primary: 'hsl(200, 80%, 45%)',
-      secondary: 'hsl(190, 70%, 55%)',
-      accent: 'hsl(35, 90%, 60%)',
-      background: 'hsl(0, 0%, 100%)',
-      foreground: 'hsl(210, 40%, 15%)',
-      muted: 'hsl(200, 30%, 95%)',
-      destructive: 'hsl(0, 84.2%, 60.2%)'
-    }
+      primary: "hsl(200, 80%, 45%)",
+      secondary: "hsl(190, 70%, 55%)",
+      accent: "hsl(35, 90%, 60%)",
+      background: "hsl(0, 0%, 100%)",
+      foreground: "hsl(210, 40%, 15%)",
+      muted: "hsl(200, 30%, 95%)",
+      destructive: "hsl(0, 84.2%, 60.2%)",
+    },
   },
   forest: {
-    name: 'Forêt',
+    name: "Forêt",
     colors: {
-      primary: 'hsl(120, 50%, 35%)',
-      secondary: 'hsl(100, 40%, 45%)',
-      accent: 'hsl(60, 80%, 50%)',
-      background: 'hsl(0, 0%, 100%)',
-      foreground: 'hsl(120, 20%, 15%)',
-      muted: 'hsl(120, 20%, 95%)',
-      destructive: 'hsl(0, 84.2%, 60.2%)'
-    }
+      primary: "hsl(120, 50%, 35%)",
+      secondary: "hsl(100, 40%, 45%)",
+      accent: "hsl(60, 80%, 50%)",
+      background: "hsl(0, 0%, 100%)",
+      foreground: "hsl(120, 20%, 15%)",
+      muted: "hsl(120, 20%, 95%)",
+      destructive: "hsl(0, 84.2%, 60.2%)",
+    },
   },
   sunset: {
-    name: 'Coucher de soleil',
+    name: "Coucher de soleil",
     colors: {
-      primary: 'hsl(20, 80%, 55%)',
-      secondary: 'hsl(340, 70%, 60%)',
-      accent: 'hsl(50, 90%, 65%)',
-      background: 'hsl(0, 0%, 100%)',
-      foreground: 'hsl(20, 30%, 15%)',
-      muted: 'hsl(20, 20%, 95%)',
-      destructive: 'hsl(0, 84.2%, 60.2%)'
-    }
-  }
+      primary: "hsl(20, 80%, 55%)",
+      secondary: "hsl(340, 70%, 60%)",
+      accent: "hsl(50, 90%, 65%)",
+      background: "hsl(0, 0%, 100%)",
+      foreground: "hsl(20, 30%, 15%)",
+      muted: "hsl(20, 20%, 95%)",
+      destructive: "hsl(0, 84.2%, 60.2%)",
+    },
+  },
 };
 
 export const ThemeManager: React.FC = () => {
   const { isSuperAdmin, getContent, updateContent } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<ThemeColors>(presetThemes.default.colors);
+  const [currentTheme, setCurrentTheme] = useState<ThemeColors>(
+    presetThemes.default.colors,
+  );
   const [isPreview, setIsPreview] = useState(false);
 
   useEffect(() => {
-    const savedTheme = getContent('theme.colors', null);
+    const savedTheme = getContent("theme.colors", null);
     if (savedTheme) {
       setCurrentTheme(savedTheme);
       applyTheme(savedTheme);
@@ -94,7 +104,7 @@ export const ThemeManager: React.FC = () => {
 
   const applyTheme = (colors: ThemeColors) => {
     const root = document.documentElement;
-    
+
     // Convertir HSL en valeurs CSS custom properties
     Object.entries(colors).forEach(([key, value]) => {
       // Extraire les valeurs HSL de la chaîne "hsl(h, s%, l%)"
@@ -106,8 +116,14 @@ export const ThemeManager: React.FC = () => {
     });
 
     // Gradients spéciaux
-    root.style.setProperty('--gradient-primary', `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`);
-    root.style.setProperty('--gradient-accent', `linear-gradient(135deg, ${colors.accent} 0%, hsl(from ${colors.accent} h s calc(l - 10%)) 100%)`);
+    root.style.setProperty(
+      "--gradient-primary",
+      `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`,
+    );
+    root.style.setProperty(
+      "--gradient-accent",
+      `linear-gradient(135deg, ${colors.accent} 0%, hsl(from ${colors.accent} h s calc(l - 10%)) 100%)`,
+    );
   };
 
   const previewTheme = (colors: ThemeColors) => {
@@ -117,16 +133,16 @@ export const ThemeManager: React.FC = () => {
   };
 
   const saveTheme = () => {
-    updateContent('theme.colors', currentTheme);
+    updateContent("theme.colors", currentTheme);
     setIsPreview(false);
-    alert('Thème sauvegardé avec succès !');
+    alert("Thème sauvegardé avec succès !");
   };
 
   const resetTheme = () => {
     const defaultColors = presetThemes.default.colors;
     setCurrentTheme(defaultColors);
     applyTheme(defaultColors);
-    updateContent('theme.colors', null);
+    updateContent("theme.colors", null);
     setIsPreview(false);
   };
 
@@ -144,16 +160,24 @@ export const ThemeManager: React.FC = () => {
 
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
-    let h = 0, s = 0, l = (max + min) / 2;
+    let h = 0,
+      s = 0,
+      l = (max + min) / 2;
 
     if (max !== min) {
       const d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 
       switch (max) {
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
       }
       h /= 6;
     }
@@ -163,7 +187,7 @@ export const ThemeManager: React.FC = () => {
 
   const hslToHex = (hsl: string): string => {
     const match = hsl.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
-    if (!match) return '#000000';
+    if (!match) return "#000000";
 
     const h = parseInt(match[1]) / 360;
     const s = parseInt(match[2]) / 100;
@@ -172,9 +196,9 @@ export const ThemeManager: React.FC = () => {
     const hue2rgb = (p: number, q: number, t: number) => {
       if (t < 0) t += 1;
       if (t > 1) t -= 1;
-      if (t < 1/6) return p + (q - p) * 6 * t;
-      if (t < 1/2) return q;
-      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
       return p;
     };
 
@@ -184,14 +208,14 @@ export const ThemeManager: React.FC = () => {
     } else {
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
-      r = hue2rgb(p, q, h + 1/3);
+      r = hue2rgb(p, q, h + 1 / 3);
       g = hue2rgb(p, q, h);
-      b = hue2rgb(p, q, h - 1/3);
+      b = hue2rgb(p, q, h - 1 / 3);
     }
 
     const toHex = (c: number) => {
       const hex = Math.round(c * 255).toString(16);
-      return hex.length === 1 ? '0' + hex : hex;
+      return hex.length === 1 ? "0" + hex : hex;
     };
 
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
@@ -199,16 +223,18 @@ export const ThemeManager: React.FC = () => {
 
   const exportTheme = () => {
     const themeData = {
-      name: 'Custom Theme',
+      name: "Custom Theme",
       colors: currentTheme,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
-    
-    const blob = new Blob([JSON.stringify(themeData, null, 2)], { type: 'application/json' });
+
+    const blob = new Blob([JSON.stringify(themeData, null, 2)], {
+      type: "application/json",
+    });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'theme.json';
+    a.download = "theme.json";
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -224,7 +250,7 @@ export const ThemeManager: React.FC = () => {
             previewTheme(themeData.colors);
           }
         } catch (error) {
-          alert('Erreur lors de l\'importation du thème');
+          alert("Erreur lors de l'importation du thème");
         }
       };
       reader.readAsText(file);
@@ -245,8 +271,11 @@ export const ThemeManager: React.FC = () => {
       {/* Theme Manager Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-          
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+
           <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-5xl mx-4 max-h-[95vh] overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-pink-600 to-pink-700 p-6 text-white">
@@ -274,28 +303,44 @@ export const ThemeManager: React.FC = () => {
               <div className="grid lg:grid-cols-2 gap-8">
                 {/* Couleurs personnalisées */}
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">Couleurs Personnalisées</h3>
-                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">
+                    Couleurs Personnalisées
+                  </h3>
+
                   <div className="space-y-4">
                     {Object.entries(currentTheme).map(([key, value]) => (
                       <div key={key} className="flex items-center space-x-4">
                         <div className="w-24 text-sm font-medium capitalize">
-                          {key === 'destructive' ? 'Erreur' : 
-                           key === 'foreground' ? 'Texte' :
-                           key === 'background' ? 'Fond' :
-                           key === 'muted' ? 'Atténué' :
-                           key}
+                          {key === "destructive"
+                            ? "Erreur"
+                            : key === "foreground"
+                              ? "Texte"
+                              : key === "background"
+                                ? "Fond"
+                                : key === "muted"
+                                  ? "Atténué"
+                                  : key}
                         </div>
                         <input
                           type="color"
                           value={hslToHex(value)}
-                          onChange={(e) => updateColor(key as keyof ThemeColors, hexToHsl(e.target.value))}
+                          onChange={(e) =>
+                            updateColor(
+                              key as keyof ThemeColors,
+                              hexToHsl(e.target.value),
+                            )
+                          }
                           className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
                         />
                         <input
                           type="text"
                           value={value}
-                          onChange={(e) => updateColor(key as keyof ThemeColors, e.target.value)}
+                          onChange={(e) =>
+                            updateColor(
+                              key as keyof ThemeColors,
+                              e.target.value,
+                            )
+                          }
                           className="flex-1 px-3 py-2 border border-gray-300 rounded text-sm font-mono"
                           placeholder="hsl(0, 0%, 0%)"
                         />
@@ -314,7 +359,7 @@ export const ThemeManager: React.FC = () => {
                         <Save size={16} className="mr-2" />
                         Sauvegarder
                       </Button>
-                      
+
                       <Button
                         onClick={resetTheme}
                         variant="outline"
@@ -334,7 +379,7 @@ export const ThemeManager: React.FC = () => {
                         <Download size={16} className="mr-2" />
                         Exporter
                       </Button>
-                      
+
                       <label className="flex-1">
                         <Button variant="outline" className="w-full">
                           <Upload size={16} className="mr-2" />
@@ -353,8 +398,10 @@ export const ThemeManager: React.FC = () => {
 
                 {/* Thèmes prédéfinis */}
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">Thèmes Prédéfinis</h3>
-                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">
+                    Thèmes Prédéfinis
+                  </h3>
+
                   <div className="space-y-4">
                     {Object.entries(presetThemes).map(([key, theme]) => (
                       <div
@@ -376,10 +423,17 @@ export const ThemeManager: React.FC = () => {
                             Aperçu
                           </Button>
                         </div>
-                        
+
                         <div className="flex space-x-2">
-                          {['primary', 'secondary', 'accent', 'background', 'foreground'].map((colorKey) => {
-                            const color = theme.colors[colorKey as keyof ThemeColors];
+                          {[
+                            "primary",
+                            "secondary",
+                            "accent",
+                            "background",
+                            "foreground",
+                          ].map((colorKey) => {
+                            const color =
+                              theme.colors[colorKey as keyof ThemeColors];
                             return (
                               <div
                                 key={colorKey}
@@ -401,7 +455,8 @@ export const ThemeManager: React.FC = () => {
                       Générateur Automatique
                     </h4>
                     <p className="text-purple-700 text-sm mb-4">
-                      Générez un thème harmonieux basé sur une couleur principale.
+                      Générez un thème harmonieux basé sur une couleur
+                      principale.
                     </p>
                     <div className="flex space-x-3">
                       <input
@@ -412,12 +467,12 @@ export const ThemeManager: React.FC = () => {
                           const baseColor = e.target.value;
                           const generatedTheme: ThemeColors = {
                             primary: hexToHsl(baseColor),
-                            secondary: hexToHsl(baseColor + '20'), // Approximation
-                            accent: hexToHsl('#ffd700'), // Or
-                            background: 'hsl(0, 0%, 100%)',
-                            foreground: 'hsl(222.2, 84%, 4.9%)',
-                            muted: 'hsl(210, 40%, 96.1%)',
-                            destructive: 'hsl(0, 84.2%, 60.2%)'
+                            secondary: hexToHsl(baseColor + "20"), // Approximation
+                            accent: hexToHsl("#ffd700"), // Or
+                            background: "hsl(0, 0%, 100%)",
+                            foreground: "hsl(222.2, 84%, 4.9%)",
+                            muted: "hsl(210, 40%, 96.1%)",
+                            destructive: "hsl(0, 84.2%, 60.2%)",
                           };
                           previewTheme(generatedTheme);
                         }}
@@ -432,10 +487,10 @@ export const ThemeManager: React.FC = () => {
                             primary: `hsl(${randomHue}, 70%, 50%)`,
                             secondary: `hsl(${(randomHue + 30) % 360}, 65%, 55%)`,
                             accent: `hsl(${(randomHue + 180) % 360}, 80%, 60%)`,
-                            background: 'hsl(0, 0%, 100%)',
-                            foreground: 'hsl(222.2, 84%, 4.9%)',
-                            muted: 'hsl(210, 40%, 96.1%)',
-                            destructive: 'hsl(0, 84.2%, 60.2%)'
+                            background: "hsl(0, 0%, 100%)",
+                            foreground: "hsl(222.2, 84%, 4.9%)",
+                            muted: "hsl(210, 40%, 96.1%)",
+                            destructive: "hsl(0, 84.2%, 60.2%)",
                           };
                           previewTheme(generatedTheme);
                         }}

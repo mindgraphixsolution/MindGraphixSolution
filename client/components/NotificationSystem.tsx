@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { CheckCircle, XCircle, AlertTriangle, Info, X } from "lucide-react";
 
 interface Notification {
   id: string;
-  type: 'success' | 'error' | 'warning' | 'info';
+  type: "success" | "error" | "warning" | "info";
   title: string;
   message: string;
   duration?: number;
@@ -18,9 +18,12 @@ interface NotificationSystemProps {
   onRemove: (id: string) => void;
 }
 
-export const NotificationSystem: React.FC<NotificationSystemProps> = ({ notifications, onRemove }) => {
+export const NotificationSystem: React.FC<NotificationSystemProps> = ({
+  notifications,
+  onRemove,
+}) => {
   useEffect(() => {
-    notifications.forEach(notification => {
+    notifications.forEach((notification) => {
       if (notification.duration) {
         const timer = setTimeout(() => {
           onRemove(notification.id);
@@ -33,21 +36,31 @@ export const NotificationSystem: React.FC<NotificationSystemProps> = ({ notifica
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'success': return CheckCircle;
-      case 'error': return XCircle;
-      case 'warning': return AlertTriangle;
-      case 'info': return Info;
-      default: return Info;
+      case "success":
+        return CheckCircle;
+      case "error":
+        return XCircle;
+      case "warning":
+        return AlertTriangle;
+      case "info":
+        return Info;
+      default:
+        return Info;
     }
   };
 
   const getColorClasses = (type: string) => {
     switch (type) {
-      case 'success': return 'bg-green-50 border-green-200 text-green-800';
-      case 'error': return 'bg-red-50 border-red-200 text-red-800';
-      case 'warning': return 'bg-yellow-50 border-yellow-200 text-yellow-800';
-      case 'info': return 'bg-blue-50 border-blue-200 text-blue-800';
-      default: return 'bg-gray-50 border-gray-200 text-gray-800';
+      case "success":
+        return "bg-green-50 border-green-200 text-green-800";
+      case "error":
+        return "bg-red-50 border-red-200 text-red-800";
+      case "warning":
+        return "bg-yellow-50 border-yellow-200 text-yellow-800";
+      case "info":
+        return "bg-blue-50 border-blue-200 text-blue-800";
+      default:
+        return "bg-gray-50 border-gray-200 text-gray-800";
     }
   };
 
@@ -66,11 +79,13 @@ export const NotificationSystem: React.FC<NotificationSystemProps> = ({ notifica
           >
             <div className="flex items-start space-x-3">
               <Icon size={20} className="flex-shrink-0 mt-0.5" />
-              
+
               <div className="flex-1 min-w-0">
                 <h4 className="font-semibold text-sm">{notification.title}</h4>
-                <p className="text-sm opacity-90 mt-1">{notification.message}</p>
-                
+                <p className="text-sm opacity-90 mt-1">
+                  {notification.message}
+                </p>
+
                 {notification.actions && notification.actions.length > 0 && (
                   <div className="mt-3 flex space-x-2">
                     {notification.actions.map((action, index) => (
@@ -104,20 +119,20 @@ export const NotificationSystem: React.FC<NotificationSystemProps> = ({ notifica
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const addNotification = (notification: Omit<Notification, 'id'>) => {
+  const addNotification = (notification: Omit<Notification, "id">) => {
     const id = `notification-${Date.now()}-${Math.random()}`;
     const newNotification: Notification = {
       ...notification,
       id,
-      duration: notification.duration || 5000 // 5 secondes par défaut
+      duration: notification.duration || 5000, // 5 secondes par défaut
     };
 
-    setNotifications(prev => [...prev, newNotification]);
+    setNotifications((prev) => [...prev, newNotification]);
     return id;
   };
 
   const removeNotification = (id: string) => {
-    setNotifications(prev => prev.filter(n => n.id !== id));
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
 
   const clearAll = () => {
@@ -125,40 +140,56 @@ export const useNotifications = () => {
   };
 
   // Méthodes de convenance
-  const success = (title: string, message: string, options?: Partial<Notification>) => {
+  const success = (
+    title: string,
+    message: string,
+    options?: Partial<Notification>,
+  ) => {
     return addNotification({
-      type: 'success',
+      type: "success",
       title,
       message,
-      ...options
+      ...options,
     });
   };
 
-  const error = (title: string, message: string, options?: Partial<Notification>) => {
+  const error = (
+    title: string,
+    message: string,
+    options?: Partial<Notification>,
+  ) => {
     return addNotification({
-      type: 'error',
+      type: "error",
       title,
       message,
       duration: 8000, // Plus long pour les erreurs
-      ...options
+      ...options,
     });
   };
 
-  const warning = (title: string, message: string, options?: Partial<Notification>) => {
+  const warning = (
+    title: string,
+    message: string,
+    options?: Partial<Notification>,
+  ) => {
     return addNotification({
-      type: 'warning',
+      type: "warning",
       title,
       message,
-      ...options
+      ...options,
     });
   };
 
-  const info = (title: string, message: string, options?: Partial<Notification>) => {
+  const info = (
+    title: string,
+    message: string,
+    options?: Partial<Notification>,
+  ) => {
     return addNotification({
-      type: 'info',
+      type: "info",
       title,
       message,
-      ...options
+      ...options,
     });
   };
 
@@ -170,6 +201,6 @@ export const useNotifications = () => {
     success,
     error,
     warning,
-    info
+    info,
   };
 };

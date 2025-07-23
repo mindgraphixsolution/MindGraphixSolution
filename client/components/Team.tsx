@@ -1,74 +1,88 @@
-import React from 'react';
-import { Github, Linkedin, Twitter, Globe } from 'lucide-react';
-import { EditableImage } from './EditableImage';
-import { EditableText } from './EditableText';
+import React from "react";
+import { Github, Linkedin, Twitter, Globe } from "lucide-react";
+import { EditableImage } from "./EditableImage";
+import { EditableText } from "./EditableText";
 
 export const Team: React.FC = () => {
   const teamMembers = [
     {
-      name: 'Badior OUATTARA',
-      role: 'PROGRAMMEUR & GRAPHISTE',
-      image: 'https://images.pexels.com/photos/17794196/pexels-photo-17794196.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
-      bio: 'Expert en développement full-stack et design graphique avec plus de 5 ans d\'expérience.',
-      skills: ['React', 'Node.js', 'Photoshop', 'Illustrator'],
+      name: "Badior OUATTARA",
+      role: "PROGRAMMEUR & GRAPHISTE",
+      image:
+        "https://images.pexels.com/photos/17794196/pexels-photo-17794196.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face",
+      bio: "Expert en développement full-stack et design graphique avec plus de 5 ans d'expérience.",
+      skills: ["React", "Node.js", "Photoshop", "Illustrator"],
       social: {
-        linkedin: '#',
-        github: '#',
-        dribbble: '#',
-      }
+        linkedin: "#",
+        github: "#",
+        dribbble: "#",
+      },
     },
     {
-      name: 'FAÏZ PHILLIPPE SANON',
-      role: 'Développeur Full-Stack',
-      image: 'https://images.pexels.com/photos/5952738/pexels-photo-5952738.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
-      bio: 'Spécialisé dans les technologies modernes et l\'architecture scalable des applications.',
-      skills: ['TypeScript', 'Python', 'AWS', 'Docker'],
+      name: "FAÏZ PHILLIPPE SANON",
+      role: "Développeur Full-Stack",
+      image:
+        "https://images.pexels.com/photos/5952738/pexels-photo-5952738.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face",
+      bio: "Spécialisé dans les technologies modernes et l'architecture scalable des applications.",
+      skills: ["TypeScript", "Python", "AWS", "Docker"],
       social: {
-        linkedin: '#',
-        github: '#',
-        twitter: '#',
-      }
+        linkedin: "#",
+        github: "#",
+        twitter: "#",
+      },
     },
     {
-      name: 'Émilie Rousseau',
-      role: 'UX/UI Designer',
-      image: 'https://images.pexels.com/photos/7552359/pexels-photo-7552359.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
-      bio: 'Passionnée par la création d\'expériences utilisateur exceptionnelles et intuitives.',
-      skills: ['Figma', 'Sketch', 'Prototyping', 'User Research'],
+      name: "Émilie Rousseau",
+      role: "UX/UI Designer",
+      image:
+        "https://images.pexels.com/photos/7552359/pexels-photo-7552359.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face",
+      bio: "Passionnée par la création d'expériences utilisateur exceptionnelles et intuitives.",
+      skills: ["Figma", "Sketch", "Prototyping", "User Research"],
       social: {
-        linkedin: '#',
-        dribbble: '#',
-        behance: '#',
-      }
+        linkedin: "#",
+        dribbble: "#",
+        behance: "#",
+      },
     },
     {
-      name: 'Antoine Morel',
-      role: 'Motion Designer',
-      image: 'https://images.pexels.com/photos/3379937/pexels-photo-3379937.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
-      bio: 'Créateur d\'animations captivantes et de contenus vidéo pour le marketing digital.',
-      skills: ['After Effects', 'Cinema 4D', 'Premiere', 'Blender'],
+      name: "Antoine Morel",
+      role: "Motion Designer",
+      image:
+        "https://images.pexels.com/photos/3379937/pexels-photo-3379937.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face",
+      bio: "Créateur d'animations captivantes et de contenus vidéo pour le marketing digital.",
+      skills: ["After Effects", "Cinema 4D", "Premiere", "Blender"],
       social: {
-        linkedin: '#',
-        behance: '#',
-        vimeo: '#',
-      }
+        linkedin: "#",
+        behance: "#",
+        vimeo: "#",
+      },
     },
   ];
 
   const getSocialIcon = (platform: string) => {
     switch (platform) {
-      case 'linkedin': return Linkedin;
-      case 'github': return Github;
-      case 'twitter': return Twitter;
-      case 'dribbble': return Globe;
-      case 'behance': return Globe;
-      case 'vimeo': return Globe;
-      default: return Globe;
+      case "linkedin":
+        return Linkedin;
+      case "github":
+        return Github;
+      case "twitter":
+        return Twitter;
+      case "dribbble":
+        return Globe;
+      case "behance":
+        return Globe;
+      case "vimeo":
+        return Globe;
+      default:
+        return Globe;
     }
   };
 
   return (
-    <section id="team" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section
+      id="team"
+      className="py-20 bg-gradient-to-br from-gray-50 to-white"
+    >
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6 relative inline-block">
@@ -76,7 +90,8 @@ export const Team: React.FC = () => {
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-accent rounded-full"></div>
           </h2>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            Rencontrez les talents créatifs et techniques derrière Mind Graphix Solution
+            Rencontrez les talents créatifs et techniques derrière Mind Graphix
+            Solution
           </p>
         </div>
 
@@ -96,7 +111,7 @@ export const Team: React.FC = () => {
                 />
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+
                 {/* Social links overlay */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                   <div className="flex space-x-3">
@@ -137,7 +152,7 @@ export const Team: React.FC = () => {
                   className="text-gray-600 text-sm leading-relaxed mb-4"
                   multiline
                 />
-                
+
                 {/* Skills */}
                 <div className="flex flex-wrap gap-2">
                   {member.skills.slice(0, 3).map((skill) => (
@@ -170,7 +185,8 @@ export const Team: React.FC = () => {
               Rejoignez notre équipe !
             </h3>
             <p className="mb-6 opacity-90">
-              Nous recherchons toujours de nouveaux talents passionnés pour renforcer notre équipe créative.
+              Nous recherchons toujours de nouveaux talents passionnés pour
+              renforcer notre équipe créative.
             </p>
             <button className="bg-accent text-black px-8 py-3 rounded-full font-semibold hover:bg-orange-400 transform hover:scale-105 transition-all duration-300">
               Voir les offres d'emploi
