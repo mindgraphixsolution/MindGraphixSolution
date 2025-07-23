@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ChevronDown, Sparkles, Zap, Palette } from 'lucide-react';
 import { Button } from './ui/button';
 
