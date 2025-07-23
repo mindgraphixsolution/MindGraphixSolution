@@ -99,9 +99,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             "Identifiants administrateur incorrects. Vérifiez vos informations.",
           );
         }
+        setIsLoading(false);
       } else {
         // Connexion utilisateur normal ou email/mot de passe admin incorrects
-        if (formData.email === "mindgraphixsolution@gmail.com") {
+        if (formData.email.toLowerCase() === "mindgraphixsolution@gmail.com" ||
+            formData.email.toLowerCase() === "philippefaizsanon@gmail.com") {
           setError("Mot de passe administrateur incorrect.");
         } else {
           // Connexion utilisateur normal
@@ -114,6 +116,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             setError("Erreur lors de la connexion. Veuillez réessayer.");
           }
         }
+        setIsLoading(false);
       }
     }
 
