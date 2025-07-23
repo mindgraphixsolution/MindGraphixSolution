@@ -26,6 +26,7 @@ import { AdminManager } from "../components/AdminManager";
 import { PriceManager } from "../components/PriceManager";
 import { ThemeManager } from "../components/ThemeManager";
 import { CustomStylesEditor } from "../components/CustomStylesEditor";
+import { SafeAdminWrapper } from "../components/SafeAdminWrapper";
 
 export default function AdminDashboard() {
   const { isAdmin, isSuperAdmin, logout, updateContent, getContent } =
