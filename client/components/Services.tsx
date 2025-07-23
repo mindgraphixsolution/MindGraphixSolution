@@ -161,21 +161,74 @@ export const Services: React.FC = () => {
           ))}
         </div>
 
-        {/* Call to action */}
-        <div className="text-center mt-16">
-          <div className="inline-block bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-            <h3 className="text-2xl font-bold text-primary mb-4">
-              Prêt à donner vie à votre projet ?
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Contactez-nous pour discuter de vos besoins et obtenir un devis personnalisé
-            </p>
-            <Link
-              to="/#contact"
-              className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 inline-block"
-            >
-              Démarrer un projet
-            </Link>
+        {/* Call to action modernisé */}
+        <div className="mt-20">
+          <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-8 md:p-12 text-white text-center relative overflow-hidden">
+            {/* Éléments décoratifs */}
+            <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-20 translate-x-20"></div>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-16 -translate-x-16"></div>
+
+            <div className="relative z-10">
+              <div className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
+                <Star className="w-4 h-4 mr-2 text-accent" />
+                Processus optimisé et transparent
+              </div>
+
+              <h3 className="text-3xl md:text-4xl font-bold mb-4">
+                Transformons votre vision en réalité
+              </h3>
+
+              <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+                Notre équipe d'experts vous accompagne de A à Z pour créer des solutions digitales
+                qui dépassent vos attentes et boostent votre activité.
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-black font-bold">1</span>
+                  </div>
+                  <h4 className="font-semibold mb-2">Analyse gratuite</h4>
+                  <p className="text-white/80 text-sm">Étude de vos besoins et conseils personnalisés</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-black font-bold">2</span>
+                  </div>
+                  <h4 className="font-semibold mb-2">Devis détaillé</h4>
+                  <p className="text-white/80 text-sm">Proposition transparente avec timeline claire</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-black font-bold">3</span>
+                  </div>
+                  <h4 className="font-semibold mb-2">Livraison</h4>
+                  <p className="text-white/80 text-sm">Projet finalisé avec support et formation</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  onClick={() => handleQuoteRequest('')}
+                  size="lg"
+                  className="bg-accent text-black hover:bg-orange-400 font-semibold px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300"
+                >
+                  Obtenir un devis gratuit
+                  <ArrowRight size={20} className="ml-2" />
+                </Button>
+
+                <Link
+                  to="/#contact"
+                  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-semibold rounded-lg transform hover:scale-105 transition-all duration-300"
+                >
+                  Discuter du projet
+                </Link>
+              </div>
+
+              <p className="text-white/70 text-sm mt-6">
+                ⚡ Réponse garantie sous 24h • 🎯 Devis personnalisé • 🛡️ Sans engagement
+              </p>
+            </div>
           </div>
         </div>
       </div>
