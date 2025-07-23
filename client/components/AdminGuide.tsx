@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, X, User, Lock, Phone, ShieldCheck } from 'lucide-react';
+import { HelpCircle, X, User, Lock, Phone, ShieldCheck, Mail } from 'lucide-react';
 
 export const AdminGuide: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
