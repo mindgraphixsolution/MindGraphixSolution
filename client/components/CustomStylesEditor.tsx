@@ -19,10 +19,10 @@ export const CustomStylesEditor: React.FC = () => {
   }, []);
 
   const applyStyles = (css: string) => {
-    // Remove existing custom styles
+    // Remove existing custom styles safely
     const existing = document.getElementById("custom-super-admin-styles");
-    if (existing) {
-      existing.remove();
+    if (existing && existing.parentNode) {
+      existing.parentNode.removeChild(existing);
     }
 
     if (css.trim()) {
@@ -30,7 +30,11 @@ export const CustomStylesEditor: React.FC = () => {
       const styleElement = document.createElement("style");
       styleElement.id = "custom-super-admin-styles";
       styleElement.textContent = css;
-      document.head.appendChild(styleElement);
+
+      // Add to head safely
+      if (document.head) {
+        document.head.appendChild(styleElement);
+      }
     }
   };
 
