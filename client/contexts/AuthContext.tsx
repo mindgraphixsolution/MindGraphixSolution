@@ -155,6 +155,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         admin.isActive,
     );
 
+    console.log("Recherche d'admin avec les critères normalisés:", {
+      inputPhone: normalizePhone(phone),
+      inputEmail: email.toLowerCase(),
+      inputAnswer: securityAnswer.toLowerCase()
+    });
+
     if (matchingAdmin) {
       console.log("Connexion admin réussie !", matchingAdmin);
 
