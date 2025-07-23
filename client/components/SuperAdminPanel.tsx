@@ -164,7 +164,7 @@ export const SuperAdminPanel: React.FC = () => {
                           variant="outline"
                           className="w-full"
                         >
-                          Ouvrir Admin Dashboard
+                          Ouvrir Tableau de Bord Admin
                         </Button>
                       </div>
                     </div>
