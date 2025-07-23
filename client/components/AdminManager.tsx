@@ -548,7 +548,7 @@ export const AdminManager: React.FC = () => {
                     • Un administrateur désactivé ne peut plus se connecter
                   </li>
                   <li>
-                    • Gardez toujours au moins un Super Administrateur actif
+                    • Gardez toujours au moins un Administrateur Supreme actif
                   </li>
                   <li>
                     • Les mots de passe sont stockés en texte clair (pour demo
