@@ -1,28 +1,29 @@
-import React from 'react';
-import { Lightbulb, Code, TrendingUp, Headphones } from 'lucide-react';
-import { EditableText } from './EditableText';
+import React from "react";
+import { Lightbulb, Code, TrendingUp, Headphones } from "lucide-react";
+import { EditableText } from "./EditableText";
+import { EditableImage } from "./EditableImage";
 
 export const About: React.FC = () => {
   const features = [
     {
       icon: Lightbulb,
-      title: 'Design Innovant',
-      description: 'Des concepts uniques qui captivent votre audience',
+      title: "Design Innovant",
+      description: "Des concepts uniques qui captivent votre audience",
     },
     {
       icon: Code,
-      title: 'Développement Solide',
-      description: 'Des solutions techniques robustes et évolutives',
+      title: "Développement Solide",
+      description: "Des solutions techniques robustes et évolutives",
     },
     {
       icon: TrendingUp,
-      title: 'Stratégie Digitale',
-      description: 'Une approche orientée résultats pour votre business',
+      title: "Stratégie Digitale",
+      description: "Une approche orientée résultats pour votre business",
     },
     {
       icon: Headphones,
-      title: 'Support Premium',
-      description: 'Un accompagnement personnalisé à chaque étape',
+      title: "Support Premium",
+      description: "Un accompagnement personnalisé à chaque étape",
     },
   ];
 
@@ -50,8 +51,9 @@ export const About: React.FC = () => {
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-500"></div>
             <div className="relative bg-white p-2 rounded-2xl shadow-xl transform group-hover:-translate-y-2 transition-all duration-500">
-              <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+              <EditableImage
+                contentKey="about.team.image"
+                defaultSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
                 alt="Notre équipe"
                 className="w-full h-80 object-cover rounded-xl"
               />
@@ -69,16 +71,26 @@ export const About: React.FC = () => {
               </h3>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Mind Graphix Solution est spécialisée dans la{' '}
-                  <span className="text-primary font-semibold">création graphique</span> et le{' '}
-                  <span className="text-primary font-semibold">développement web</span> sur mesure. 
-                  Notre mission est de transformer vos idées en solutions digitales impactantes.
+                  Mind Graphix Solution est spécialisée dans la{" "}
+                  <span className="text-primary font-semibold">
+                    création graphique
+                  </span>{" "}
+                  et le{" "}
+                  <span className="text-primary font-semibold">
+                    développement web
+                  </span>{" "}
+                  sur mesure. Notre mission est de transformer vos idées en
+                  solutions digitales impactantes.
                 </p>
                 <p>
-                  Nous croyons en une approche holistique qui combine esthétique, fonctionnalité 
-                  et expérience utilisateur pour créer des produits qui non seulement impressionnent 
-                  visuellement mais qui délivrent également des{' '}
-                  <span className="text-accent font-semibold">résultats concrets</span>.
+                  Nous croyons en une approche holistique qui combine
+                  esthétique, fonctionnalité et expérience utilisateur pour
+                  créer des produits qui non seulement impressionnent
+                  visuellement mais qui délivrent également des{" "}
+                  <span className="text-accent font-semibold">
+                    résultats concrets
+                  </span>
+                  .
                 </p>
               </div>
             </div>
