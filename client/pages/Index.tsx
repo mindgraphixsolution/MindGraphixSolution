@@ -12,6 +12,7 @@ import { AdminPanel } from '../components/AdminPanel';
 import { AdminGuide } from '../components/AdminGuide';
 import { AdminNotifications } from '../components/AdminNotifications';
 import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
+import { AdminUserGuide } from '../components/AdminUserGuide';
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -171,6 +172,7 @@ export default function Index() {
       <AdminViewSwitcher />
       <AdminPanel />
       <AdminGuide />
+      <AdminUserGuide />
       <AdminNotifications />
     </div>
   );
