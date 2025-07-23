@@ -45,6 +45,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   } | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [siteContent, setSiteContent] = useState<Record<string, any>>({});
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Charger l'état d'authentification au démarrage
   useEffect(() => {
