@@ -20,6 +20,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { AdminNotifications } from '../components/AdminNotifications';
+import { LivePreview } from '../components/LivePreview';
 
 export default function AdminDashboard() {
   const { isAdmin, logout, updateContent, getContent } = useAuth();
@@ -356,24 +357,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Preview Panel */}
-          <div className="flex-1 bg-gray-50 p-6">
-            <div className="h-full">
-              <div className="bg-white rounded-lg shadow-lg h-full overflow-hidden">
-                <div className="h-full">
-                  <iframe
-                    src="/"
-                    className="w-full h-full border-0"
-                    style={{ 
-                      width: getPreviewWidth(),
-                      margin: previewMode !== 'desktop' ? '0 auto' : '0',
-                      transform: previewMode === 'mobile' ? 'scale(0.8)' : 'scale(1)',
-                      transformOrigin: 'top center'
-                    }}
-                    title="Aperçu du site"
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="flex-1">
+            <LivePreview url="/" />
           </div>
         </main>
       </div>
