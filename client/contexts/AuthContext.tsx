@@ -234,6 +234,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const updateContent = (key: string, value: any) => {
+    if (!isInitialized) return;
     const newContent = { ...siteContent, [key]: value };
     setSiteContent(newContent);
     localStorage.setItem("siteContent", JSON.stringify(newContent));
