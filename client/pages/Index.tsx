@@ -8,6 +8,7 @@ import { Portfolio } from '../components/Portfolio';
 import { Team } from '../components/Team';
 import { Footer } from '../components/Footer';
 import { AuthModal } from '../components/AuthModal';
+import { AdminPanel } from '../components/AdminPanel';
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -163,6 +164,8 @@ export default function Index() {
         onClose={() => setShowLoginModal(false)}
         defaultMode={authMode}
       />
+
+      <AdminPanel />
     </div>
   );
 }
