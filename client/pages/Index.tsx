@@ -205,6 +205,7 @@ export default function Index() {
       <LayoutEditor />
       <PriceManager />
       <AdminManager />
+      <AdminLoginHelp />
     </div>
   );
 }
