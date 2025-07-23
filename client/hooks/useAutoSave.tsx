@@ -68,18 +68,26 @@ export const useAutoSave = () => {
 
   const exportContent = () => {
     if (!isAdmin) return;
-    
+
     const content = localStorage.getItem('siteContent') || '{}';
     const blob = new Blob([content], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    
+
     const a = document.createElement('a');
     a.href = url;
     a.download = `mind-graphix-content-${new Date().toISOString().split('T')[0]}.json`;
+    a.style.display = 'none';
+
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+
+    // Clean up safely
+    setTimeout(() => {
+      if (document.body.contains(a)) {
+        document.body.removeChild(a);
+      }
+      URL.revokeObjectURL(url);
+    }, 100);
   };
 
   const importContent = (file: File) => {
