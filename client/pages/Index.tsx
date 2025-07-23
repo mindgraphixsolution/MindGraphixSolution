@@ -183,6 +183,8 @@ export default function Index() {
       <ThemeManager />
       <ContentManager />
       <LayoutEditor />
+      <PriceManager />
+      <AdminManager />
     </div>
   );
 }
