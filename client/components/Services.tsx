@@ -232,6 +232,13 @@ export const Services: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de demande de devis */}
+      <QuoteRequest
+        isOpen={showQuoteModal}
+        onClose={() => setShowQuoteModal(false)}
+        selectedService={selectedService}
+      />
     </section>
   );
 };
