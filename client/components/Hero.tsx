@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Sparkles, Zap, Palette } from 'lucide-react';
 import { Button } from './ui/button';
+import { EditableText } from './EditableText';
 
 export const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -55,24 +56,20 @@ export const Hero: React.FC = () => {
               Créativité & Innovation Digitale
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-              Solutions{' '}
-              <span className="bg-gradient-to-r from-accent to-orange-400 bg-clip-text text-transparent">
-                Créatives
-              </span>
-              <br />
-              pour Votre Présence{' '}
-              <span className="relative">
-                Digitale
-                <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-accent to-orange-400 rounded-full"></div>
-              </span>
-            </h1>
+            <EditableText
+              contentKey="hero.title"
+              defaultValue="Solutions Créatives pour Votre Présence Digitale"
+              as="h1"
+              className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
+            />
             
-            <p className={`text-xl text-white/90 mb-8 max-w-2xl leading-relaxed transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              Nous combinons design captivant et développement robuste pour créer des 
-              <span className="text-accent font-semibold"> expériences digitales mémorables</span> qui 
-              propulsent votre entreprise vers le succès.
-            </p>
+            <EditableText
+              contentKey="hero.subtitle"
+              defaultValue="Nous combinons design captivant et développement robuste pour créer des expériences digitales mémorables qui propulsent votre entreprise vers le succès."
+              as="p"
+              className={`text-xl text-white/90 mb-8 max-w-2xl leading-relaxed transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              multiline
+            />
             
             <div className={`flex flex-col sm:flex-row gap-4 mb-12 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <Button
