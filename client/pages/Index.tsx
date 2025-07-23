@@ -3,51 +3,35 @@ import { Header } from '../components/Header';
 import { Hero } from '../components/Hero';
 import { About } from '../components/About';
 import { Services } from '../components/Services';
+import { Portfolio } from '../components/Portfolio';
+import { Team } from '../components/Team';
+import { Footer } from '../components/Footer';
+import { AuthModal } from '../components/AuthModal';
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
   return (
     <div className="min-h-screen">
-      <Header 
-        onLoginClick={() => setShowLoginModal(true)}
-        onRegisterClick={() => setShowRegisterModal(true)}
+      <Header
+        onLoginClick={() => {
+          setAuthMode('login');
+          setShowLoginModal(true);
+        }}
+        onRegisterClick={() => {
+          setAuthMode('register');
+          setShowLoginModal(true);
+        }}
       />
       
       <main>
         <Hero />
         <About />
         <Services />
-        
-        {/* Placeholder sections pour maintenant */}
-        <section id="portfolio" className="py-20 bg-white">
-          <div className="container mx-auto px-6 text-center">
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-16 border border-gray-200">
-              <h2 className="text-4xl font-bold text-primary mb-6">Portfolio</h2>
-              <p className="text-gray-600 mb-8">
-                Cette section sera bientôt disponible avec nos dernières réalisations
-              </p>
-              <div className="inline-flex items-center px-6 py-3 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                🚧 En construction - Contenus à venir
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="team" className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
-          <div className="container mx-auto px-6 text-center">
-            <div className="bg-white rounded-2xl p-16 shadow-lg border border-gray-200">
-              <h2 className="text-4xl font-bold text-primary mb-6">Notre Équipe</h2>
-              <p className="text-gray-600 mb-8">
-                Rencontrez bientôt les talents derrière Mind Graphix Solution
-              </p>
-              <div className="inline-flex items-center px-6 py-3 bg-accent/10 text-gray-700 rounded-full text-sm font-medium">
-                ⭐ Section en préparation
-              </div>
-            </div>
-          </div>
-        </section>
+        <Portfolio />
+        <Team />
 
         <section id="contact" className="py-20 bg-gradient-to-br from-primary to-secondary text-white">
           <div className="container mx-auto px-6">
@@ -157,29 +141,14 @@ export default function Index() {
         </section>
       </main>
 
-      {/* Simple footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-6">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-3 mb-6">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                <span className="text-white font-bold text-sm">MG</span>
-              </div>
-              <span className="text-xl font-bold">
-                Mind <span className="text-accent">Graphix</span> Solution
-              </span>
-            </div>
-            <p className="text-gray-400 mb-6">
-              Spécialisée dans le design graphique et le développement web
-            </p>
-            <div className="border-t border-gray-800 pt-6">
-              <p className="text-gray-500 text-sm">
-                © 2025 Mind Graphix Solution. Tous droits réservés.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        defaultMode={authMode}
+      />
     </div>
   );
 }
