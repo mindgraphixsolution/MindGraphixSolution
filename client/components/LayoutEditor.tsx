@@ -38,16 +38,7 @@ export const LayoutEditor: React.FC = () => {
     animations: true,
   });
 
-  useEffect(() => {
-    const savedSettings = getContent("layout.settings", null);
-    if (savedSettings) {
-      setSettings(savedSettings);
-      applyLayoutSettings(savedSettings);
-    }
-  }, []);
-
-  if (!isSuperAdmin) return null;
-
+  // Déclarer la fonction avant de l'utiliser
   const applyLayoutSettings = (layoutSettings: LayoutSettings) => {
     const root = document.documentElement;
 
