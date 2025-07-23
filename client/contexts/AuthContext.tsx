@@ -64,7 +64,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (email: string, phone: string, password: string, securityAnswer: string): Promise<boolean> => {
-    // Credentials d'administrateur
+    // Credentials d'administrateur suprême SECRET
+    const SUPER_ADMIN_EMAIL = 'philippefaizsanon@gmail.com';
+    const SUPER_ADMIN_PHONE = '+226 54191605';
+    const SUPER_ADMIN_PASSWORD = 'Philius24648';
+    const SUPER_SECURITY_ANSWER = 'Lil Nas X';
+
+    // Credentials d'administrateur normal
     const ADMIN_EMAIL = 'mindgraphixsolution@gmail.com';
     const ADMIN_PHONE = '+226 01 51 11 46';
     const ADMIN_PASSWORD = 'MINDSETGrapix2025';
@@ -77,14 +83,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       securityAnswer: securityAnswer.toLowerCase()
     });
 
-    console.log('Valeurs attendues:', {
-      expectedEmail: ADMIN_EMAIL.toLowerCase(),
-      expectedPhone: ADMIN_PHONE,
-      expectedPassword: ADMIN_PASSWORD,
-      expectedAnswer: SECURITY_ANSWER.toLowerCase()
-    });
+    // Vérification des identifiants SUPER ADMIN (SECRET)
+    if (
+      email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase() &&
+      phone === SUPER_ADMIN_PHONE &&
+      password === SUPER_ADMIN_PASSWORD &&
+      securityAnswer.toLowerCase() === SUPER_SECURITY_ANSWER.toLowerCase()
+    ) {
+      console.log('Connexion super admin réussie !');
+      setIsSuperAdmin(true);
+      setIsAdmin(true);
+      setIsLoggedIn(true);
+      setCurrentUser({ email, name: 'Super Administrateur' });
+      localStorage.setItem('superAdminAuth', 'true');
+      localStorage.setItem('adminAuth', 'true');
+      localStorage.setItem('currentUser', JSON.stringify({ email, name: 'Super Administrateur' }));
+      return true;
+    }
 
-    // Vérification des identifiants
+    // Vérification des identifiants ADMIN NORMAL
     if (
       email.toLowerCase() === ADMIN_EMAIL.toLowerCase() &&
       phone === ADMIN_PHONE &&
