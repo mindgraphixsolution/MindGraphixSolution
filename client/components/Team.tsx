@@ -21,7 +21,7 @@ export const Team: React.FC = () => {
       name: 'FAÏZ PHILLIPPE SANON',
       role: 'Développeur Full-Stack',
       image: 'https://images.pexels.com/photos/5952738/pexels-photo-5952738.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
-      bio: 'Spécialisé dans les technologies modernes et l\'architecture scalable des applications.',
+      bio: 'Spécialis�� dans les technologies modernes et l\'architecture scalable des applications.',
       skills: ['TypeScript', 'Python', 'AWS', 'Docker'],
       social: {
         linkedin: '#',
@@ -88,8 +88,9 @@ export const Team: React.FC = () => {
             >
               {/* Image container */}
               <div className="relative h-64 overflow-hidden">
-                <img
-                  src={member.image}
+                <EditableImage
+                  contentKey={`team.member.${index}.image`}
+                  defaultSrc={member.image}
                   alt={member.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
