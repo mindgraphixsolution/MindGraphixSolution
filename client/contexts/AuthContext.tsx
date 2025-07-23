@@ -254,6 +254,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         isLoggedIn,
         currentUser,
         isEditMode,
+        isInitialized,
         login,
         loginUser,
         logout,
