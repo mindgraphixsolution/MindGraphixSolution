@@ -209,6 +209,11 @@ export default function Index() {
       <LayoutEditor />
       <PriceManager />
       <AdminManager />
+
+      <NotificationSystem
+        notifications={notifications}
+        onRemove={removeNotification}
+      />
     </div>
   );
 }
