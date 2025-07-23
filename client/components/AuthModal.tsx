@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { X, Mail, Lock, User, Eye, EyeOff, Phone, ShieldCheck } from 'lucide-react';
 import { Button } from './ui/button';
+import { useAuth } from '../contexts/AuthContext';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -21,28 +22,82 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     email: '',
     password: '',
     confirmPassword: '',
+    phone: '',
+    securityAnswer: '',
   });
+  const [showSecurityQuestion, setShowSecurityQuestion] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { login } = useAuth();
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     
-    // Simulation d'une requête API
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    if (mode === 'register' && formData.password !== formData.confirmPassword) {
-      alert('Les mots de passe ne correspondent pas');
+    if (mode === 'register') {
+      // Simulation d'inscription
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      if (formData.password !== formData.confirmPassword) {
+        setError('Les mots de passe ne correspondent pas');
+        setIsLoading(false);
+        return;
+      }
+      
+      alert('Inscription réussie !');
       setIsLoading(false);
-      return;
+      onClose();
+      resetForm();
+    } else {
+      // Tentative de connexion
+      if (formData.email === 'mindgraphixsolution@gmail.com' && !showSecurityQuestion) {
+        setShowSecurityQuestion(true);
+        setIsLoading(false);
+        return;
+      }
+      
+      if (showSecurityQuestion) {
+        // Tentative de connexion admin
+        const isAdminLogin = await login(
+          formData.email,
+          formData.phone,
+          formData.password,
+          formData.securityAnswer
+        );
+        
+        if (isAdminLogin) {
+          alert('Connexion administrateur réussie ! Vous avez maintenant accès au panneau d\'administration.');
+          onClose();
+          resetForm();
+        } else {
+          setError('Identifiants administrateur incorrects. Vérifiez vos informations.');
+        }
+      } else {
+        // Connexion utilisateur normal
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        alert('Connexion utilisateur réussie !');
+        onClose();
+        resetForm();
+      }
     }
-
-    alert(mode === 'login' ? 'Connexion réussie !' : 'Inscription réussie !');
+    
     setIsLoading(false);
-    onClose();
-    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  };
+  
+  const resetForm = () => {
+    setFormData({ 
+      name: '', 
+      email: '', 
+      password: '', 
+      confirmPassword: '', 
+      phone: '', 
+      securityAnswer: '' 
+    });
+    setShowSecurityQuestion(false);
+    setError('');
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -62,7 +117,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Header */}
         <div className="relative bg-gradient-to-r from-primary to-secondary p-6 text-white">
           <button
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              resetForm();
+            }}
             className="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-full transition-colors"
           >
             <X size={20} />
@@ -70,14 +128,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           
           <div className="text-center">
             <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              {mode === 'login' ? <Lock size={24} /> : <User size={24} />}
+              {mode === 'login' ? (
+                showSecurityQuestion ? <ShieldCheck size={24} /> : <Lock size={24} />
+              ) : <User size={24} />}
             </div>
             <h2 className="text-2xl font-bold">
-              {mode === 'login' ? 'Connexion' : 'Créer un compte'}
+              {mode === 'login' 
+                ? showSecurityQuestion 
+                  ? 'Authentification Admin'
+                  : 'Connexion'
+                : 'Créer un compte'
+              }
             </h2>
             <p className="text-white/80 mt-2">
               {mode === 'login' 
-                ? 'Connectez-vous à votre compte' 
+                ? showSecurityQuestion 
+                  ? 'Vérification des identifiants administrateur'
+                  : 'Connectez-vous à votre compte'
                 : 'Rejoignez Mind Graphix Solution'
               }
             </p>
@@ -122,6 +189,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 />
               </div>
             </div>
+
+            {showSecurityQuestion && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Téléphone
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    placeholder="+226 01 51 11 46"
+                    required
+                  />
+                </div>
+              </div>
+            )}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -173,7 +259,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
             )}
 
-            {mode === 'login' && (
+            {showSecurityQuestion && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Question de sécurité: Qui est le plus bête dans l'équipe ?
+                </label>
+                <div className="relative">
+                  <ShieldCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                  <input
+                    type="text"
+                    value={formData.securityAnswer}
+                    onChange={(e) => handleInputChange('securityAnswer', e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    placeholder="Votre réponse..."
+                    required
+                  />
+                </div>
+              </div>
+            )}
+
+            {mode === 'login' && !showSecurityQuestion && (
               <div className="flex items-center justify-between text-sm">
                 <label className="flex items-center">
                   <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary" />
@@ -185,6 +290,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
             )}
 
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                <p className="text-red-600 text-sm">{error}</p>
+              </div>
+            )}
+
             <Button
               type="submit"
               disabled={isLoading}
@@ -193,55 +304,84 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               {isLoading ? (
                 <div className="flex items-center justify-center space-x-2">
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>{mode === 'login' ? 'Connexion...' : 'Inscription...'}</span>
+                  <span>
+                    {mode === 'login' 
+                      ? showSecurityQuestion 
+                        ? 'Authentification...' 
+                        : 'Connexion...'
+                      : 'Inscription...'
+                    }
+                  </span>
                 </div>
               ) : (
-                mode === 'login' ? 'Se connecter' : 'Créer mon compte'
+                mode === 'login' 
+                  ? showSecurityQuestion 
+                    ? 'Connexion Admin'
+                    : 'Se connecter'
+                  : 'Créer mon compte'
               )}
             </Button>
           </form>
 
           {/* Switch mode */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              {mode === 'login' ? 'Pas encore de compte ?' : 'Déjà un compte ?'}
+          {!showSecurityQuestion && (
+            <div className="mt-6 text-center">
+              <p className="text-gray-600">
+                {mode === 'login' ? 'Pas encore de compte ?' : 'Déjà un compte ?'}
+                <button
+                  onClick={() => {
+                    setMode(mode === 'login' ? 'register' : 'login');
+                    resetForm();
+                  }}
+                  className="ml-2 text-primary hover:text-secondary font-semibold"
+                >
+                  {mode === 'login' ? 'S\'inscrire' : 'Se connecter'}
+                </button>
+              </p>
+            </div>
+          )}
+
+          {showSecurityQuestion && (
+            <div className="mt-6 text-center">
               <button
-                onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-                className="ml-2 text-primary hover:text-secondary font-semibold"
+                onClick={resetForm}
+                className="text-primary hover:text-secondary font-semibold"
               >
-                {mode === 'login' ? 'S\'inscrire' : 'Se connecter'}
+                ← Retour à la connexion normale
               </button>
-            </p>
-          </div>
+            </div>
+          )}
 
           {/* Social auth */}
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+          {!showSecurityQuestion && (
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Ou continuer avec</span>
+                </div>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Ou continuer avec</span>
+              
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <Button
+                  variant="outline"
+                  className="flex items-center justify-center space-x-2 py-3 hover:bg-gray-50"
+                >
+                  <span className="text-lg">🌐</span>
+                  <span>Google</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex items-center justify-center space-x-2 py-3 hover:bg-gray-50"
+                >
+                  <span className="text-lg">📘</span>
+                  <span>Facebook</span>
+                </Button>
               </div>
             </div>
-            
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <Button
-                variant="outline"
-                className="flex items-center justify-center space-x-2 py-3 hover:bg-gray-50"
-              >
-                <span className="text-lg">🌐</span>
-                <span>Google</span>
-              </Button>
-              <Button
-                variant="outline"
-                className="flex items-center justify-center space-x-2 py-3 hover:bg-gray-50"
-              >
-                <span className="text-lg">📘</span>
-                <span>Facebook</span>
-              </Button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
