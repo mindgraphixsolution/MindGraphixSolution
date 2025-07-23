@@ -4,6 +4,7 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { AuthModal } from '../components/AuthModal';
 import { AdminPanel } from '../components/AdminPanel';
+import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
 import { useState } from 'react';
 import { Target, Eye, Heart, Award, Users, Lightbulb, Code, Rocket } from 'lucide-react';
 
@@ -266,6 +267,7 @@ export default function About() {
         defaultMode={authMode}
       />
 
+      <AdminViewSwitcher />
       <AdminPanel />
     </div>
   );
