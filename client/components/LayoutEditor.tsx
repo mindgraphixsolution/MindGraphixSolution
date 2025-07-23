@@ -139,12 +139,18 @@ export const LayoutEditor: React.FC = () => {
           outline-offset: 1px;
         }
       `;
-      document.head.appendChild(style);
+      if (document.head) {
+        document.head.appendChild(style);
+      }
     } else {
       // Désactiver le mode édition
-      document.body.classList.remove("layout-edit-mode");
+      if (document.body) {
+        document.body.classList.remove("layout-edit-mode");
+      }
       const style = document.getElementById("layout-editor-styles");
-      if (style) style.remove();
+      if (style && style.parentNode) {
+        style.parentNode.removeChild(style);
+      }
     }
   };
 
