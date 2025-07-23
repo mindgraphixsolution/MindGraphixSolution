@@ -668,7 +668,9 @@ export default function AdminDashboard() {
                   <h2 className="text-xl font-bold text-gray-900">
                     Messages & Demandes
                   </h2>
-                  <AdminNotifications />
+                  <SafeAdminWrapper>
+                    <AdminNotifications />
+                  </SafeAdminWrapper>
                 </div>
               )}
 
