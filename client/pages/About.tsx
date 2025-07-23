@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { AuthModal } from '../components/AuthModal';
+import { AdminPanel } from '../components/AdminPanel';
 import { useState } from 'react';
 import { Target, Eye, Heart, Award, Users, Lightbulb, Code, Rocket } from 'lucide-react';
 
@@ -264,6 +265,8 @@ export default function About() {
         onClose={() => setShowAuthModal(false)}
         defaultMode={authMode}
       />
+
+      <AdminPanel />
     </div>
   );
 }
