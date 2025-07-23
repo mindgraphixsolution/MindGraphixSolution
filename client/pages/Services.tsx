@@ -4,6 +4,7 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { AuthModal } from '../components/AuthModal';
 import { AdminPanel } from '../components/AdminPanel';
+import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
 import { 
   Palette, Code, Smartphone, Video, ShoppingCart, Search, 
   Check, ArrowRight, Star, Clock, Users, Zap 
@@ -359,6 +360,7 @@ export default function Services() {
         defaultMode={authMode}
       />
 
+      <AdminViewSwitcher />
       <AdminPanel />
     </div>
   );
