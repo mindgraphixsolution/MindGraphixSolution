@@ -86,10 +86,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         if (formData.email === 'mindgraphixsolution@gmail.com') {
           setError('Mot de passe administrateur incorrect.');
         } else {
-          await new Promise(resolve => setTimeout(resolve, 1500));
-          alert('Connexion utilisateur réussie !');
-          onClose();
-          resetForm();
+          // Connexion utilisateur normal
+          const userLogin = await loginUser(formData.email, formData.password);
+          if (userLogin) {
+            alert('Connexion utilisateur réussie !');
+            onClose();
+            resetForm();
+          } else {
+            setError('Erreur lors de la connexion. Veuillez réessayer.');
+          }
         }
       }
     }
