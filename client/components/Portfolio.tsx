@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ExternalLink, Eye, Heart } from 'lucide-react';
 
 export const Portfolio: React.FC = () => {
@@ -196,15 +197,12 @@ export const Portfolio: React.FC = () => {
             <p className="text-gray-600 mb-6">
               Travaillons ensemble pour donner vie à vos idées les plus créatives
             </p>
-            <button 
-              onClick={() => {
-                const element = document.querySelector('#contact');
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+            <Link
+              to="/#contact"
+              className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 inline-block"
             >
               Démarrer un projet
-            </button>
+            </Link>
           </div>
         </div>
       </div>
