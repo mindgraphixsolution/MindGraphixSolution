@@ -1,0 +1,249 @@
+import React, { useState } from 'react';
+import { X, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { Button } from './ui/button';
+
+interface AuthModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  defaultMode?: 'login' | 'register';
+}
+
+export const AuthModal: React.FC<AuthModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  defaultMode = 'login' 
+}) => {
+  const [mode, setMode] = useState<'login' | 'register'>(defaultMode);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // Simulation d'une requête API
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    if (mode === 'register' && formData.password !== formData.confirmPassword) {
+      alert('Les mots de passe ne correspondent pas');
+      setIsLoading(false);
+      return;
+    }
+
+    alert(mode === 'login' ? 'Connexion réussie !' : 'Inscription réussie !');
+    setIsLoading(false);
+    onClose();
+    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      
+      {/* Modal */}
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+        {/* Header */}
+        <div className="relative bg-gradient-to-r from-primary to-secondary p-6 text-white">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-full transition-colors"
+          >
+            <X size={20} />
+          </button>
+          
+          <div className="text-center">
+            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              {mode === 'login' ? <Lock size={24} /> : <User size={24} />}
+            </div>
+            <h2 className="text-2xl font-bold">
+              {mode === 'login' ? 'Connexion' : 'Créer un compte'}
+            </h2>
+            <p className="text-white/80 mt-2">
+              {mode === 'login' 
+                ? 'Connectez-vous à votre compte' 
+                : 'Rejoignez Mind Graphix Solution'
+              }
+            </p>
+          </div>
+        </div>
+
+        {/* Form */}
+        <div className="p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {mode === 'register' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Nom complet
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    placeholder="Votre nom complet"
+                    required
+                  />
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  placeholder="votre@email.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Mot de passe
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  placeholder="••••••••"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {mode === 'register' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirmer le mot de passe
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    value={formData.confirmPassword}
+                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {mode === 'login' && (
+              <div className="flex items-center justify-between text-sm">
+                <label className="flex items-center">
+                  <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary" />
+                  <span className="ml-2 text-gray-600">Se souvenir de moi</span>
+                </label>
+                <button type="button" className="text-primary hover:text-secondary font-medium">
+                  Mot de passe oublié ?
+                </button>
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 text-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>{mode === 'login' ? 'Connexion...' : 'Inscription...'}</span>
+                </div>
+              ) : (
+                mode === 'login' ? 'Se connecter' : 'Créer mon compte'
+              )}
+            </Button>
+          </form>
+
+          {/* Switch mode */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-600">
+              {mode === 'login' ? 'Pas encore de compte ?' : 'Déjà un compte ?'}
+              <button
+                onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
+                className="ml-2 text-primary hover:text-secondary font-semibold"
+              >
+                {mode === 'login' ? 'S\'inscrire' : 'Se connecter'}
+              </button>
+            </p>
+          </div>
+
+          {/* Social auth */}
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">Ou continuer avec</span>
+              </div>
+            </div>
+            
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <Button
+                variant="outline"
+                className="flex items-center justify-center space-x-2 py-3 hover:bg-gray-50"
+              >
+                <span className="text-lg">🌐</span>
+                <span>Google</span>
+              </Button>
+              <Button
+                variant="outline"
+                className="flex items-center justify-center space-x-2 py-3 hover:bg-gray-50"
+              >
+                <span className="text-lg">📘</span>
+                <span>Facebook</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
