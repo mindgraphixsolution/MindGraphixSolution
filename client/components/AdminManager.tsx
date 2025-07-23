@@ -362,7 +362,7 @@ export const AdminManager: React.FC = () => {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Question de S��curité
+                          Question de Sécurité
                         </label>
                         <input
                           type="text"
@@ -392,7 +392,7 @@ export const AdminManager: React.FC = () => {
                             })
                           }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                          placeholder="Réponse à la question de sécurité"
+                          placeholder="Réponse à la question de s��curité"
                         />
                       </div>
 
@@ -444,7 +444,7 @@ export const AdminManager: React.FC = () => {
                           </h5>
                           <span
                             className={`px-2 py-1 rounded-full text-xs font-bold ${
-                              admin.role === "super_admin"
+                              admin.role === "supreme"
                                 ? "bg-red-100 text-red-800"
                                 : "bg-blue-100 text-blue-800"
                             }`}
