@@ -201,25 +201,61 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
                 ))}
               </ul>
               <div className="flex flex-col space-y-3 mt-6">
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    onLoginClick?.();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="border-2 border-primary text-primary hover:bg-primary hover:text-white"
-                >
-                  Connexion
-                </Button>
-                <Button
-                  onClick={() => {
-                    onRegisterClick?.();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="bg-gradient-to-r from-accent to-orange-400 text-black font-semibold hover:from-orange-400 hover:to-accent"
-                >
-                  Inscription
-                </Button>
+                {isLoggedIn ? (
+                  <>
+                    <div className="flex items-center space-x-2 text-gray-700 p-2">
+                      <User size={20} />
+                      <span className="font-medium">
+                        {isAdmin ? 'Admin' : currentUser?.name || 'Utilisateur'}
+                      </span>
+                    </div>
+                    {isAdmin && (
+                      <Button
+                        onClick={() => {
+                          navigate('/admin');
+                          setIsMobileMenuOpen(false);
+                        }}
+                        variant="outline"
+                        className="border-2 border-primary text-primary hover:bg-primary hover:text-white"
+                      >
+                        Vue Admin
+                      </Button>
+                    )}
+                    <Button
+                      onClick={() => {
+                        logout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      variant="outline"
+                      className="border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                    >
+                      <LogOut size={16} className="mr-2" />
+                      Déconnexion
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        onLoginClick?.();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="border-2 border-primary text-primary hover:bg-primary hover:text-white"
+                    >
+                      Connexion
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onRegisterClick?.();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="bg-gradient-to-r from-accent to-orange-400 text-black font-semibold hover:from-orange-400 hover:to-accent"
+                    >
+                      Inscription
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
