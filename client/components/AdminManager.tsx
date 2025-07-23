@@ -122,7 +122,7 @@ export const AdminManager: React.FC = () => {
       securityAnswer: "",
       role: "admin",
       createdAt: new Date().toISOString().split("T")[0],
-      createdBy: currentUser?.email || "super_admin",
+      createdBy: currentUser?.email || "supreme",
       isActive: true,
     };
 
