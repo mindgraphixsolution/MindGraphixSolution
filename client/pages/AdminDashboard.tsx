@@ -28,7 +28,7 @@ import { ThemeManager } from '../components/ThemeManager';
 import { CustomStylesEditor } from '../components/CustomStylesEditor';
 
 export default function AdminDashboard() {
-  const { isAdmin, logout, updateContent, getContent } = useAuth();
+  const { isAdmin, isSuperAdmin, logout, updateContent, getContent } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const [previewMode, setPreviewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const { forceSave, exportContent, importContent } = useAutoSave();
