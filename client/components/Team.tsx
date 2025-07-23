@@ -1,5 +1,7 @@
 import React from 'react';
 import { Github, Linkedin, Twitter, Globe } from 'lucide-react';
+import { EditableImage } from './EditableImage';
+import { EditableText } from './EditableText';
 
 export const Team: React.FC = () => {
   const teamMembers = [
