@@ -22,18 +22,22 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
   }, []);
 
   const navItems = [
-    { label: 'Accueil', href: '#home' },
-    { label: 'À propos', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Portfolio', href: '#portfolio' },
-    { label: 'Équipe', href: '#team' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Accueil', href: '/', type: 'route' },
+    { label: 'À propos', href: '/about', type: 'route' },
+    { label: 'Services', href: '/services', type: 'route' },
+    { label: 'Portfolio', href: '#portfolio', type: 'scroll' },
+    { label: 'Équipe', href: '#team', type: 'scroll' },
+    { label: 'Contact', href: '#contact', type: 'scroll' },
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (item: any) => {
+    if (item.type === 'scroll') {
+      const element = document.querySelector(item.href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Pour les routes, on laisse le Link gérer la navigation
     }
     setIsMobileMenuOpen(false);
   };
@@ -67,15 +71,27 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
           <ul className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <li key={item.label}>
-                <button
-                  onClick={() => scrollToSection(item.href)}
-                  className={`relative font-medium transition-colors hover:text-accent group ${
-                    isScrolled ? 'text-gray-700' : 'text-white'
-                  }`}
-                >
-                  {item.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
-                </button>
+                {item.type === 'route' ? (
+                  <Link
+                    to={item.href}
+                    className={`relative font-medium transition-colors hover:text-accent group ${
+                      isScrolled ? 'text-gray-700' : 'text-white'
+                    }`}
+                  >
+                    {item.label}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => handleNavigation(item)}
+                    className={`relative font-medium transition-colors hover:text-accent group ${
+                      isScrolled ? 'text-gray-700' : 'text-white'
+                    }`}
+                  >
+                    {item.label}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                )}
               </li>
             ))}
           </ul>
@@ -119,12 +135,22 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
               <ul className="space-y-4">
                 {navItems.map((item) => (
                   <li key={item.label}>
-                    <button
-                      onClick={() => scrollToSection(item.href)}
-                      className="block w-full text-left text-gray-700 font-medium py-2 transition-colors hover:text-accent"
-                    >
-                      {item.label}
-                    </button>
+                    {item.type === 'route' ? (
+                      <Link
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block w-full text-left text-gray-700 font-medium py-2 transition-colors hover:text-accent"
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() => handleNavigation(item)}
+                        className="block w-full text-left text-gray-700 font-medium py-2 transition-colors hover:text-accent"
+                      >
+                        {item.label}
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
