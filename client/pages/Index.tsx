@@ -16,6 +16,7 @@ import { SuperAdminPanel } from '../components/SuperAdminPanel';
 import { CustomStylesEditor } from '../components/CustomStylesEditor';
 import { ThemeManager } from '../components/ThemeManager';
 import { ContentManager } from '../components/ContentManager';
+import { LayoutEditor } from '../components/LayoutEditor';
 
 
 export default function Index() {
