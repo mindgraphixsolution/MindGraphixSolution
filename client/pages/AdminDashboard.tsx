@@ -277,7 +277,9 @@ export default function AdminDashboard() {
                       <h3 className="font-semibold text-orange-800 mb-2">
                         Demandes de Devis
                       </h3>
-                      <AdminNotifications />
+                      <SafeAdminWrapper>
+                        <AdminNotifications />
+                      </SafeAdminWrapper>
                     </div>
 
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
