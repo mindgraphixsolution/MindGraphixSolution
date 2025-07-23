@@ -240,6 +240,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const getContent = (key: string, defaultValue: any = "") => {
+    if (!isInitialized) return defaultValue;
     return siteContent[key] || defaultValue;
   };
 
