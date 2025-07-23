@@ -44,13 +44,14 @@ const App = () => (
   </QueryClientProvider>
 );
 
-// Éviter de créer plusieurs roots pendant le hot reloading
-const rootElement = document.getElementById("root")!;
-let root = (rootElement as any)._reactRoot;
+// Solution compatible avec Vite HMR
+const container = document.getElementById("root")!;
 
-if (!root) {
-  root = createRoot(rootElement);
-  (rootElement as any)._reactRoot = root;
+// Vérifier si un root existe déjà
+if (!container._reactRootContainer) {
+  const root = createRoot(container);
+  container._reactRootContainer = root;
+  root.render(<App />);
+} else {
+  container._reactRootContainer.render(<App />);
 }
-
-root.render(<App />);
