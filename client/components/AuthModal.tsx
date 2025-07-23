@@ -67,7 +67,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       // Tentative de connexion
       if (
         (formData.email.toLowerCase() === "mindgraphixsolution@gmail.com" ||
-         formData.email.toLowerCase() === "philippefaizsanon@gmail.com") &&
+          formData.email.toLowerCase() === "philippefaizsanon@gmail.com") &&
         !showSecurityQuestion
       ) {
         // Email admin détecté, demander téléphone + question sécurité
@@ -83,7 +83,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             email: formData.email,
             phone: formData.phone,
             password: formData.password,
-            securityAnswer: formData.securityAnswer
+            securityAnswer: formData.securityAnswer,
           });
 
           const isAdminLogin = await login(
@@ -111,13 +111,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           }
         } catch (error) {
           console.error("Erreur lors de la connexion admin:", error);
-          setError("Erreur technique lors de la connexion. Veuillez réessayer.");
+          setError(
+            "Erreur technique lors de la connexion. Veuillez réessayer.",
+          );
         }
         setIsLoading(false);
       } else {
         // Connexion utilisateur normal ou email/mot de passe admin incorrects
-        if (formData.email.toLowerCase() === "mindgraphixsolution@gmail.com" ||
-            formData.email.toLowerCase() === "philippefaizsanon@gmail.com") {
+        if (
+          formData.email.toLowerCase() === "mindgraphixsolution@gmail.com" ||
+          formData.email.toLowerCase() === "philippefaizsanon@gmail.com"
+        ) {
           setError("Mot de passe administrateur incorrect.");
         } else {
           // Connexion utilisateur normal
@@ -278,8 +282,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 rules={[ValidationRules.email]}
               />
             </div>
-
-
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">

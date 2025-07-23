@@ -449,9 +449,7 @@ export const AdminManager: React.FC = () => {
                                 : "bg-blue-100 text-blue-800"
                             }`}
                           >
-                            {admin.role === "supreme"
-                              ? "SUPREME"
-                              : "ADMIN"}
+                            {admin.role === "supreme" ? "SUPREME" : "ADMIN"}
                           </span>
                           {!admin.isActive && (
                             <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">
@@ -537,8 +535,8 @@ export const AdminManager: React.FC = () => {
                 </h4>
                 <ul className="text-yellow-700 text-sm space-y-1">
                   <li>
-                    • Seuls les Administrateurs Supreme peuvent gérer les comptes
-                    administrateurs
+                    • Seuls les Administrateurs Supreme peuvent gérer les
+                    comptes administrateurs
                   </li>
                   <li>
                     • Les administrateurs système (par défaut) ne peuvent pas

@@ -97,7 +97,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // Normaliser le numéro de téléphone (supprimer espaces, préfixes et caractères spéciaux)
     const normalizePhone = (phoneNumber: string): string => {
-      return phoneNumber.replace(/[\s\-\(\)\+]/g, '').replace(/^226/, '').trim();
+      return phoneNumber
+        .replace(/[\s\-\(\)\+]/g, "")
+        .replace(/^226/, "")
+        .trim();
     };
 
     // Charger les administrateurs depuis le stockage
@@ -138,12 +141,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     });
 
-    console.log("Administrateurs disponibles:", allAdmins.map(admin => ({
-      email: admin.email,
-      phone: admin.phone,
-      normalizedPhone: normalizePhone(admin.phone),
-      isActive: admin.isActive
-    })));
+    console.log(
+      "Administrateurs disponibles:",
+      allAdmins.map((admin) => ({
+        email: admin.email,
+        phone: admin.phone,
+        normalizedPhone: normalizePhone(admin.phone),
+        isActive: admin.isActive,
+      })),
+    );
 
     // Rechercher l'administrateur correspondant
     const matchingAdmin = allAdmins.find(
@@ -158,7 +164,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     console.log("Recherche d'admin avec les critères normalisés:", {
       inputPhone: normalizePhone(phone),
       inputEmail: email.toLowerCase(),
-      inputAnswer: securityAnswer.toLowerCase()
+      inputAnswer: securityAnswer.toLowerCase(),
     });
 
     if (matchingAdmin) {
