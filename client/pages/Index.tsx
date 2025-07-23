@@ -11,6 +11,7 @@ import { AuthModal } from '../components/AuthModal';
 import { AdminPanel } from '../components/AdminPanel';
 import { AdminGuide } from '../components/AdminGuide';
 import { AdminNotifications } from '../components/AdminNotifications';
+import { AdminViewSwitcher } from '../components/AdminViewSwitcher';
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -167,6 +168,7 @@ export default function Index() {
         defaultMode={authMode}
       />
 
+      <AdminViewSwitcher />
       <AdminPanel />
       <AdminGuide />
       <AdminNotifications />
