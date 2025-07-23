@@ -12,7 +12,6 @@ import {
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { PhoneInput } from "./PhoneInput";
 import { FormValidator, ValidationRules } from "./FormValidator";
 
 interface AuthModalProps {
