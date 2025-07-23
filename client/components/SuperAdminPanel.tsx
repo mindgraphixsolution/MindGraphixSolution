@@ -122,7 +122,21 @@ export const SuperAdminPanel: React.FC = () => {
                 <div className="space-y-6">
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                     <h3 className="text-lg font-semibold text-red-800 mb-2">Mode Super Admin Actif</h3>
-                    <p className="text-red-600 text-sm">Vous avez un accès complet à toutes les fonctionnalités.</p>
+                    <p className="text-red-600 text-sm mb-4">Vous avez un accès complet à toutes les fonctionnalités.</p>
+
+                    <div className="bg-white rounded-lg p-4 border border-red-300">
+                      <h4 className="font-semibold text-red-800 mb-3">🔐 Identifiants Super Admin</h4>
+                      <div className="space-y-2 text-sm font-mono">
+                        <div><span className="text-gray-600">Email:</span> <span className="font-bold">philippefaizsanon@gmail.com</span></div>
+                        <div><span className="text-gray-600">Téléphone:</span> <span className="font-bold">+226 54191605</span></div>
+                        <div><span className="text-gray-600">Mot de passe:</span> <span className="font-bold">Philius24648</span></div>
+                        <div><span className="text-gray-600">Question:</span> <span className="font-bold">Qui est ton artiste préféré ?</span></div>
+                        <div><span className="text-gray-600">Réponse:</span> <span className="font-bold">Lil Nas X</span></div>
+                      </div>
+                      <div className="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800">
+                        ⚠️ Gardez ces identifiants secrets et en sécurité !
+                      </div>
+                    </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
