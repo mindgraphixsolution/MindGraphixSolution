@@ -19,7 +19,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
   placeholder,
   multiline = false,
 }) => {
-  const { isAdmin, isEditMode, getContent, updateContent } = useAuth();
+  const { isAdmin, isSuperAdmin, isEditMode, getContent, updateContent } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState('');
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
