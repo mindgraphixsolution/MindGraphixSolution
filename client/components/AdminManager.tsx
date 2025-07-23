@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Users, UserPlus, Shield, Trash2, Edit, Save, X, Key, Mail } from 'lucide-react';
 import { Button } from './ui/button';
 import { useAuth } from '../contexts/AuthContext';
+import { PhoneInput } from './PhoneInput';
 
 interface AdminUser {
   id: string;
