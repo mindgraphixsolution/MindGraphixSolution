@@ -44,14 +44,18 @@ const App = () => (
   </QueryClientProvider>
 );
 
-// Solution compatible avec Vite HMR
-const container = document.getElementById("root")!;
+// Initialisation de l'application compatible avec Vite HMR
+function initApp() {
+  const container = document.getElementById("root")!;
 
-// Vérifier si un root existe déjà
-if (!container._reactRootContainer) {
+  // Nettoyer le conteneur existant si nécessaire
+  if (container.hasChildNodes()) {
+    container.innerHTML = '';
+  }
+
   const root = createRoot(container);
-  container._reactRootContainer = root;
   root.render(<App />);
-} else {
-  container._reactRootContainer.render(<App />);
 }
+
+// Démarrer l'application
+initApp();
