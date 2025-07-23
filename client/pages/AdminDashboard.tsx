@@ -207,7 +207,19 @@ export default function AdminDashboard() {
               {activeTab === 'overview' && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-bold text-gray-900">Vue d'ensemble</h2>
-                  
+
+                  <div className="bg-gradient-to-r from-purple-500 to-blue-600 rounded-lg p-4 text-white mb-4">
+                    <h3 className="text-lg font-bold mb-2">
+                      {isSuperAdmin ? '👑 Accès Administrateur Supreme' : '🔧 Accès Administrateur'}
+                    </h3>
+                    <p className="text-sm opacity-90">
+                      {isSuperAdmin
+                        ? 'Vous avez accès à tous les outils avancés dans la section Paramètres'
+                        : 'Connecté en tant qu\'administrateur standard'
+                      }
+                    </p>
+                  </div>
+
                   <div className="grid grid-cols-1 gap-4">
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                       <h3 className="font-semibold text-blue-800 mb-2">Site Web</h3>
