@@ -31,26 +31,39 @@ export const useAutoSave = () => {
     };
   }, [isAdmin]);
 
+  const showSaveIndicator = (message: string, bgColor: string) => {
+    // Remove existing indicator first
+    if (indicatorRef.current && document.body.contains(indicatorRef.current)) {
+      document.body.removeChild(indicatorRef.current);
+    }
+
+    // Create new indicator
+    const indicator = document.createElement('div');
+    indicator.className = `fixed top-4 right-4 z-50 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg transition-opacity`;
+    indicator.textContent = message;
+    indicatorRef.current = indicator;
+
+    document.body.appendChild(indicator);
+
+    setTimeout(() => {
+      if (indicatorRef.current && document.body.contains(indicatorRef.current)) {
+        document.body.removeChild(indicatorRef.current);
+        indicatorRef.current = null;
+      }
+    }, 3000);
+  };
+
   const forceSave = () => {
     if (!isAdmin) return;
-    
+
     const currentContent = localStorage.getItem('siteContent') || '{}';
-    
+
     // Backup to a different key for recovery
     localStorage.setItem('siteContentBackup', currentContent);
     localStorage.setItem('lastSaveTime', new Date().toISOString());
-    
+
     // Show save confirmation
-    const indicator = document.createElement('div');
-    indicator.className = 'fixed top-4 right-4 z-50 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg';
-    indicator.textContent = '💾 Sauvegarde manuelle effectuée';
-    document.body.appendChild(indicator);
-    
-    setTimeout(() => {
-      if (document.body.contains(indicator)) {
-        document.body.removeChild(indicator);
-      }
-    }, 3000);
+    showSaveIndicator('💾 Sauvegarde manuelle effectuée', 'bg-blue-500');
   };
 
   const exportContent = () => {
