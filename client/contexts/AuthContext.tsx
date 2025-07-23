@@ -94,6 +94,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       securityAnswer: securityAnswer.toLowerCase(),
     });
 
+    console.log("Administrateurs disponibles:", allAdmins.map(admin => ({
+      email: admin.email,
+      phone: admin.phone,
+      normalizedPhone: normalizePhone(admin.phone),
+      isActive: admin.isActive
+    })));
+
     // Charger les administrateurs depuis le stockage
     const savedAdmins = JSON.parse(localStorage.getItem("siteContent") || "{}");
     const systemAdmins = savedAdmins["system.admins"] || [];
