@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, ChevronRight, ChevronLeft, Check, Calendar, DollarSign, Clock, Users, Target, Zap } from 'lucide-react';
 import { Button } from './ui/button';
+import { PhoneInput } from './PhoneInput';
 
 interface QuoteRequestProps {
   isOpen: boolean;
@@ -590,7 +591,7 @@ export const QuoteRequest: React.FC<QuoteRequestProps> = ({ isOpen, onClose, sel
             </div>
           )}
 
-          {/* Step 5: Mat��riaux & Finalisation */}
+          {/* Step 5: Matériaux & Finalisation */}
           {currentStep === 5 && (
             <div className="space-y-6">
               <div className="text-center mb-6">
