@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ExternalLink } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -11,6 +11,8 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,12 +34,16 @@ export const Header: React.FC<HeaderProps> = ({ onLoginClick, onRegisterClick })
 
   const handleNavigation = (item: any) => {
     if (item.type === 'scroll') {
-      const element = document.querySelector(item.href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+      // Si on n'est pas sur la page d'accueil, rediriger vers l'accueil avec l'ancre
+      if (location.pathname !== '/') {
+        navigate('/' + item.href);
+      } else {
+        // Si on est sur la page d'accueil, faire le scroll normal
+        const element = document.querySelector(item.href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
       }
-    } else {
-      // Pour les routes, on laisse le Link gérer la navigation
     }
     setIsMobileMenuOpen(false);
   };
