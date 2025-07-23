@@ -144,7 +144,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     // Sinon utiliser les questions par défaut
     return (
       defaultQuestions[email.toLowerCase()] ||
-      "Question de sécurité non d��finie"
+      "Question de sécurité non définie"
     );
   };
 
@@ -344,27 +344,47 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             )}
 
             {showSecurityQuestion && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Question de sécurité: {getSecurityQuestion(formData.email)}
-                </label>
-                <div className="relative">
-                  <ShieldCheck
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                    size={18}
-                  />
-                  <input
-                    type="text"
-                    value={formData.securityAnswer}
-                    onChange={(e) =>
-                      handleInputChange("securityAnswer", e.target.value)
-                    }
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    placeholder="Votre réponse..."
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Téléphone
+                  </label>
+                  <PhoneInput
+                    value={formData.phone}
+                    onChange={(value) => handleInputChange("phone", value)}
+                    placeholder="01 51 11 46"
                     required
                   />
+                  <p className="text-xs text-blue-600 mt-1">
+                    💡 Format: +226 01 51 11 46 ou +226 54191605
+                  </p>
                 </div>
-              </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Question de sécurité: {getSecurityQuestion(formData.email)}
+                  </label>
+                  <div className="relative">
+                    <ShieldCheck
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                      size={18}
+                    />
+                    <input
+                      type="text"
+                      value={formData.securityAnswer}
+                      onChange={(e) =>
+                        handleInputChange("securityAnswer", e.target.value)
+                      }
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                      placeholder="Votre réponse..."
+                      required
+                    />
+                  </div>
+                  <p className="text-xs text-blue-600 mt-1">
+                    💡 Réponses: "Badiori" ou "Lil Nas X" (respecter la casse)
+                  </p>
+                </div>
+              </>
             )}
 
             {mode === "login" && !showSecurityQuestion && (
