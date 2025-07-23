@@ -392,7 +392,7 @@ export const AdminManager: React.FC = () => {
                             })
                           }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                          placeholder="Réponse à la question de s��curité"
+                          placeholder="Réponse à la question de sécurité"
                         />
                       </div>
 
@@ -449,8 +449,8 @@ export const AdminManager: React.FC = () => {
                                 : "bg-blue-100 text-blue-800"
                             }`}
                           >
-                            {admin.role === "super_admin"
-                              ? "SUPER ADMIN"
+                            {admin.role === "supreme"
+                              ? "SUPREME"
                               : "ADMIN"}
                           </span>
                           {!admin.isActive && (
