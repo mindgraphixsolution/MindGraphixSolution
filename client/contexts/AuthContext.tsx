@@ -139,9 +139,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     });
 
-    // Normaliser le numéro de téléphone (supprimer espaces et caractères spéciaux)
+    // Normaliser le numéro de téléphone (supprimer espaces, préfixes et caractères spéciaux)
     const normalizePhone = (phoneNumber: string): string => {
-      return phoneNumber.replace(/[\s\-\(\)]/g, '').trim();
+      return phoneNumber.replace(/[\s\-\(\)\+]/g, '').replace(/^226/, '').trim();
     };
 
     // Rechercher l'administrateur correspondant
