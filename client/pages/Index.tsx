@@ -180,6 +180,7 @@ export default function Index() {
       <CustomStylesEditor />
       <ThemeManager />
       <ContentManager />
+      <LayoutEditor />
     </div>
   );
 }
