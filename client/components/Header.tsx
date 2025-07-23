@@ -117,7 +117,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <User size={20} />
                   <span className="font-medium">
                     {isSuperAdmin
-                      ? "Super Admin"
+                      ? "Supreme"
                       : isAdmin
                         ? "Admin"
                         : currentUser?.name || "Utilisateur"}
@@ -216,7 +216,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <User size={20} />
                       <span className="font-medium">
                         {isSuperAdmin
-                          ? "Super Admin"
+                          ? "Supreme"
                           : isAdmin
                             ? "Admin"
                             : currentUser?.name || "Utilisateur"}
