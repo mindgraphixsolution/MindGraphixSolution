@@ -2,8 +2,11 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 interface AuthContextType {
   isAdmin: boolean;
+  isLoggedIn: boolean;
+  currentUser: { email: string; name?: string } | null;
   isEditMode: boolean;
   login: (email: string, phone: string, password: string, securityAnswer: string) => Promise<boolean>;
+  loginUser: (email: string, password: string, name?: string) => Promise<boolean>;
   logout: () => void;
   toggleEditMode: () => void;
   updateContent: (key: string, value: any) => void;
