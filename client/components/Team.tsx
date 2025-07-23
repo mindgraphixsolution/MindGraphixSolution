@@ -30,7 +30,7 @@ export const Team: React.FC = () => {
     {
       name: 'Émilie Rousseau',
       role: 'UX/UI Designer',
-      image: 'https://randomuser.me/api/portraits/women/68.jpg',
+      image: 'https://images.pexels.com/photos/7552359/pexels-photo-7552359.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
       bio: 'Passionnée par la création d\'expériences utilisateur exceptionnelles et intuitives.',
       skills: ['Figma', 'Sketch', 'Prototyping', 'User Research'],
       social: {
