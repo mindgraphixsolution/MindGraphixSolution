@@ -34,14 +34,8 @@ export default function Index() {
   return (
     <div className="min-h-screen">
       <Header
-        onLoginClick={() => {
-          setAuthMode('login');
-          setShowLoginModal(true);
-        }}
-        onRegisterClick={() => {
-          setAuthMode('register');
-          setShowLoginModal(true);
-        }}
+        onLoginClick={() => setShowLoginModal(true)}
+        onRegisterClick={() => setShowRegisterModal(true)}
       />
       
       <main>
