@@ -172,6 +172,7 @@ export default function Index() {
       <AdminViewSwitcher />
       <AdminPanel />
       <AdminNotifications />
+      <SuperAdminPanel />
     </div>
   );
 }
