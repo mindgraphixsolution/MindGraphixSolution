@@ -1,5 +1,6 @@
 import React from 'react';
 import { Lightbulb, Code, TrendingUp, Headphones } from 'lucide-react';
+import { EditableText } from './EditableText';
 
 export const About: React.FC = () => {
   const features = [
@@ -29,13 +30,19 @@ export const About: React.FC = () => {
     <section id="about" className="py-20 bg-white">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6 relative inline-block">
-            À Propos de Nous
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-accent rounded-full"></div>
-          </h2>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            Découvrez l'esprit innovant derrière Mind Graphix Solution
-          </p>
+          <EditableText
+            contentKey="about.title"
+            defaultValue="À Propos de Nous"
+            as="h2"
+            className="text-4xl md:text-5xl font-bold text-primary mb-6 relative inline-block"
+          />
+          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-accent rounded-full"></div>
+          <EditableText
+            contentKey="about.subtitle"
+            defaultValue="Découvrez l'esprit innovant derrière Mind Graphix Solution"
+            as="p"
+            className="text-gray-600 text-lg max-w-3xl mx-auto"
+          />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
