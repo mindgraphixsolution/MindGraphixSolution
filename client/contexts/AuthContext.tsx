@@ -29,12 +29,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Charger l'état d'authentification au démarrage
   useEffect(() => {
     const savedAuth = localStorage.getItem('adminAuth');
+    const savedUser = localStorage.getItem('currentUser');
     const savedContent = localStorage.getItem('siteContent');
-    
+
     if (savedAuth === 'true') {
       setIsAdmin(true);
+      setIsLoggedIn(true);
     }
-    
+
+    if (savedUser) {
+      try {
+        const user = JSON.parse(savedUser);
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+      } catch (e) {
+        console.error('Erreur lors du chargement de l\'utilisateur:', e);
+      }
+    }
+
     if (savedContent) {
       try {
         setSiteContent(JSON.parse(savedContent));
