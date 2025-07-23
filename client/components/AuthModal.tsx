@@ -3,6 +3,7 @@ import { X, Mail, Lock, User, Eye, EyeOff, Phone, ShieldCheck } from 'lucide-rea
 import { Button } from './ui/button';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { PhoneInput } from './PhoneInput';
 
 interface AuthModalProps {
   isOpen: boolean;
