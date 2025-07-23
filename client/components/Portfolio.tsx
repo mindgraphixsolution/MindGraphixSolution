@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, Eye, Heart } from 'lucide-react';
+import { ExternalLink, Eye, Heart, MessageSquare } from 'lucide-react';
+import { QuoteRequestModal } from './QuoteRequestModal';
 
 export const Portfolio: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [quoteModal, setQuoteModal] = useState({ isOpen: false, projectTitle: '', projectCategory: '' });
 
   const portfolioItems = [
     {
@@ -134,10 +136,27 @@ export const Portfolio: React.FC = () => {
                 {/* Action buttons */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                   <div className="flex space-x-3">
-                    <button className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent hover:text-black transition-all duration-300 transform hover:scale-110">
+                    <button
+                      className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-blue-500 hover:text-white transition-all duration-300 transform hover:scale-110"
+                      title="Voir les détails"
+                    >
                       <Eye size={20} />
                     </button>
-                    <button className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent hover:text-black transition-all duration-300 transform hover:scale-110">
+                    <button
+                      onClick={() => setQuoteModal({
+                        isOpen: true,
+                        projectTitle: item.title,
+                        projectCategory: item.category
+                      })}
+                      className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-accent hover:text-black transition-all duration-300 transform hover:scale-110"
+                      title="Demander un devis"
+                    >
+                      <MessageSquare size={20} />
+                    </button>
+                    <button
+                      className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-green-500 hover:text-white transition-all duration-300 transform hover:scale-110"
+                      title="Voir le projet"
+                    >
                       <ExternalLink size={20} />
                     </button>
                   </div>
@@ -205,6 +224,14 @@ export const Portfolio: React.FC = () => {
             </Link>
           </div>
         </div>
+
+        {/* Quote Request Modal */}
+        <QuoteRequestModal
+          isOpen={quoteModal.isOpen}
+          onClose={() => setQuoteModal({ isOpen: false, projectTitle: '', projectCategory: '' })}
+          projectTitle={quoteModal.projectTitle}
+          projectCategory={quoteModal.projectCategory}
+        />
       </div>
     </section>
   );
