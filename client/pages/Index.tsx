@@ -195,16 +195,18 @@ export default function Index() {
         defaultMode="register"
       />
 
-      <AdminViewSwitcher />
-      <AdminPanel />
-      <AdminNotifications />
-      <SuperAdminPanel />
-      <CustomStylesEditor />
-      <ThemeManager />
-      <ContentManager />
-      <LayoutEditor />
-      <PriceManager />
-      <AdminManager />
+      <SafeAdminWrapper>
+        <AdminViewSwitcher />
+        <AdminPanel />
+        <AdminNotifications />
+        <SuperAdminPanel />
+        <CustomStylesEditor />
+        <ThemeManager />
+        <ContentManager />
+        <LayoutEditor />
+        <PriceManager />
+        <AdminManager />
+      </SafeAdminWrapper>
     </div>
   );
 }
