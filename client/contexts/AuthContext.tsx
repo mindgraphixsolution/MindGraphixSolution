@@ -139,8 +139,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   return (
     <AuthContext.Provider value={{
       isAdmin,
+      isLoggedIn,
+      currentUser,
       isEditMode,
       login,
+      loginUser,
       logout,
       toggleEditMode,
       updateContent,
