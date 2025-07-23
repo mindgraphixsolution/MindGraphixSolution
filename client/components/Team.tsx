@@ -21,7 +21,7 @@ export const Team: React.FC = () => {
       name: 'FAÏZ PHILLIPPE SANON',
       role: 'Développeur Full-Stack',
       image: 'https://images.pexels.com/photos/5952738/pexels-photo-5952738.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
-      bio: 'Spécialis�� dans les technologies modernes et l\'architecture scalable des applications.',
+      bio: 'Spécialisé dans les technologies modernes et l\'architecture scalable des applications.',
       skills: ['TypeScript', 'Python', 'AWS', 'Docker'],
       social: {
         linkedin: '#',
@@ -45,7 +45,7 @@ export const Team: React.FC = () => {
       name: 'Antoine Morel',
       role: 'Motion Designer',
       image: 'https://images.pexels.com/photos/3379937/pexels-photo-3379937.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop&crop=face',
-      bio: 'Créateur d\'animations captivantes et de contenus vidéo pour le marketing digital.',
+      bio: 'Cr��ateur d\'animations captivantes et de contenus vidéo pour le marketing digital.',
       skills: ['After Effects', 'Cinema 4D', 'Premiere', 'Blender'],
       social: {
         linkedin: '#',
@@ -118,12 +118,18 @@ export const Team: React.FC = () => {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                  {member.name}
-                </h3>
-                <p className="text-primary font-semibold mb-3 text-sm uppercase tracking-wide">
-                  {member.role}
-                </p>
+                <EditableText
+                  contentKey={`team.member.${index}.name`}
+                  defaultValue={member.name}
+                  as="h3"
+                  className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors"
+                />
+                <EditableText
+                  contentKey={`team.member.${index}.role`}
+                  defaultValue={member.role}
+                  as="p"
+                  className="text-primary font-semibold mb-3 text-sm uppercase tracking-wide"
+                />
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   {member.bio}
                 </p>
