@@ -5,44 +5,76 @@ import { Button } from './ui/button';
 import { QuoteRequest } from './QuoteRequest';
 
 export const Services: React.FC = () => {
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [selectedService, setSelectedService] = useState('');
+
   const services = [
     {
+      id: 'design',
       icon: Palette,
       title: 'Design Graphique',
       description: 'Création d\'identités visuelles percutantes, logos, supports print et éléments graphiques qui renforcent votre image de marque.',
       gradient: 'from-pink-500 to-purple-600',
+      price: 'À partir de 800€',
+      features: ['Logo & identité', 'Supports print', 'Charte graphique', 'Déclinaisons'],
+      timeline: '2-4 semaines'
     },
     {
+      id: 'web-dev',
       icon: Code,
       title: 'Développement Web',
       description: 'Sites web et applications sur mesure, performants et sécurisés, conçus avec les dernières technologies du marché.',
       gradient: 'from-blue-500 to-cyan-600',
+      price: 'À partir de 2000€',
+      features: ['Design responsive', 'CMS intégré', 'SEO optimisé', 'Sécurité renforcée'],
+      timeline: '4-8 semaines'
     },
     {
+      id: 'ui-ux',
       icon: Smartphone,
       title: 'UI/UX Design',
       description: 'Interfaces intuitives et expériences utilisateur optimisées pour maximiser l\'engagement et la conversion.',
       gradient: 'from-green-500 to-teal-600',
+      price: 'À partir de 1500€',
+      features: ['Wireframes', 'Prototypes', 'Tests utilisateurs', 'Design system'],
+      timeline: '3-6 semaines'
     },
     {
+      id: 'motion',
       icon: Video,
       title: 'Motion Design',
       description: 'Animations et vidéos captivantes pour dynamiser votre communication et renforcer votre storytelling.',
       gradient: 'from-orange-500 to-red-600',
+      price: 'À partir de 1200€',
+      features: ['Story-board', 'Animation 2D/3D', 'Sound design', 'Formats multiples'],
+      timeline: '3-5 semaines'
     },
     {
+      id: 'ecommerce',
       icon: ShoppingCart,
       title: 'E-commerce',
       description: 'Solutions e-commerce complètes pour vendre en ligne avec une expérience client optimisée.',
       gradient: 'from-indigo-500 to-purple-600',
+      price: 'À partir de 3500€',
+      features: ['Catalogue produits', 'Paiement sécurisé', 'Gestion stock', 'Analytics'],
+      timeline: '6-10 semaines'
     },
     {
+      id: 'marketing',
       icon: Search,
       title: 'SEO & Marketing',
       description: 'Stratégies digitales pour améliorer votre visibilité en ligne et générer plus de leads qualifiés.',
       gradient: 'from-yellow-500 to-orange-600',
+      price: 'À partir de 600€/mois',
+      features: ['Audit SEO', 'Stratégie contenu', 'Campagnes pub', 'Reporting'],
+      timeline: 'En continu'
     },
   ];
+
+  const handleQuoteRequest = (serviceId: string) => {
+    setSelectedService(serviceId);
+    setShowQuoteModal(true);
+  };
 
   return (
     <section id="services" className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
