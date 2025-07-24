@@ -58,7 +58,7 @@ export const AdminGuide: React.FC = () => {
                     </div>
                     <div className="flex items-center">
                       <ShieldCheck className="w-4 h-4 mr-2 text-blue-600" />
-                      <strong>Question de sécurité :</strong> Badiori
+                      <strong>Question de sécurité :</strong> [Confidentielle]
                     </div>
                   </div>
                 </div>
