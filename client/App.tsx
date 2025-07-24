@@ -44,6 +44,8 @@ export default function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
             <IntelligentBot />
+            <HybridChatSystem />
+            <SecurityEnforcer />
             <SystemValidator />
           </BrowserRouter>
         </TooltipProvider>
