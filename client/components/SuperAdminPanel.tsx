@@ -189,36 +189,27 @@ export const SuperAdminPanel: React.FC = () => {
 
                     <div className="bg-white rounded-lg p-4 border border-red-300">
                       <h4 className="font-semibold text-red-800 mb-3">
-                        🔐 Identifiants Supreme
+                        🔐 Accès Sécurisé Supreme
                       </h4>
-                      <div className="space-y-2 text-sm font-mono">
-                        <div>
-                          <span className="text-gray-600">Email:</span>{" "}
-                          <span className="font-bold">
-                            philippefaizsanon@gmail.com
+                      <div className="space-y-2 text-sm">
+                        <div className="p-3 bg-green-50 border border-green-200 rounded">
+                          <span className="text-green-800 font-semibold">
+                            ✓ Authentification Supreme Active
                           </span>
                         </div>
-                        <div>
-                          <span className="text-gray-600">Téléphone:</span>{" "}
-                          <span className="font-bold">+226 54191605</span>
-                        </div>
-                        <div>
-                          <span className="text-gray-600">Mot de passe:</span>{" "}
-                          <span className="font-bold">Philius24648</span>
-                        </div>
-                        <div>
-                          <span className="text-gray-600">Question:</span>{" "}
-                          <span className="font-bold">
-                            Qui est ton artiste préféré ?
+                        <div className="p-3 bg-blue-50 border border-blue-200 rounded">
+                          <span className="text-blue-800">
+                            🔒 Accès complet aux fonctionnalités système
                           </span>
                         </div>
-                        <div>
-                          <span className="text-gray-600">Réponse:</span>{" "}
-                          <span className="font-bold">Lil Nas X</span>
+                        <div className="p-3 bg-purple-50 border border-purple-200 rounded">
+                          <span className="text-purple-800">
+                            ⚡ Droits administrateur maximum
+                          </span>
                         </div>
                       </div>
                       <div className="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800">
-                        ⚠️ Gardez ces identifiants secrets et en sécurité !
+                        ⚠️ Session sécurisée - Toutes les actions sont tracées
                       </div>
                     </div>
                   </div>
