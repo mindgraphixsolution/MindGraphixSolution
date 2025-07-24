@@ -85,14 +85,13 @@ export const SuperAdminPanel: React.FC = () => {
 
   return (
     <>
-      {/* Supreme Button - Caché mais accessible par raccourci clavier */}
+      {/* Supreme Button - Accessible uniquement au super admin */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 right-4 z-50 w-12 h-12 bg-transparent hover:bg-transparent text-transparent rounded-full flex items-center justify-center transition-all duration-300 opacity-0 pointer-events-none"
-        title=""
-        style={{ display: 'none' }}
+        className="fixed top-4 right-4 z-50 w-8 h-8 bg-gray-200 hover:bg-gray-300 text-gray-500 hover:text-gray-700 rounded-full flex items-center justify-center transition-all duration-300 opacity-50 hover:opacity-100"
+        title="Admin"
       >
-        <Shield size={20} />
+        <Shield size={16} />
       </button>
 
       {/* Supreme Panel Modal */}
