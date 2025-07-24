@@ -29,7 +29,7 @@ export default function Services() {
         'Illustrations personnalisées',
         'Retouche et montage photo'
       ],
-      pricing: 'À partir de 150€',
+      pricing: 'À partir de 98.000 FCFA',
       duration: '3-7 jours',
       gradient: 'from-pink-500 to-purple-600',
       image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
