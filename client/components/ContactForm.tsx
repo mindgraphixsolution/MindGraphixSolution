@@ -17,6 +17,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onLoginClick, onRegist
     priority: 'normal'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showQuickSignup, setShowQuickSignup] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
