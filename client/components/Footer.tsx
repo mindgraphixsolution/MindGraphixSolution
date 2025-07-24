@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Phone, MapPin, Send, Facebook, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
