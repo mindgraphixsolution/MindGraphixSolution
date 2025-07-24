@@ -261,6 +261,20 @@ export const SupremeSecurityPanel: React.FC<SupremeSecurityPanelProps> = ({
               >
                 Export complet système
               </Button>
+              <Button
+                onClick={() => executeSupremeCommand('emergency_backup')}
+                className="w-full bg-red-600 hover:bg-red-700 text-white"
+                size="sm"
+              >
+                Sauvegarde d'urgence
+              </Button>
+              <Button
+                onClick={() => executeSupremeCommand('system_diagnostics')}
+                className="w-full bg-cyan-600 hover:bg-cyan-700 text-white"
+                size="sm"
+              >
+                Diagnostics système
+              </Button>
             </div>
           </div>
 
