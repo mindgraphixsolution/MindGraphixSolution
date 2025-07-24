@@ -203,8 +203,8 @@ export const LiveChat: React.FC = () => {
           className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110"
         >
           <MessageCircle size={24} />
-          {chatSession && chatSession.messages.some(m => 
-            m.sender === 'admin' && 
+          {chatSession && chatSession.messages && chatSession.messages.some(m =>
+            m.sender === 'admin' &&
             new Date(m.timestamp).getTime() > Date.now() - 300000 // 5 minutes
           ) && (
             <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
