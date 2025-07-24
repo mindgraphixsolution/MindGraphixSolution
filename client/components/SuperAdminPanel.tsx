@@ -30,32 +30,7 @@ export const SuperAdminPanel: React.FC = () => {
 
   if (!isSuperAdmin) return null;
 
-  // Raccourci clavier secret : Ctrl + Shift + S + A
-  useEffect(() => {
-    let keySequence: string[] = [];
-    const secretSequence = ['Control', 'Shift', 's', 'a'];
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && (e.key === 's' || e.key === 'a')) {
-        keySequence.push(e.key);
-        if (keySequence.length > secretSequence.length) {
-          keySequence = [e.key];
-        }
-
-        if (keySequence.length === 2 &&
-            keySequence[0] === 's' &&
-            keySequence[1] === 'a') {
-          setIsOpen(true);
-          keySequence = [];
-        }
-      } else {
-        keySequence = [];
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   const exportSiteData = () => {
     const siteData = localStorage.getItem("siteContent");
