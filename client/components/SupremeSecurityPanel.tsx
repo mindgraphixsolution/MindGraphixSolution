@@ -17,8 +17,6 @@ export const SupremeSecurityPanel: React.FC<SupremeSecurityPanelProps> = ({
   const [securityLevel, setSecurityLevel] = useState('maximum');
   const [sessionData, setSessionData] = useState<any>({});
 
-  if (!isSuperAdmin) return null;
-
   // Synchroniser avec les props
   useEffect(() => {
     setIsVisible(isOpen);
