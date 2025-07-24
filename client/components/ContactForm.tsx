@@ -92,11 +92,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onLoginClick, onRegist
               Se Connecter
             </Button>
             <Button
-              onClick={onRegisterClick}
+              onClick={() => setShowQuickSignup(true)}
               variant="outline"
               className="w-full border-white text-white hover:bg-white hover:text-black transition-all duration-300"
             >
-              Créer un Compte
+              <UserPlus size={20} className="mr-2" />
+              Créer un Compte Rapidement
             </Button>
           </div>
           <p className="text-white/60 text-sm mt-4">
