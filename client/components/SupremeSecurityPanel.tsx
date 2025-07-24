@@ -3,9 +3,17 @@ import { Shield, Lock, Eye, EyeOff, Monitor, Users, Database, Settings } from 'l
 import { Button } from './ui/button';
 import { useAuth } from '../contexts/AuthContext';
 
-export const SupremeSecurityPanel: React.FC = () => {
+interface SupremeSecurityPanelProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export const SupremeSecurityPanel: React.FC<SupremeSecurityPanelProps> = ({
+  isOpen = false,
+  onClose
+}) => {
   const { isSuperAdmin } = useAuth();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(isOpen);
   const [securityLevel, setSecurityLevel] = useState('maximum');
   const [sessionData, setSessionData] = useState<any>({});
 
