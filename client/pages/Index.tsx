@@ -22,6 +22,7 @@ import { AdminManager } from "../components/AdminManager";
 import { SafeAdminWrapper } from "../components/SafeAdminWrapper";
 import { SupremeSecurityPanel } from "../components/SupremeSecurityPanel";
 import { ImageManager } from "../components/ImageManager";
+import { ContactForm } from "../components/ContactForm";
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
