@@ -24,6 +24,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [newUrl, setNewUrl] = useState("");
   const [uploadMethod, setUploadMethod] = useState<'url' | 'file'>('url');
+  const [isUploading, setIsUploading] = useState(false);
 
   const currentSrc = getContent(contentKey, defaultSrc);
 
