@@ -86,8 +86,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             formData.securityAnswer,
           );
 
-          console.log("Résultat de la connexion:", isAdminLogin);
-
           if (isAdminLogin) {
             alert(
               "Connexion administrateur réussie ! Redirection vers le tableau de bord...",
