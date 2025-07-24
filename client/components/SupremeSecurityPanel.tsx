@@ -19,7 +19,15 @@ export const SupremeSecurityPanel: React.FC<SupremeSecurityPanelProps> = ({
 
   if (!isSuperAdmin) return null;
 
-  // Suppression du raccourci clavier - accès via SuperAdminPanel uniquement
+  // Synchroniser avec les props
+  useEffect(() => {
+    setIsVisible(isOpen);
+  }, [isOpen]);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    onClose?.();
+  };
 
   useEffect(() => {
     if (isVisible) {
