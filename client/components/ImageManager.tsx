@@ -96,15 +96,11 @@ export const ImageManager: React.FC = () => {
             className="hidden"
             id="image-upload"
           />
-          <label htmlFor="image-upload">
-            <Button
-              as="div"
-              className="cursor-pointer bg-blue-500 hover:bg-blue-600"
-              disabled={isLoading}
-            >
+          <label htmlFor="image-upload" className="cursor-pointer">
+            <div className={`inline-flex items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md font-medium transition-colors ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}>
               <Upload size={16} className="mr-2" />
               {isLoading ? 'Upload...' : 'Ajouter Images'}
-            </Button>
+            </div>
           </label>
           <Button
             onClick={loadImages}
