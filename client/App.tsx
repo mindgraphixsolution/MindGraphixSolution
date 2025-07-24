@@ -13,6 +13,7 @@ import Services from "./pages/Services";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import { AdminRoute } from "./components/AdminRoute";
+import { IntelligentBot } from "./components/IntelligentBot";
 
 const queryClient = new QueryClient();
 
