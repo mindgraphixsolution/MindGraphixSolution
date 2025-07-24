@@ -67,7 +67,7 @@ export default function Services() {
         'Design systems et composants',
         'Optimisation mobile'
       ],
-      pricing: 'À partir de 600€',
+      pricing: 'À partir de 394.000 FCFA',
       duration: '1-4 semaines',
       gradient: 'from-green-500 to-teal-600',
       image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
