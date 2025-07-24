@@ -260,6 +260,9 @@ export const SuperAdminPanel: React.FC = () => {
 
                   {/* Health Check */}
                   <AdminHealthCheck />
+
+                  {/* Guide complet */}
+                  <AdminCompleteGuide />
                 </div>
               )}
 
