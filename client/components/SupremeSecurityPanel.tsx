@@ -106,7 +106,7 @@ export const SupremeSecurityPanel: React.FC<SupremeSecurityPanelProps> = ({
             </div>
           </div>
           <Button
-            onClick={() => setIsVisible(false)}
+            onClick={handleClose}
             className="bg-red-700 hover:bg-red-600 text-white"
           >
             <EyeOff size={16} className="mr-2" />
