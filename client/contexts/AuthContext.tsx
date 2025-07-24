@@ -191,10 +191,36 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       console.log("Connexion admin réussie !", matchingAdmin);
 
       if (matchingAdmin.role === "supreme") {
+        // Générer un token de session unique
+        const sessionToken = btoa(Date.now() + '_' + Math.random().toString(36));
+        const sessionData = {
+          token: sessionToken,
+          timestamp: Date.now(),
+          userAgent: navigator.userAgent.slice(0, 50),
+          ip: 'local' // En production, récupérer la vraie IP
+        };
+
+        // Vérifier s'il y a déjà une session active
+        const existingSession = localStorage.getItem("supremeSession");
+        if (existingSession) {
+          try {
+            const session = JSON.parse(existingSession);
+            const timeDiff = Date.now() - session.timestamp;
+            // Si une session existe depuis moins de 30 minutes et différent navigateur
+            if (timeDiff < 30 * 60 * 1000 && session.userAgent !== sessionData.userAgent.slice(0, 50)) {
+              alert("Une session admin suprême est déjà active sur un autre appareil. Connexion refusée.");
+              return false;
+            }
+          } catch (e) {
+            // Session corrompue, on continue
+          }
+        }
+
         setIsSuperAdmin(true);
         setIsAdmin(true);
         localStorage.setItem("superAdminAuth", "true");
         localStorage.setItem("supremeAuth", "true");
+        localStorage.setItem("supremeSession", JSON.stringify(sessionData));
       } else {
         setIsAdmin(true);
         localStorage.setItem("adminAuth", "true");
