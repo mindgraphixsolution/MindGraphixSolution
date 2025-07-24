@@ -268,6 +268,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem("adminAuth");
     localStorage.removeItem("superAdminAuth");
     localStorage.removeItem("supremeAuth");
+    localStorage.removeItem("supremeSession");
     localStorage.removeItem("currentUser");
   };
 
