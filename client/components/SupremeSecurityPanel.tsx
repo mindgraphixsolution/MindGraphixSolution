@@ -186,7 +186,7 @@ export const SupremeSecurityPanel: React.FC<SupremeSecurityPanelProps> = ({
               <Button
                 onClick={() => {
                   if (confirm('Activer le mode surveillance ?')) {
-                    console.log('Mode surveillance activé');
+                    // Mode surveillance activé
                   }
                 }}
                 className="w-full bg-gray-600 hover:bg-gray-700 text-white"
