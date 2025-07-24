@@ -32,6 +32,7 @@ export const SuperAdminPanel: React.FC = () => {
   } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("general");
+  const [showSecurityPanel, setShowSecurityPanel] = useState(false);
 
   if (!isSuperAdmin) return null;
 
