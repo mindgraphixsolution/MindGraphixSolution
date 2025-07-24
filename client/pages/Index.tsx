@@ -124,60 +124,10 @@ export default function Index() {
                 </div>
               </div>
 
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-                <form className="space-y-6">
-                  <div>
-                    <label className="block text-white font-medium mb-2">
-                      Nom complet
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/70 focus:outline-none focus:border-accent transition-colors"
-                      placeholder="Votre nom"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-white font-medium mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/70 focus:outline-none focus:border-accent transition-colors"
-                      placeholder="votre@email.com"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-white font-medium mb-2">
-                      Sujet
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/70 focus:outline-none focus:border-accent transition-colors"
-                      placeholder="Sujet de votre message"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-white font-medium mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      rows={4}
-                      className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/70 focus:outline-none focus:border-accent transition-colors resize-none"
-                      placeholder="Décrivez votre projet..."
-                    ></textarea>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-accent text-black font-semibold py-3 rounded-lg hover:bg-orange-400 transform hover:scale-105 transition-all duration-300"
-                  >
-                    Envoyer le message
-                  </button>
-                </form>
-              </div>
+              <ContactForm
+                onLoginClick={() => setShowLoginModal(true)}
+                onRegisterClick={() => setShowRegisterModal(true)}
+              />
             </div>
           </div>
         </section>
