@@ -14,6 +14,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import { AdminRoute } from "./components/AdminRoute";
 import { IntelligentBot } from "./components/IntelligentBot";
+import { SystemValidator } from "./components/SystemValidator";
 
 const queryClient = new QueryClient();
 
