@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, ExternalLink, User, LogOut } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
+import { ClientNotifications } from "./ClientNotifications";
 
 interface HeaderProps {
   onLoginClick?: () => void;
