@@ -79,7 +79,7 @@ const getSecureAdmins = (): AdminUser[] => {
 export const AdminManager: React.FC = () => {
   const { isSuperAdmin, currentUser, getContent, updateContent } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [admins, setAdmins] = useState<AdminUser[]>(defaultAdmins);
+  const [admins, setAdmins] = useState<AdminUser[]>(getSecureAdmins());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<AdminUser | null>(null);
   const [isCreating, setIsCreating] = useState(false);
