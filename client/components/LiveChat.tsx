@@ -191,7 +191,8 @@ export const LiveChat: React.FC = () => {
     });
   };
 
-  if (!isLoggedIn) return null;
+  // Ne pas afficher pour les admins ou les utilisateurs non connectés
+  if (isAdmin || !isLoggedIn) return null;
 
   return (
     <>
