@@ -105,7 +105,7 @@ export default function Services() {
         'Optimisation conversions',
         'Support multi-devises'
       ],
-      pricing: 'À partir de 1200€',
+      pricing: 'À partir de 787.000 FCFA',
       duration: '3-8 semaines',
       gradient: 'from-indigo-500 to-purple-600',
       image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
