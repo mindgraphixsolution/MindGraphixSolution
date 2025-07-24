@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronDown, Sparkles, Zap, Palette } from 'lucide-react';
 import { Button } from './ui/button';
 import { EditableText } from './EditableText';
+import { EditableImage } from './EditableImage';
 
 export const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
