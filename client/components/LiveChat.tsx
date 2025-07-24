@@ -169,7 +169,7 @@ export const LiveChat: React.FC = () => {
 
     const updatedSession = {
       ...chatSession,
-      messages: [...chatSession.messages, adminMessage],
+      messages: [...(chatSession.messages || []), adminMessage],
       lastActivity: new Date().toISOString()
     };
 
