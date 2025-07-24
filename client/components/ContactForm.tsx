@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Lock, Send, User, Mail, MessageSquare } from 'lucide-react';
+import { Lock, Send, User, Mail, MessageSquare, UserPlus } from 'lucide-react';
 import { Button } from './ui/button';
 import { useAuth } from '../contexts/AuthContext';
+import { QuickAccountCreation } from './QuickAccountCreation';
 
 interface ContactFormProps {
   onLoginClick: () => void;
