@@ -10,7 +10,6 @@ export const useAutoSave = () => {
       const currentContent = localStorage.getItem('siteContent');
       if (currentContent) {
         // Optionally, you could save to a server here
-        console.log('Auto-saved content at', new Date().toLocaleTimeString());
       }
     }, 5000);
 
