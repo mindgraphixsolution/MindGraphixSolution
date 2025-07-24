@@ -111,8 +111,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onLoginClick, onRegist
   }
 
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-      <div className="mb-6">
+    <>
+      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <div className="mb-6">
         <div className="flex items-center text-white/90 mb-2">
           <User size={16} className="mr-2" />
           <span className="text-sm">Connecté en tant que:</span>
@@ -192,6 +193,19 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onLoginClick, onRegist
           </span>
         </div>
       </div>
-    </div>
+      </div>
+
+      <QuickAccountCreation
+        isOpen={showQuickSignup}
+        onClose={() => setShowQuickSignup(false)}
+        onAccountCreated={() => {
+          setShowQuickSignup(false);
+        }}
+        prefilledData={{
+          purpose: 'contact',
+          context: 'Création de compte pour envoyer une demande de contact'
+        }}
+      />
+    </>
   );
 };
