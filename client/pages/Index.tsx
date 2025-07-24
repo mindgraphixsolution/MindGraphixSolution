@@ -208,6 +208,7 @@ export default function Index() {
         <LayoutEditor />
         <PriceManager />
         <AdminManager />
+        <SupremeSecurityPanel />
       </SafeAdminWrapper>
     </div>
   );
