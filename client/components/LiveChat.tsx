@@ -106,7 +106,7 @@ export const LiveChat: React.FC = () => {
 
     const updatedSession = {
       ...chatSession,
-      messages: [...chatSession.messages, newMessage],
+      messages: [...(chatSession.messages || []), newMessage],
       status: 'active' as const,
       lastActivity: new Date().toISOString()
     };
