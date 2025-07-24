@@ -164,7 +164,9 @@ export default function Index() {
       </SafeAdminWrapper>
 
       {/* Chat en direct pour les clients */}
-      <LiveChat />
+      <ErrorBoundary>
+        <LiveChat />
+      </ErrorBoundary>
     </div>
   );
 }
