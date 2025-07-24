@@ -25,6 +25,7 @@ import { GlobalUploadManager } from "./GlobalUploadManager";
 import { AdminHealthCheck } from "./AdminHealthCheck";
 import { RequestChatTester } from "./RequestChatTester";
 import { AdminCompleteGuide } from "./AdminCompleteGuide";
+import { AdminFunctionalityTester } from "./AdminFunctionalityTester";
 
 export const SuperAdminPanel: React.FC = () => {
   const {
