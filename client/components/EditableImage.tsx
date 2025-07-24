@@ -67,13 +67,44 @@ export const EditableImage: React.FC<EditableImageProps> = ({
           </h4>
 
           <div className="space-y-3">
-            <input
-              type="url"
-              value={newUrl}
-              onChange={(e) => setNewUrl(e.target.value)}
-              placeholder="URL de la nouvelle image"
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent"
-            />
+            {/* Toggle entre URL et fichier */}
+            <div className="flex gap-2 mb-3">
+              <Button
+                type="button"
+                onClick={() => setUploadMethod('url')}
+                size="sm"
+                variant={uploadMethod === 'url' ? 'default' : 'outline'}
+                className="flex-1"
+              >
+                Par URL
+              </Button>
+              <Button
+                type="button"
+                onClick={() => setUploadMethod('file')}
+                size="sm"
+                variant={uploadMethod === 'file' ? 'default' : 'outline'}
+                className="flex-1"
+              >
+                Fichier Local
+              </Button>
+            </div>
+
+            {uploadMethod === 'url' ? (
+              <input
+                type="url"
+                value={newUrl}
+                onChange={(e) => setNewUrl(e.target.value)}
+                placeholder="URL de la nouvelle image"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              />
+            ) : (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileUpload}
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              />
+            )}
 
             {newUrl && (
               <div className="relative">
