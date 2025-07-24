@@ -45,6 +45,18 @@ export const EditableImage: React.FC<EditableImageProps> = ({
     setIsEditing(false);
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target?.result as string;
+        setNewUrl(dataUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   if (isEditing) {
     return (
       <div className="relative">
