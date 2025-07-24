@@ -26,6 +26,7 @@ import { AdminHealthCheck } from "./AdminHealthCheck";
 import { RequestChatTester } from "./RequestChatTester";
 import { AdminCompleteGuide } from "./AdminCompleteGuide";
 import { AdminFunctionalityTester } from "./AdminFunctionalityTester";
+import { AdvancedAdminFeatures } from "./AdvancedAdminFeatures";
 
 export const SuperAdminPanel: React.FC = () => {
   const {
