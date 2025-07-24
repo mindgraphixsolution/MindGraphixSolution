@@ -86,7 +86,7 @@ export default function Services() {
         'Montage vidéo professionnel',
         'Post-production et effets'
       ],
-      pricing: 'À partir de 400€',
+      pricing: 'À partir de 262.000 FCFA',
       duration: '1-3 semaines',
       gradient: 'from-orange-500 to-red-600',
       image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
