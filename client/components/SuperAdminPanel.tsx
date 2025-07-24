@@ -243,6 +243,13 @@ export const SuperAdminPanel: React.FC = () => {
                         >
                           Ouvrir Tableau de Bord Admin
                         </Button>
+                        <Button
+                          onClick={() => setShowSecurityPanel(true)}
+                          className="w-full bg-red-600 hover:bg-red-700 text-white"
+                        >
+                          <Shield size={16} className="mr-2" />
+                          Console de Sécurité Supreme
+                        </Button>
                       </div>
                     </div>
                   </div>
