@@ -23,6 +23,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
   const { isSuperAdmin, getContent, updateContent } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [newUrl, setNewUrl] = useState("");
+  const [uploadMethod, setUploadMethod] = useState<'url' | 'file'>('url');
 
   const currentSrc = getContent(contentKey, defaultSrc);
 
