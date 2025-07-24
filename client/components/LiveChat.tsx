@@ -246,7 +246,7 @@ export const LiveChat: React.FC = () => {
             <>
               {/* Messages */}
               <div className="h-64 overflow-y-auto p-4 space-y-3">
-                {chatSession?.messages.map((message) => (
+                {chatSession?.messages?.map((message) => (
                   <div
                     key={message.id}
                     className={`flex ${message.sender === 'client' ? 'justify-end' : 'justify-start'}`}
