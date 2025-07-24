@@ -255,6 +255,9 @@ export const SuperAdminPanel: React.FC = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Health Check */}
+                  <AdminHealthCheck />
                 </div>
               )}
 
