@@ -8,8 +8,11 @@ export function createServer() {
 
   // Middleware
   app.use(cors());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json({ limit: '50mb' })); // Augmenter la limite pour les images
+  app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+  // Servir les fichiers statiques depuis public
+  app.use(express.static('public'));
 
   // Example API routes
   app.get("/api/ping", (_req, res) => {
