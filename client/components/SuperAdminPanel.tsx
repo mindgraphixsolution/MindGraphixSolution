@@ -13,6 +13,7 @@ import {
   RefreshCw,
   Image,
   MessageSquare,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
