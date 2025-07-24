@@ -93,13 +93,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     password: string,
     securityAnswer: string,
   ): Promise<boolean> => {
-    console.log("Tentative de connexion admin:", {
-      email: email.toLowerCase(),
-      phone,
-      password,
-      securityAnswer: securityAnswer.toLowerCase(),
-    });
-
     // Normaliser le numéro de téléphone (supprimer espaces, préfixes et caractères spéciaux)
     const normalizePhone = (phoneNumber: string): string => {
       return phoneNumber
@@ -114,7 +107,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // Système de sécurité obfusqué
     const getSecureAdmins = () => {
-      // Encodage Base64 inversé avec rotation
       const secureData = [
         {
           e: atob("cGhpbGlwcGVmYWl6c2Fub25AZ21haWwuY29t"),
@@ -161,16 +153,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     });
 
-    console.log(
-      "Administrateurs disponibles:",
-      allAdmins.map((admin) => ({
-        email: admin.email,
-        phone: admin.phone,
-        normalizedPhone: normalizePhone(admin.phone),
-        isActive: admin.isActive,
-      })),
-    );
-
     // Rechercher l'administrateur correspondant
     const matchingAdmin = allAdmins.find(
       (admin) =>
@@ -181,14 +163,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         admin.isActive,
     );
 
-    console.log("Recherche d'admin avec les critères normalisés:", {
-      inputPhone: normalizePhone(phone),
-      inputEmail: email.toLowerCase(),
-      inputAnswer: securityAnswer.toLowerCase(),
-    });
-
     if (matchingAdmin) {
-      console.log("Connexion admin réussie !", matchingAdmin);
 
       if (matchingAdmin.role === "supreme") {
         // Générer un token de session unique
