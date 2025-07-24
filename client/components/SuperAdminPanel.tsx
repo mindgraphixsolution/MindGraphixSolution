@@ -270,6 +270,11 @@ export const SuperAdminPanel: React.FC = () => {
                 </div>
               )}
 
+              {/* Advanced Tab */}
+              {activeTab === "advanced" && (
+                <AdvancedAdminFeatures />
+              )}
+
               {/* Tests Tab */}
               {activeTab === "tests" && (
                 <AdminFunctionalityTester />
