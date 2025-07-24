@@ -267,6 +267,11 @@ export const SuperAdminPanel: React.FC = () => {
                 </div>
               )}
 
+              {/* Images Tab */}
+              {activeTab === "images" && (
+                <ImageManager />
+              )}
+
               {/* Content Tab */}
               {activeTab === "content" && (
                 <div className="space-y-6">
