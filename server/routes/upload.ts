@@ -57,8 +57,8 @@ export const handleImageUpload: RequestHandler = async (req, res) => {
 
 export const handleGetImages: RequestHandler = (req, res) => {
   try {
-    const uploadsDir = path.join(__dirname, "../../public/uploads");
-    
+    const uploadsDir = "./public/uploads";
+
     if (!fs.existsSync(uploadsDir)) {
       return res.json({ images: [] });
     }
