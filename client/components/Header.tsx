@@ -112,6 +112,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
               <div className="flex items-center space-x-4">
+                <ClientNotifications />
                 <div
                   className={`flex items-center space-x-2 ${isScrolled ? "text-gray-700" : "text-white"}`}
                 >
