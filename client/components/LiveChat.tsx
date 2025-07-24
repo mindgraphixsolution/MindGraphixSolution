@@ -83,7 +83,7 @@ export const LiveChat: React.FC = () => {
     const savedSessions = JSON.parse(localStorage.getItem('chatSessions') || '[]');
     const updatedSession = savedSessions.find((s: ChatSession) => s.id === chatSession.id);
 
-    if (updatedSession && updatedSession.messages.length > chatSession.messages.length) {
+    if (updatedSession && updatedSession.messages && chatSession.messages && updatedSession.messages.length > chatSession.messages.length) {
       setChatSession(updatedSession);
       
       // Afficher notification si chat fermé
