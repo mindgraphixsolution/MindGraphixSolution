@@ -71,9 +71,11 @@ export const Header: React.FC<HeaderProps> = ({
               isScrolled ? "text-primary" : "text-white"
             }`}
           >
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-              <span className="text-white font-bold text-lg">MG</span>
-            </div>
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F4871d4fcbac047999c8a4dbe551aa7ef%2Faa0f68d60ade45f69d38a41cc2d1e34f?format=webp&width=800"
+              alt="Mind Graphix Solution Logo"
+              className="w-12 h-12 rounded-full object-cover"
+            />
             <span>
               Mind <span className="text-accent">Graphix</span> Solution
             </span>
