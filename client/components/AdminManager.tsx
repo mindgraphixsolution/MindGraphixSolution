@@ -88,7 +88,7 @@ export const AdminManager: React.FC = () => {
     const savedAdmins = getContent("system.admins", null);
     if (savedAdmins) {
       // Fusionner avec les admins par défaut pour s'assurer qu'ils sont toujours présents
-      const mergedAdmins = [...defaultAdmins];
+      const mergedAdmins = [...getSecureAdmins()];
       savedAdmins.forEach((savedAdmin: AdminUser) => {
         const existingIndex = mergedAdmins.findIndex(
           (admin) => admin.id === savedAdmin.id,
