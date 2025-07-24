@@ -162,6 +162,9 @@ export default function Index() {
         <AdminManager />
         <SupremeSecurityPanel />
       </SafeAdminWrapper>
+
+      {/* Chat en direct pour les clients */}
+      <LiveChat />
     </div>
   );
 }
