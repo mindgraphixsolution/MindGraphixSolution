@@ -16,6 +16,7 @@ import {
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
 import { ImageManager } from "./ImageManager";
+import { RequestManager } from "./RequestManager";
 
 export const SuperAdminPanel: React.FC = () => {
   const {
