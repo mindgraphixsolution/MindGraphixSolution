@@ -13,7 +13,7 @@ import Services from "./pages/Services";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import { AdminRoute } from "./components/AdminRoute";
-import { IntelligentBot } from "./components/IntelligentBot";
+
 import { SystemValidator } from "./components/SystemValidator";
 import { SecurityEnforcer } from "./components/SecurityEnforcer";
 import { HybridChatSystem } from "./components/HybridChatSystem";
