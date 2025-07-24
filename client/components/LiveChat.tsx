@@ -30,9 +30,6 @@ export const LiveChat: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Ne pas afficher pour les admins
-  if (isAdmin) return null;
-
   useEffect(() => {
     if (isLoggedIn && currentUser?.email) {
       loadOrCreateChatSession();
