@@ -20,6 +20,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { ImageManager } from "./ImageManager";
 import { RequestManager } from "./RequestManager";
 import { ChatManager } from "./ChatManager";
+import { SupremeSecurityPanel } from "./SupremeSecurityPanel";
 
 export const SuperAdminPanel: React.FC = () => {
   const {
