@@ -87,6 +87,9 @@ export const ClientNotifications: React.FC = () => {
     return date.toLocaleDateString('fr-FR');
   };
 
+  // Ne pas afficher pour les admins ou les utilisateurs non connectés
+  if (!isLoggedIn || isAdmin) return null;
+
   return (
     <div className="relative">
       {/* Bouton de notification */}
