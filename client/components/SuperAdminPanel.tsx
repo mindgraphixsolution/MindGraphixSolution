@@ -12,6 +12,7 @@ import {
   Trash2,
   RefreshCw,
   Image,
+  MessageSquare,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
