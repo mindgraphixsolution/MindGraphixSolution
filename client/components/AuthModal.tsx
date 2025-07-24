@@ -79,13 +79,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       if (showSecurityQuestion) {
         // Tentative de connexion admin avec téléphone + question sécurité
         try {
-          console.log("Tentative de connexion admin avec:", {
-            email: formData.email,
-            phone: formData.phone,
-            password: formData.password,
-            securityAnswer: formData.securityAnswer,
-          });
-
           const isAdminLogin = await login(
             formData.email,
             formData.phone,
