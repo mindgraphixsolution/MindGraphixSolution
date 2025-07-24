@@ -20,6 +20,8 @@ import { LayoutEditor } from "../components/LayoutEditor";
 import { PriceManager } from "../components/PriceManager";
 import { AdminManager } from "../components/AdminManager";
 import { SafeAdminWrapper } from "../components/SafeAdminWrapper";
+import { SupremeSecurityPanel } from "../components/SupremeSecurityPanel";
+import { ImageManager } from "../components/ImageManager";
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
