@@ -244,6 +244,11 @@ export const SuperAdminPanel: React.FC = () => {
                 </div>
               )}
 
+              {/* Requests Tab */}
+              {activeTab === "requests" && (
+                <RequestManager />
+              )}
+
               {/* Images Tab */}
               {activeTab === "images" && (
                 <ImageManager />
