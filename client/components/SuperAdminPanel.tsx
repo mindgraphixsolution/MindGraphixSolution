@@ -11,6 +11,7 @@ import {
   Upload,
   Trash2,
   RefreshCw,
+  Image,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
