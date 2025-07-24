@@ -170,21 +170,21 @@ const services = [
 
 const budgetRanges = [
   {
-    value: "1000-5000",
-    label: "1 000€ - 5 000€",
+    value: "650000-3250000",
+    label: "650.000 - 3.250.000 FCFA",
     description: "Projet simple",
   },
   {
-    value: "5000-15000",
-    label: "5 000€ - 15 000€",
+    value: "3250000-9750000",
+    label: "3.250.000 - 9.750.000 FCFA",
     description: "Projet standard",
   },
   {
-    value: "15000-30000",
-    label: "15 000€ - 30 000€",
+    value: "9750000-19500000",
+    label: "9.750.000 - 19.500.000 FCFA",
     description: "Projet avancé",
   },
-  { value: "30000+", label: "30 000€+", description: "Projet complexe" },
+  { value: "19500000+", label: "19.500.000 FCFA+", description: "Projet complexe" },
   { value: "to-discuss", label: "À discuter", description: "Budget flexible" },
 ];
 
