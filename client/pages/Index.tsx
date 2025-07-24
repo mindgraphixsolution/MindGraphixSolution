@@ -24,6 +24,7 @@ import { SafeAdminWrapper } from "../components/SafeAdminWrapper";
 import { ImageManager } from "../components/ImageManager";
 import { ContactForm } from "../components/ContactForm";
 import { LiveChat } from "../components/LiveChat";
+import { ErrorBoundary } from "../components/ErrorBoundary";
 
 export default function Index() {
   const [showLoginModal, setShowLoginModal] = useState(false);
