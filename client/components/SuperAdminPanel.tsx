@@ -131,6 +131,7 @@ export const SuperAdminPanel: React.FC = () => {
                 {[
                   { id: "general", label: "Général", icon: Settings },
                   { id: "requests", label: "Demandes", icon: MessageSquare },
+                  { id: "chat", label: "Chat", icon: MessageCircle },
                   { id: "content", label: "Contenu", icon: Edit },
                   { id: "images", label: "Images", icon: Image },
                   { id: "users", label: "Utilisateurs", icon: Users },
