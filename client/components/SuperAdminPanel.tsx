@@ -24,6 +24,7 @@ import { SupremeSecurityPanel } from "./SupremeSecurityPanel";
 import { GlobalUploadManager } from "./GlobalUploadManager";
 import { AdminHealthCheck } from "./AdminHealthCheck";
 import { RequestChatTester } from "./RequestChatTester";
+import { AdminCompleteGuide } from "./AdminCompleteGuide";
 
 export const SuperAdminPanel: React.FC = () => {
   const {
