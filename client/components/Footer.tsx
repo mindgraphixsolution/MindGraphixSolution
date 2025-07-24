@@ -8,6 +8,12 @@ export const Footer: React.FC = () => {
   const [isSubscribing, setIsSubscribing] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isAdmin } = useAuth();
+
+  // Masquer le footer si un administrateur est connecté
+  if (isAdmin) {
+    return null;
+  }
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
