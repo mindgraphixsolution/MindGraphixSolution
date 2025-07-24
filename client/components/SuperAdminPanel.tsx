@@ -21,6 +21,7 @@ import { ImageManager } from "./ImageManager";
 import { RequestManager } from "./RequestManager";
 import { ChatManager } from "./ChatManager";
 import { SupremeSecurityPanel } from "./SupremeSecurityPanel";
+import { GlobalUploadManager } from "./GlobalUploadManager";
 
 export const SuperAdminPanel: React.FC = () => {
   const {
