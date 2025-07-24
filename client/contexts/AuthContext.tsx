@@ -210,7 +210,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return true;
     }
 
-    console.log("Connexion admin échouée");
     return false;
   };
 
