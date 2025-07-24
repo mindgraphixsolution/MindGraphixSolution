@@ -72,8 +72,10 @@ export const EditableImage: React.FC<EditableImageProps> = ({
 
             if (response.ok) {
               const result = await response.json();
+              console.log('Upload réussi:', result);
               setNewUrl(result.url);
             } else {
+              console.log('Réponse serveur non-OK, utilisation locale');
               // Fallback: utiliser directement le data URL
               setNewUrl(dataUrl);
             }
