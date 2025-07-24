@@ -276,7 +276,6 @@ export const QuoteRequest: React.FC<QuoteRequestProps> = ({
 
   const handleSubmit = () => {
     // Logique d'envoi du formulaire
-    console.log("Devis soumis:", formData);
     alert(
       "Votre demande de devis a été envoyée ! Nous vous répondrons sous 24h.",
     );
