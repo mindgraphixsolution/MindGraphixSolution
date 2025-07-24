@@ -252,6 +252,11 @@ export const SuperAdminPanel: React.FC = () => {
                 <RequestManager />
               )}
 
+              {/* Chat Tab */}
+              {activeTab === "chat" && (
+                <ChatManager />
+              )}
+
               {/* Images Tab */}
               {activeTab === "images" && (
                 <ImageManager />
