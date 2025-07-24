@@ -458,10 +458,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               >
                 ← Retour à la connexion normale
               </button>
-              <div className="text-xs text-gray-500">
-                <p>Test Philippe: 54191605 / Lil Nas X</p>
-                <p>Test Mind: 01 51 11 46 / Badiori</p>
-              </div>
+
             </div>
           )}
 
