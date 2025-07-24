@@ -440,6 +440,12 @@ export const SuperAdminPanel: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Supreme Security Panel */}
+      <SupremeSecurityPanel
+        isOpen={showSecurityPanel}
+        onClose={() => setShowSecurityPanel(false)}
+      />
     </>
   );
 };
