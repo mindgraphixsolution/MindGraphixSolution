@@ -138,7 +138,7 @@ export const AdminUserGuide: React.FC = () => {
                         </div>
                         <div className="flex items-center space-x-2">
                           <strong className="text-red-700">Question sécurité:</strong>
-                          <code className="bg-red-100 px-2 py-1 rounded">Badiori</code>
+                          <code className="bg-red-100 px-2 py-1 rounded">[Confidentielle]</code>
                         </div>
                       </div>
                     </div>
