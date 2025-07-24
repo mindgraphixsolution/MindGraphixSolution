@@ -269,7 +269,10 @@ export const SuperAdminPanel: React.FC = () => {
 
               {/* Images Tab */}
               {activeTab === "images" && (
-                <ImageManager />
+                <div className="space-y-6">
+                  <ImageManager />
+                  <GlobalUploadManager />
+                </div>
               )}
 
               {/* Content Tab */}
