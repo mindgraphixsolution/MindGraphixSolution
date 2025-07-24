@@ -269,7 +269,10 @@ export const SuperAdminPanel: React.FC = () => {
 
               {/* Chat Tab */}
               {activeTab === "chat" && (
-                <ChatManager />
+                <div className="space-y-6">
+                  <ChatManager />
+                  <RequestChatTester />
+                </div>
               )}
 
               {/* Images Tab */}
