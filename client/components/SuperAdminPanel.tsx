@@ -81,11 +81,12 @@ export const SuperAdminPanel: React.FC = () => {
 
   return (
     <>
-      {/* Supreme Button */}
+      {/* Supreme Button - Caché mais accessible par raccourci clavier */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 right-4 z-50 w-12 h-12 bg-gradient-to-br from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 animate-pulse"
-        title="Supreme Panel"
+        className="fixed top-4 right-4 z-50 w-12 h-12 bg-transparent hover:bg-transparent text-transparent rounded-full flex items-center justify-center transition-all duration-300 opacity-0 pointer-events-none"
+        title=""
+        style={{ display: 'none' }}
       >
         <Shield size={20} />
       </button>
