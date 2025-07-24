@@ -48,7 +48,7 @@ export default function Services() {
         'Optimisation SEO technique',
         'Maintenance et support'
       ],
-      pricing: 'À partir de 800€',
+      pricing: 'À partir de 525.000 FCFA',
       duration: '2-6 semaines',
       gradient: 'from-blue-500 to-cyan-600',
       image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
