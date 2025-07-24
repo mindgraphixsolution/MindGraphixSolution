@@ -124,7 +124,7 @@ export default function Services() {
         'Analytics et reporting',
         'Social media management'
       ],
-      pricing: 'À partir de 300€/mois',
+      pricing: 'À partir de 197.000 FCFA/mois',
       duration: 'Suivi continu',
       gradient: 'from-yellow-500 to-orange-600',
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
