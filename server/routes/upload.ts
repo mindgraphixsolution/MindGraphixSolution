@@ -8,16 +8,13 @@ const __dirname = path.dirname(__filename);
 
 export const handleImageUpload: RequestHandler = async (req, res) => {
   try {
+    console.log("Upload request received");
+
     // Vérifier si l'utilisateur est un super admin
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('SuperAdmin ')) {
+      console.log("Unauthorized access attempt");
       return res.status(403).json({ error: "Accès non autorisé" });
-    }
-
-    // Créer le dossier uploads s'il n'existe pas
-    const uploadsDir = path.join(__dirname, "../../public/uploads");
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
     const imageData = req.body.imageData;
@@ -25,6 +22,12 @@ export const handleImageUpload: RequestHandler = async (req, res) => {
 
     if (!imageData) {
       return res.status(400).json({ error: "Aucune image fournie" });
+    }
+
+    // Utiliser un chemin relatif plus simple
+    const uploadsDir = "./public/uploads";
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
     // Décoder l'image base64
@@ -37,9 +40,11 @@ export const handleImageUpload: RequestHandler = async (req, res) => {
 
     // Retourner l'URL de l'image
     const imageUrl = `/uploads/${fileName}`;
-    
-    res.json({ 
-      success: true, 
+
+    console.log("Image uploaded successfully:", imageUrl);
+
+    res.json({
+      success: true,
       url: imageUrl,
       message: "Image uploadée avec succès"
     });
