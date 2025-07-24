@@ -22,7 +22,6 @@ export const useAutoSave = () => {
       if (currentContent) {
         // Force save
         localStorage.setItem('siteContent_backup', currentContent);
-        console.log('Manual save completed');
         alert('Contenu sauvegardé avec succès !');
       } else {
         alert('Aucun contenu à sauvegarder');
