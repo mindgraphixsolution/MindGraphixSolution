@@ -44,39 +44,133 @@ export const SupremeSecurityPanel: React.FC<SupremeSecurityPanelProps> = ({
   const executeSupremeCommand = (command: string) => {
     switch (command) {
       case 'clear_all_cache':
-        if (confirm('ATTENTION: Effacer tous les caches système ?')) {
-          caches.keys().then(names => {
-            names.forEach(name => caches.delete(name));
+        if (confirm('ATTENTION: Vider tous les caches ? Données critiques seront préservées.')) {
+          // Sauvegarder les données critiques
+          const criticalData = {
+            adminAuth: localStorage.getItem('adminAuth'),
+            superAdminAuth: localStorage.getItem('superAdminAuth'),
+            supremeAuth: localStorage.getItem('supremeAuth'),
+            currentUser: localStorage.getItem('currentUser'),
+            siteContent: localStorage.getItem('siteContent')
+          };
+
+          // Vider les caches
+          localStorage.clear();
+          sessionStorage.clear();
+          if ('caches' in window) {
+            caches.keys().then(names => names.forEach(name => caches.delete(name)));
+          }
+
+          // Restaurer les données critiques
+          Object.entries(criticalData).forEach(([key, value]) => {
+            if (value) localStorage.setItem(key, value);
           });
+
+          alert('Cache vidé ! Données critiques préservées.');
           location.reload();
         }
         break;
+
       case 'force_reload':
-        location.reload();
+        if (confirm('Forcer le rechargement complet ?')) {
+          localStorage.setItem('forceReload_' + Date.now(), 'true');
+          location.reload();
+        }
         break;
+
       case 'export_everything':
-        const allData = {
-          localStorage: { ...localStorage },
-          sessionStorage: { ...sessionStorage },
-          siteContent: JSON.parse(localStorage.getItem('siteContent') || '{}'),
-          timestamp: new Date().toISOString(),
-          sessionInfo: sessionData
-        };
-        const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `supreme_export_${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
+        try {
+          const exportData = {
+            timestamp: new Date().toISOString(),
+            admin: currentUser?.email,
+            systemData: {
+              siteContent: JSON.parse(localStorage.getItem('siteContent') || '{}'),
+              adminLogs: JSON.parse(localStorage.getItem('adminLogs') || '[]'),
+              userRequests: JSON.parse(localStorage.getItem('userRequests') || '[]'),
+              chatSessions: JSON.parse(localStorage.getItem('chatSessions') || '[]'),
+              uploadedImages: JSON.parse(localStorage.getItem('uploadedImages') || '[]'),
+            },
+            sessionInfo: sessionData,
+            securityInfo: {
+              authLevel: 'supreme',
+              sessionActive: true,
+              exportTime: Date.now()
+            }
+          };
+
+          const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `supreme_export_${Date.now()}.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+
+          alert('Export complet terminé !');
+        } catch (error) {
+          alert('Erreur export: ' + (error instanceof Error ? error.message : 'Erreur'));
+        }
         break;
+
       case 'stealth_mode':
-        // Mode furtif - masquer tous les éléments admin
-        const adminElements = document.querySelectorAll('[class*="admin"], [class*="super"]');
-        adminElements.forEach(el => {
-          (el as HTMLElement).style.display = 'none';
-        });
+        if (confirm('Mode furtif: masquer tous les éléments admin ?')) {
+          const elements = document.querySelectorAll('[class*="admin"], [class*="super"], button[title="Admin"]');
+          elements.forEach(el => (el as HTMLElement).style.display = 'none');
+
+          alert('Mode furtif activé ! Rechargez pour restaurer.');
+          setTimeout(() => {
+            if (confirm('Restaurer l\'affichage admin ?')) location.reload();
+          }, 30000);
+        }
         break;
+
+      case 'emergency_backup':
+        try {
+          const backup = {
+            timestamp: new Date().toISOString(),
+            admin: currentUser?.email,
+            emergency: true,
+            data: {
+              siteContent: localStorage.getItem('siteContent'),
+              userRequests: localStorage.getItem('userRequests'),
+              chatSessions: localStorage.getItem('chatSessions'),
+              adminAuth: localStorage.getItem('adminAuth')
+            }
+          };
+
+          localStorage.setItem('emergencyBackup', JSON.stringify(backup));
+
+          const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `emergency_${Date.now()}.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+
+          alert('Sauvegarde d\'urgence créée !');
+        } catch (error) {
+          alert('Erreur sauvegarde: ' + (error instanceof Error ? error.message : 'Erreur'));
+        }
+        break;
+
+      case 'system_diagnostics':
+        const diagnostics = {
+          storage: `LocalStorage: ${Object.keys(localStorage).length} clés`,
+          session: `SessionStorage: ${Object.keys(sessionStorage).length} clés`,
+          memory: (performance as any).memory ?
+            `Mémoire: ${Math.round((performance as any).memory.usedJSHeapSize / 1024 / 1024)}MB` :
+            'Mémoire: Non disponible',
+          screen: `Écran: ${screen.width}x${screen.height}`,
+          window: `Fenêtre: ${window.innerWidth}x${window.innerHeight}`,
+          connection: (navigator as any).connection?.effectiveType || 'Inconnue'
+        };
+
+        alert('Diagnostics:\n\n' + Object.values(diagnostics).join('\n'));
+        break;
+
+      default:
+        alert('Commande inconnue: ' + command);
     }
   };
 
