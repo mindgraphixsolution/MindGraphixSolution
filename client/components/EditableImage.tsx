@@ -46,15 +46,50 @@ export const EditableImage: React.FC<EditableImageProps> = ({
     setIsEditing(false);
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const dataUrl = event.target?.result as string;
-        setNewUrl(dataUrl);
-      };
-      reader.readAsDataURL(file);
+      setIsUploading(true);
+
+      try {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          const dataUrl = event.target?.result as string;
+
+          try {
+            // Essayer d'uploader vers le serveur
+            const response = await fetch('/api/upload/image', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'SuperAdmin ' + localStorage.getItem('supremeAuth')
+              },
+              body: JSON.stringify({
+                imageData: dataUrl,
+                fileName: `${contentKey}_${Date.now()}.${file.name.split('.').pop()}`
+              })
+            });
+
+            if (response.ok) {
+              const result = await response.json();
+              setNewUrl(result.url);
+            } else {
+              // Fallback: utiliser directement le data URL
+              setNewUrl(dataUrl);
+            }
+          } catch (error) {
+            console.log('Upload serveur échoué, utilisation locale:', error);
+            // Fallback: utiliser directement le data URL
+            setNewUrl(dataUrl);
+          } finally {
+            setIsUploading(false);
+          }
+        };
+        reader.readAsDataURL(file);
+      } catch (error) {
+        console.error('Erreur lors de la lecture du fichier:', error);
+        setIsUploading(false);
+      }
     }
   };
 
