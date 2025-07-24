@@ -139,20 +139,26 @@ export const Footer: React.FC = () => {
               </p>
               
               {/* Contact Info */}
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-gray-400">
-                  <MapPin size={18} className="text-accent" />
-                  <span>Bobo-Dioulasso, Sect N°4</span>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3 text-gray-400">
+                  <MapPin size={18} className="text-accent flex-shrink-0 mt-1" />
+                  <span className="leading-relaxed">Bobo-Dioulasso, Sect N°4</span>
                 </div>
-                <div className="flex items-center space-x-3 text-gray-400">
-                  <Phone size={18} className="text-accent" />
-                  <a href="tel:+22601511146" className="hover:text-accent transition-colors">
+                <div className="flex items-start space-x-3 text-gray-400">
+                  <Phone size={18} className="text-accent flex-shrink-0 mt-1" />
+                  <a
+                    href="tel:+22601511146"
+                    className="hover:text-accent transition-colors leading-relaxed font-medium"
+                  >
                     +226 01 51 11 46
                   </a>
                 </div>
-                <div className="flex items-center space-x-3 text-gray-400">
-                  <Mail size={18} className="text-accent" />
-                  <a href="mailto:mindgraphixsolution@gmail.com" className="hover:text-accent transition-colors">
+                <div className="flex items-start space-x-3 text-gray-400">
+                  <Mail size={18} className="text-accent flex-shrink-0 mt-1" />
+                  <a
+                    href="mailto:mindgraphixsolution@gmail.com"
+                    className="hover:text-accent transition-colors leading-relaxed font-medium break-all"
+                  >
                     mindgraphixsolution@gmail.com
                   </a>
                 </div>
