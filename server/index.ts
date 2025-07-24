@@ -21,5 +21,9 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Routes d'upload d'images
+  app.post("/api/upload/image", handleImageUpload);
+  app.get("/api/upload/images", handleGetImages);
+
   return app;
 }
