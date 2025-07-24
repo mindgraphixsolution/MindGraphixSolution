@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
+import { ImageManager } from "./ImageManager";
 
 export const SuperAdminPanel: React.FC = () => {
   const {
