@@ -160,7 +160,6 @@ export default function Index() {
         <LayoutEditor />
         <PriceManager />
         <AdminManager />
-        <SupremeSecurityPanel />
       </SafeAdminWrapper>
 
       {/* Chat en direct pour les clients */}
