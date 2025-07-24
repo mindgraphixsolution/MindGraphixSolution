@@ -19,9 +19,6 @@ export const ClientNotifications: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  // Ne pas afficher pour les admins
-  if (!isLoggedIn || isAdmin) return null;
-
   useEffect(() => {
     if (currentUser?.email) {
       loadNotifications();
