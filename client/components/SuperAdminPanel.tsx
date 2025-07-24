@@ -268,6 +268,11 @@ export const SuperAdminPanel: React.FC = () => {
                 </div>
               )}
 
+              {/* Tests Tab */}
+              {activeTab === "tests" && (
+                <AdminFunctionalityTester />
+              )}
+
               {/* Requests Tab */}
               {activeTab === "requests" && (
                 <RequestManager />
