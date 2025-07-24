@@ -11,17 +11,7 @@ export const SupremeSecurityPanel: React.FC = () => {
 
   if (!isSuperAdmin) return null;
 
-  useEffect(() => {
-    // Raccourci ultra-secret : Ctrl + Alt + Shift + Z
-    const handleKeyCombo = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.altKey && e.shiftKey && e.key === 'Z') {
-        setIsVisible(!isVisible);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyCombo);
-    return () => window.removeEventListener('keydown', handleKeyCombo);
-  }, [isVisible]);
+  // Suppression du raccourci clavier - accès via SuperAdminPanel uniquement
 
   useEffect(() => {
     if (isVisible) {
