@@ -80,6 +80,8 @@ export const SupremeSecurityPanel: React.FC<SupremeSecurityPanelProps> = ({
     }
   };
 
+  if (!isSuperAdmin) return null;
+
   if (!isVisible) {
     return (
       <div className="fixed bottom-2 left-2 opacity-5 hover:opacity-100 transition-opacity duration-300">
