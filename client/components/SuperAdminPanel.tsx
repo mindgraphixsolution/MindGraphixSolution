@@ -138,6 +138,7 @@ export const SuperAdminPanel: React.FC = () => {
               <nav className="flex">
                 {[
                   { id: "general", label: "Général", icon: Settings },
+                  { id: "tests", label: "Tests", icon: RefreshCw },
                   { id: "requests", label: "Demandes", icon: MessageSquare },
                   { id: "chat", label: "Chat", icon: MessageCircle },
                   { id: "content", label: "Contenu", icon: Edit },
