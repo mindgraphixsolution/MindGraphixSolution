@@ -153,6 +153,7 @@ export const SuperAdminPanel: React.FC = () => {
                 {[
                   { id: "general", label: "Général", icon: Settings },
                   { id: "content", label: "Contenu", icon: Edit },
+                  { id: "images", label: "Images", icon: Image },
                   { id: "users", label: "Utilisateurs", icon: Users },
                   { id: "data", label: "Données", icon: Database },
                 ].map((tab) => {
