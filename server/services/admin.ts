@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { Role } from "@shared/auth";
+import { Role } from "../../shared/auth.js";
 
 const prisma = new PrismaClient();
 

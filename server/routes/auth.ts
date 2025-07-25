@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { AuthService } from "../services/auth";
-import { LoginRequest, RegisterRequest } from "@shared/auth";
+import { LoginRequest, RegisterRequest } from "../../shared/auth.js";
 
 // Inscription
 export const handleRegister: RequestHandler = async (req, res) => {
