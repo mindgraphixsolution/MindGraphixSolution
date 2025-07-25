@@ -72,19 +72,38 @@ export function createServer() {
   app.get("/api/upload/images", authenticateToken, handleGetImages);
   app.delete("/api/upload/image/:id", authenticateToken, handleDeleteImage);
 
-  // Routes admin (exemple)
-  app.get("/api/admin/users", authenticateToken, requireAdmin, (req, res) => {
+  // Routes SUPER ADMIN uniquement (privilèges maximum)
+  app.get("/api/superadmin/system", authenticateToken, requireSuperAdmin, (req, res) => {
     res.json({
-      message: "Route admin - Liste des utilisateurs",
-      user: req.user
+      message: "Route SUPER ADMIN - Configuration système",
+      user: req.user,
+      privileges: "MAXIMUM - Accès à tout le système"
     });
   });
 
-  // Routes modérateur (exemple)
+  app.get("/api/superadmin/all-users", authenticateToken, requireSuperAdmin, (req, res) => {
+    res.json({
+      message: "Route SUPER ADMIN - Tous les utilisateurs + admins",
+      user: req.user,
+      note: "Seul le super admin peut voir cette route"
+    });
+  });
+
+  // Routes admin normaux et super admins
+  app.get("/api/admin/users", authenticateToken, requireAdmin, (req, res) => {
+    res.json({
+      message: "Route admin - Liste des utilisateurs",
+      user: req.user,
+      level: req.user?.role === 'SUPER_ADMIN' ? 'SUPER_ADMIN' : 'ADMIN'
+    });
+  });
+
+  // Routes modérateur, admin et super admin
   app.get("/api/moderator/reports", authenticateToken, requireModerator, (req, res) => {
     res.json({
       message: "Route modérateur - Rapports",
-      user: req.user
+      user: req.user,
+      level: req.user?.role
     });
   });
 
