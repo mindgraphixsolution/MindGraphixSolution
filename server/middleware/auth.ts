@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
-import { AuthUser, Role } from "@shared/auth";
+import { AuthUser, Role } from "../../shared/auth.js";
 
 const prisma = new PrismaClient();
 
