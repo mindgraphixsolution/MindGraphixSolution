@@ -7,7 +7,7 @@ import {
   LoginRequest,
   RegisterRequest,
   Role,
-} from "@shared/auth";
+} from "../../shared/auth.js";
 
 const prisma = new PrismaClient();
 
