@@ -73,6 +73,7 @@ export function createServer() {
 
   // Routes publiques
   app.get("/api/demo", optionalAuth, handleDemo);
+  app.get("/api/privilege-hierarchy", getPrivilegeHierarchy);
 
   // Routes d'upload protégées
   app.post("/api/upload/image", authenticateToken, handleImageUpload);
