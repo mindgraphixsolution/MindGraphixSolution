@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -21,33 +21,41 @@ const storage = multer.diskStorage({
     const randomId = Math.random().toString(36).substring(2, 15);
     const ext = path.extname(file.originalname).toLowerCase();
     const sanitizedName = file.originalname
-      .replace(/[^a-zA-Z0-9.-]/g, '_')
-      .replace(/\.+/g, '.');
-    
+      .replace(/[^a-zA-Z0-9.-]/g, "_")
+      .replace(/\.+/g, ".");
+
     const uniqueFilename = `${timestamp}_${randomId}_${sanitizedName}`;
     cb(null, uniqueFilename);
-  }
+  },
 });
 
 // Filtres de sécurité pour les fichiers
 const fileFilter = (req: any, file: Express.Multer.File, cb: any) => {
   // Types MIME autorisés
   const allowedMimes = [
-    'image/jpeg',
-    'image/jpg', 
-    'image/png',
-    'image/gif',
-    'image/webp'
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+    "image/webp",
   ];
 
   // Extensions autorisées
-  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+  const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
   const fileExtension = path.extname(file.originalname).toLowerCase();
 
-  if (allowedMimes.includes(file.mimetype) && allowedExtensions.includes(fileExtension)) {
+  if (
+    allowedMimes.includes(file.mimetype) &&
+    allowedExtensions.includes(fileExtension)
+  ) {
     cb(null, true);
   } else {
-    cb(new Error('Type de fichier non autorisé. Seules les images (JPEG, PNG, GIF, WebP) sont acceptées.'), false);
+    cb(
+      new Error(
+        "Type de fichier non autorisé. Seules les images (JPEG, PNG, GIF, WebP) sont acceptées.",
+      ),
+      false,
+    );
   }
 };
 
@@ -56,13 +64,13 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: parseInt(process.env.MAX_FILE_SIZE || '10485760'), // 10MB par défaut
-    files: 5 // Maximum 5 fichiers
-  }
+    fileSize: parseInt(process.env.MAX_FILE_SIZE || "10485760"), // 10MB par défaut
+    files: 5, // Maximum 5 fichiers
+  },
 });
 
 // Middleware d'upload avec gestion d'erreurs
-export const uploadMiddleware = upload.array('images', 5);
+export const uploadMiddleware = upload.array("images", 5);
 
 // Handler pour l'upload d'images (nouvelle version sécurisée)
 export const handleImageUpload: RequestHandler = async (req, res) => {
@@ -72,16 +80,16 @@ export const handleImageUpload: RequestHandler = async (req, res) => {
         console.error("Erreur Multer:", err);
         return res.status(400).json({
           error: "Erreur d'upload",
-          message: err.message
+          message: err.message,
         });
       }
 
       const files = req.files as Express.Multer.File[];
-      
+
       if (!files || files.length === 0) {
         return res.status(400).json({
           error: "Aucun fichier fourni",
-          message: "Veuillez sélectionner au moins un fichier à uploader"
+          message: "Veuillez sélectionner au moins un fichier à uploader",
         });
       }
 
@@ -96,8 +104,8 @@ export const handleImageUpload: RequestHandler = async (req, res) => {
                 mimetype: file.mimetype,
                 size: file.size,
                 path: file.path,
-                userId: req.user?.id || null
-              }
+                userId: req.user?.id || null,
+              },
             });
 
             return {
@@ -106,22 +114,21 @@ export const handleImageUpload: RequestHandler = async (req, res) => {
               originalName: file.originalname,
               size: file.size,
               url: `/uploads/${file.filename}`,
-              createdAt: uploadRecord.createdAt
+              createdAt: uploadRecord.createdAt,
             };
-          })
+          }),
         );
 
         res.json({
           success: true,
           message: `${uploadedFiles.length} fichier(s) uploadé(s) avec succès`,
-          data: uploadedFiles
+          data: uploadedFiles,
         });
-
       } catch (dbError) {
         console.error("Erreur base de données lors de l'upload:", dbError);
-        
+
         // Supprimer les fichiers en cas d'erreur DB
-        files.forEach(file => {
+        files.forEach((file) => {
           if (fs.existsSync(file.path)) {
             fs.unlinkSync(file.path);
           }
@@ -129,16 +136,15 @@ export const handleImageUpload: RequestHandler = async (req, res) => {
 
         res.status(500).json({
           error: "Erreur de sauvegarde",
-          message: "Erreur lors de la sauvegarde en base de données"
+          message: "Erreur lors de la sauvegarde en base de données",
         });
       }
     });
-
   } catch (error) {
     console.error("Erreur lors de l'upload:", error);
     res.status(500).json({
       error: "Erreur serveur",
-      message: "Erreur interne lors de l'upload"
+      message: "Erreur interne lors de l'upload",
     });
   }
 };
@@ -151,36 +157,37 @@ export const handleGetImages: RequestHandler = async (req, res) => {
     const skip = (page - 1) * limit;
 
     // Récupérer uniquement les uploads de l'utilisateur connecté (ou tous si admin)
-    const where = req.user?.role === 'ADMIN' 
-      ? {} 
-      : { userId: req.user?.id || null };
+    const where =
+      req.user?.role === "ADMIN" ? {} : { userId: req.user?.id || null };
 
     const [uploads, total] = await Promise.all([
       prisma.upload.findMany({
         where,
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
         skip,
         take: limit,
         include: {
           user: {
-            select: { username: true, email: true }
-          }
-        }
+            select: { username: true, email: true },
+          },
+        },
       }),
-      prisma.upload.count({ where })
+      prisma.upload.count({ where }),
     ]);
 
-    const images = uploads.map(upload => ({
+    const images = uploads.map((upload) => ({
       id: upload.id,
       filename: upload.filename,
       originalName: upload.originalName,
       size: upload.size,
       url: `/uploads/${upload.filename}`,
       createdAt: upload.createdAt,
-      uploader: upload.user ? {
-        username: upload.user.username,
-        email: upload.user.email
-      } : null
+      uploader: upload.user
+        ? {
+            username: upload.user.username,
+            email: upload.user.email,
+          }
+        : null,
     }));
 
     res.json({
@@ -191,16 +198,15 @@ export const handleGetImages: RequestHandler = async (req, res) => {
           page,
           limit,
           total,
-          pages: Math.ceil(total / limit)
-        }
-      }
+          pages: Math.ceil(total / limit),
+        },
+      },
     });
-
   } catch (error) {
     console.error("Erreur lors de la récupération des images:", error);
     res.status(500).json({
       error: "Erreur serveur",
-      message: "Erreur lors de la récupération des images"
+      message: "Erreur lors de la récupération des images",
     });
   }
 };
@@ -212,21 +218,21 @@ export const handleDeleteImage: RequestHandler = async (req, res) => {
 
     // Récupérer l'upload
     const upload = await prisma.upload.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!upload) {
       return res.status(404).json({
         error: "Image non trouvée",
-        message: "L'image demandée n'existe pas"
+        message: "L'image demandée n'existe pas",
       });
     }
 
     // Vérifier les permissions (propriétaire ou admin)
-    if (upload.userId !== req.user?.id && req.user?.role !== 'ADMIN') {
+    if (upload.userId !== req.user?.id && req.user?.role !== "ADMIN") {
       return res.status(403).json({
         error: "Accès refusé",
-        message: "Vous ne pouvez supprimer que vos propres images"
+        message: "Vous ne pouvez supprimer que vos propres images",
       });
     }
 
@@ -238,19 +244,18 @@ export const handleDeleteImage: RequestHandler = async (req, res) => {
 
     // Supprimer l'enregistrement en base
     await prisma.upload.delete({
-      where: { id }
+      where: { id },
     });
 
     res.json({
       success: true,
-      message: "Image supprimée avec succès"
+      message: "Image supprimée avec succès",
     });
-
   } catch (error) {
     console.error("Erreur lors de la suppression:", error);
     res.status(500).json({
       error: "Erreur serveur",
-      message: "Erreur lors de la suppression de l'image"
+      message: "Erreur lors de la suppression de l'image",
     });
   }
 };
@@ -295,11 +300,11 @@ export const handleLegacyImageUpload: RequestHandler = async (req, res) => {
           data: {
             filename: uniqueFileName,
             originalName: fileName,
-            mimetype: 'image/png', // Par défaut pour base64
+            mimetype: "image/png", // Par défaut pour base64
             size: imageBuffer.length,
             path: filePath,
-            userId: req.user.id
-          }
+            userId: req.user.id,
+          },
         });
       } catch (dbError) {
         console.error("Erreur DB pour upload legacy:", dbError);
@@ -315,9 +320,8 @@ export const handleLegacyImageUpload: RequestHandler = async (req, res) => {
       success: true,
       url: imageUrl,
       message: "Image uploadée avec succès",
-      id: uploadRecord?.id
+      id: uploadRecord?.id,
     });
-
   } catch (error) {
     console.error("Erreur upload legacy:", error);
     res.status(500).json({ error: "Erreur lors de l'upload" });

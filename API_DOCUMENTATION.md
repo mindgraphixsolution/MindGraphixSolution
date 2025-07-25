@@ -54,30 +54,30 @@ npm run start            # Démarrer en production
 
 ### Endpoints d'authentification
 
-| Méthode | Endpoint | Description | Rate Limit |
-|---------|----------|-------------|------------|
-| POST | `/api/auth/register` | Inscription | 5/15min |
-| POST | `/api/auth/login` | Connexion | 5/15min |
-| POST | `/api/auth/logout` | Déconnexion | - |
-| GET | `/api/auth/profile` | Profil utilisateur | - |
-| POST | `/api/auth/refresh-token` | Rafraîchir le token | - |
-| POST | `/api/auth/change-password` | Changer mot de passe | - |
+| Méthode | Endpoint                    | Description          | Rate Limit |
+| ------- | --------------------------- | -------------------- | ---------- |
+| POST    | `/api/auth/register`        | Inscription          | 5/15min    |
+| POST    | `/api/auth/login`           | Connexion            | 5/15min    |
+| POST    | `/api/auth/logout`          | Déconnexion          | -          |
+| GET     | `/api/auth/profile`         | Profil utilisateur   | -          |
+| POST    | `/api/auth/refresh-token`   | Rafraîchir le token  | -          |
+| POST    | `/api/auth/change-password` | Changer mot de passe | -          |
 
 ### Exemple d'inscription
 
 ```javascript
-const response = await fetch('/api/auth/register', {
-  method: 'POST',
+const response = await fetch("/api/auth/register", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    email: 'user@example.com',
-    username: 'myusername',
-    password: 'SecurePass123!',
-    firstName: 'John',
-    lastName: 'Doe'
-  })
+    email: "user@example.com",
+    username: "myusername",
+    password: "SecurePass123!",
+    firstName: "John",
+    lastName: "Doe",
+  }),
 });
 
 const data = await response.json();
@@ -87,15 +87,15 @@ const data = await response.json();
 ### Exemple de connexion
 
 ```javascript
-const response = await fetch('/api/auth/login', {
-  method: 'POST',
+const response = await fetch("/api/auth/login", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    email: 'user@example.com',
-    password: 'SecurePass123!'
-  })
+    email: "user@example.com",
+    password: "SecurePass123!",
+  }),
 });
 
 const data = await response.json();
@@ -105,12 +105,12 @@ const data = await response.json();
 ### Utilisation du token
 
 ```javascript
-const token = localStorage.getItem('authToken');
+const token = localStorage.getItem("authToken");
 
-const response = await fetch('/api/auth/profile', {
+const response = await fetch("/api/auth/profile", {
   headers: {
-    'Authorization': `Bearer ${token}`
-  }
+    Authorization: `Bearer ${token}`,
+  },
 });
 ```
 
@@ -127,58 +127,58 @@ const response = await fetch('/api/auth/profile', {
 
 ```javascript
 // Routes protégées par authentification
-app.get('/api/protected', authenticateToken, handler);
+app.get("/api/protected", authenticateToken, handler);
 
 // Routes admin uniquement
-app.get('/api/admin/*', authenticateToken, requireAdmin, handler);
+app.get("/api/admin/*", authenticateToken, requireAdmin, handler);
 
 // Routes admin + modérateur
-app.get('/api/moderator/*', authenticateToken, requireModerator, handler);
+app.get("/api/moderator/*", authenticateToken, requireModerator, handler);
 
 // Authentification optionnelle
-app.get('/api/public', optionalAuth, handler);
+app.get("/api/public", optionalAuth, handler);
 ```
 
 ## 📁 Upload de fichiers
 
 ### Endpoints d'upload
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/api/upload/image` | Upload multiple (Multer) | ✅ |
-| POST | `/api/upload/legacy` | Upload base64 (compatibilité) | ✅ |
-| GET | `/api/upload/images` | Liste des images | ✅ |
-| DELETE | `/api/upload/image/:id` | Supprimer une image | ✅ |
+| Méthode | Endpoint                | Description                   | Auth |
+| ------- | ----------------------- | ----------------------------- | ---- |
+| POST    | `/api/upload/image`     | Upload multiple (Multer)      | ✅   |
+| POST    | `/api/upload/legacy`    | Upload base64 (compatibilité) | ✅   |
+| GET     | `/api/upload/images`    | Liste des images              | ✅   |
+| DELETE  | `/api/upload/image/:id` | Supprimer une image           | ✅   |
 
 ### Upload avec formulaire (recommandé)
 
 ```javascript
 const formData = new FormData();
-formData.append('images', file1);
-formData.append('images', file2);
+formData.append("images", file1);
+formData.append("images", file2);
 
-const response = await fetch('/api/upload/image', {
-  method: 'POST',
+const response = await fetch("/api/upload/image", {
+  method: "POST",
   headers: {
-    'Authorization': `Bearer ${token}`
+    Authorization: `Bearer ${token}`,
   },
-  body: formData
+  body: formData,
 });
 ```
 
 ### Upload base64 (legacy)
 
 ```javascript
-const response = await fetch('/api/upload/legacy', {
-  method: 'POST',
+const response = await fetch("/api/upload/legacy", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
   },
   body: JSON.stringify({
-    imageData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA...',
-    fileName: 'my-image.png'
-  })
+    imageData: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA...",
+    fileName: "my-image.png",
+  }),
 });
 ```
 
@@ -254,6 +254,7 @@ const response = await fetch('/api/upload/legacy', {
 ### Pour la production
 
 1. **Configurez les variables d'environnement** :
+
    ```bash
    DATABASE_URL="your-production-db-url"
    JWT_SECRET="your-super-secure-jwt-secret"
@@ -261,11 +262,13 @@ const response = await fetch('/api/upload/legacy', {
    ```
 
 2. **Configurez CORS** pour votre domaine :
+
    ```javascript
-   origin: ['https://your-domain.com']
+   origin: ["https://your-domain.com"];
    ```
 
 3. **Générez et poussez la base** :
+
    ```bash
    npm run db:generate
    npm run db:push
@@ -305,6 +308,7 @@ USER:
 ```bash
 npm run db:studio
 ```
+
 Interface graphique pour visualiser et modifier la base de données.
 
 ## 📚 Types TypeScript partagés
@@ -312,12 +316,13 @@ Interface graphique pour visualiser et modifier la base de données.
 Vos types sont définis dans `shared/auth.ts` et peuvent être utilisés côté client et serveur :
 
 ```typescript
-import { User, AuthResponse, LoginRequest } from '@shared/auth';
+import { User, AuthResponse, LoginRequest } from "@shared/auth";
 ```
 
 ## 🔧 Extensibilité
 
 Votre API est maintenant prête pour :
+
 - ✅ Intégration mobile (React Native/Flutter)
 - ✅ Dashboard admin React
 - ✅ Paiements (Stripe, Orange Money)

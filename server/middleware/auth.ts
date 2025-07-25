@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
-import { PrismaClient } from '@prisma/client';
-import { AuthUser, Role } from '@shared/auth';
+import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+import { PrismaClient } from "@prisma/client";
+import { AuthUser, Role } from "@shared/auth";
 
 const prisma = new PrismaClient();
 
@@ -15,39 +15,43 @@ declare global {
 }
 
 // Middleware pour vérifier le token JWT
-export const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
+export const authenticateToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1]; // Bearer TOKEN
 
     if (!token) {
       return res.status(401).json({
-        error: 'Token manquant',
-        message: 'Token d\'authentification requis'
+        error: "Token manquant",
+        message: "Token d'authentification requis",
       });
     }
 
     // Vérifier si le token existe en base et n'est pas expiré
     const session = await prisma.session.findUnique({
       where: { token },
-      include: { user: true }
+      include: { user: true },
     });
 
     if (!session || session.expiresAt < new Date()) {
       return res.status(401).json({
-        error: 'Token invalide',
-        message: 'Token expiré ou invalide'
+        error: "Token invalide",
+        message: "Token expiré ou invalide",
       });
     }
 
     // Vérifier le JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
-    
+
     // Vérifier que l'utilisateur est toujours actif
     if (!session.user.isActive) {
       return res.status(401).json({
-        error: 'Compte désactivé',
-        message: 'Votre compte a été désactivé'
+        error: "Compte désactivé",
+        message: "Votre compte a été désactivé",
       });
     }
 
@@ -56,15 +60,15 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
       id: session.user.id,
       email: session.user.email,
       username: session.user.username,
-      role: session.user.role as Role
+      role: session.user.role as Role,
     };
 
     next();
   } catch (error) {
-    console.error('Erreur d\'authentification:', error);
+    console.error("Erreur d'authentification:", error);
     return res.status(401).json({
-      error: 'Token invalide',
-      message: 'Token d\'authentification invalide'
+      error: "Token invalide",
+      message: "Token d'authentification invalide",
     });
   }
 };
@@ -74,15 +78,15 @@ export const requireRole = (roles: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
       return res.status(401).json({
-        error: 'Non authentifié',
-        message: 'Authentification requise'
+        error: "Non authentifié",
+        message: "Authentification requise",
       });
     }
 
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
-        error: 'Accès refusé',
-        message: 'Privilèges insuffisants'
+        error: "Accès refusé",
+        message: "Privilèges insuffisants",
       });
     }
 
@@ -97,18 +101,26 @@ export const requireAdmin = requireRole([Role.ADMIN, Role.SUPER_ADMIN]);
 export const requireSuperAdmin = requireRole([Role.SUPER_ADMIN]);
 
 // Middleware pour les admins et modérateurs
-export const requireModerator = requireRole([Role.ADMIN, Role.SUPER_ADMIN, Role.MODERATOR]);
+export const requireModerator = requireRole([
+  Role.ADMIN,
+  Role.SUPER_ADMIN,
+  Role.MODERATOR,
+]);
 
 // Middleware optionnel d'authentification (n'échoue pas si pas de token)
-export const optionalAuth = async (req: Request, res: Response, next: NextFunction) => {
+export const optionalAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
 
     if (token) {
       const session = await prisma.session.findUnique({
         where: { token },
-        include: { user: true }
+        include: { user: true },
       });
 
       if (session && session.expiresAt > new Date() && session.user.isActive) {
@@ -116,13 +128,13 @@ export const optionalAuth = async (req: Request, res: Response, next: NextFuncti
           id: session.user.id,
           email: session.user.email,
           username: session.user.username,
-          role: session.user.role as Role
+          role: session.user.role as Role,
         };
       }
     }
   } catch (error) {
-    console.error('Erreur d\'authentification optionnelle:', error);
+    console.error("Erreur d'authentification optionnelle:", error);
   }
-  
+
   next();
 };

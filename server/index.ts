@@ -1,13 +1,18 @@
 import express from "express";
 import { handleDemo } from "./routes/demo";
-import { handleImageUpload, handleGetImages, handleDeleteImage, handleLegacyImageUpload } from "./routes/upload";
+import {
+  handleImageUpload,
+  handleGetImages,
+  handleDeleteImage,
+  handleLegacyImageUpload,
+} from "./routes/upload";
 import {
   getPrivilegeHierarchy,
   getAllAdmins,
   promoteToAdmin,
   promoteToSuperAdmin,
   demoteAdmin,
-  createAdmin
+  createAdmin,
 } from "./routes/admin";
 import {
   handleRegister,
@@ -15,7 +20,7 @@ import {
   handleLogout,
   handleProfile,
   handleRefreshToken,
-  handleChangePassword
+  handleChangePassword,
 } from "./routes/auth";
 import {
   corsConfig,
@@ -23,20 +28,20 @@ import {
   apiLimiter,
   authLimiter,
   errorLogger,
-  errorHandler
+  errorHandler,
 } from "./middleware/security";
 import {
   authenticateToken,
   requireAdmin,
   requireSuperAdmin,
   requireModerator,
-  optionalAuth
+  optionalAuth,
 } from "./middleware/auth";
 import {
   validateRegister,
   validateLogin,
   validatePasswordChange,
-  handleValidationErrors
+  handleValidationErrors,
 } from "./validation/auth";
 
 export function createServer() {
@@ -48,28 +53,46 @@ export function createServer() {
   app.use(apiLimiter);
 
   // Parsing des données
-  app.use(express.json({ limit: '50mb' }));
-  app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+  app.use(express.json({ limit: "50mb" }));
+  app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
   // Servir les fichiers statiques depuis public
-  app.use(express.static('public'));
+  app.use(express.static("public"));
 
   // Health check
   app.get("/api/ping", (_req, res) => {
     res.json({
       message: "Fusion API v3.0 - Sécurisé avec JWT",
       timestamp: new Date().toISOString(),
-      status: "healthy"
+      status: "healthy",
     });
   });
 
   // Routes d'authentification (avec rate limiting spécial)
-  app.post("/api/auth/register", authLimiter, validateRegister, handleValidationErrors, handleRegister);
-  app.post("/api/auth/login", authLimiter, validateLogin, handleValidationErrors, handleLogin);
+  app.post(
+    "/api/auth/register",
+    authLimiter,
+    validateRegister,
+    handleValidationErrors,
+    handleRegister,
+  );
+  app.post(
+    "/api/auth/login",
+    authLimiter,
+    validateLogin,
+    handleValidationErrors,
+    handleLogin,
+  );
   app.post("/api/auth/logout", authenticateToken, handleLogout);
   app.get("/api/auth/profile", authenticateToken, handleProfile);
   app.post("/api/auth/refresh-token", handleRefreshToken);
-  app.post("/api/auth/change-password", authenticateToken, validatePasswordChange, handleValidationErrors, handleChangePassword);
+  app.post(
+    "/api/auth/change-password",
+    authenticateToken,
+    validatePasswordChange,
+    handleValidationErrors,
+    handleChangePassword,
+  );
 
   // Routes publiques
   app.get("/api/demo", optionalAuth, handleDemo);
@@ -82,37 +105,72 @@ export function createServer() {
   app.delete("/api/upload/image/:id", authenticateToken, handleDeleteImage);
 
   // Routes SUPER ADMIN uniquement (privilèges maximum)
-  app.get("/api/superadmin/system", authenticateToken, requireSuperAdmin, (req, res) => {
-    res.json({
-      message: "Route SUPER ADMIN - Configuration système",
-      user: req.user,
-      privileges: "MAXIMUM - Accès à tout le système"
-    });
-  });
+  app.get(
+    "/api/superadmin/system",
+    authenticateToken,
+    requireSuperAdmin,
+    (req, res) => {
+      res.json({
+        message: "Route SUPER ADMIN - Configuration système",
+        user: req.user,
+        privileges: "MAXIMUM - Accès à tout le système",
+      });
+    },
+  );
 
-  app.get("/api/superadmin/admins", authenticateToken, requireSuperAdmin, getAllAdmins);
-  app.post("/api/superadmin/create-admin", authenticateToken, requireSuperAdmin, createAdmin);
-  app.post("/api/superadmin/promote-admin", authenticateToken, requireSuperAdmin, promoteToAdmin);
-  app.post("/api/superadmin/promote-superadmin", authenticateToken, requireSuperAdmin, promoteToSuperAdmin);
-  app.post("/api/superadmin/demote-admin", authenticateToken, requireSuperAdmin, demoteAdmin);
+  app.get(
+    "/api/superadmin/admins",
+    authenticateToken,
+    requireSuperAdmin,
+    getAllAdmins,
+  );
+  app.post(
+    "/api/superadmin/create-admin",
+    authenticateToken,
+    requireSuperAdmin,
+    createAdmin,
+  );
+  app.post(
+    "/api/superadmin/promote-admin",
+    authenticateToken,
+    requireSuperAdmin,
+    promoteToAdmin,
+  );
+  app.post(
+    "/api/superadmin/promote-superadmin",
+    authenticateToken,
+    requireSuperAdmin,
+    promoteToSuperAdmin,
+  );
+  app.post(
+    "/api/superadmin/demote-admin",
+    authenticateToken,
+    requireSuperAdmin,
+    demoteAdmin,
+  );
 
   // Routes admin normaux et super admins
   app.get("/api/admin/users", authenticateToken, requireAdmin, (req, res) => {
     res.json({
       message: "Route admin - Liste des utilisateurs",
       user: req.user,
-      level: req.user?.role === 'SUPER_ADMIN' ? 'SUPER_ADMIN' : 'ADMIN'
+      level: req.user?.role === "SUPER_ADMIN" ? "SUPER_ADMIN" : "ADMIN",
     });
   });
 
   // Routes modérateur, admin et super admin
-  app.get("/api/moderator/reports", authenticateToken, requireModerator, (req, res) => {
-    res.json({
-      message: "Route modérateur - Rapports",
-      user: req.user,
-      level: req.user?.role
-    });
-  });
+  app.get(
+    "/api/moderator/reports",
+    authenticateToken,
+    requireModerator,
+    (req, res) => {
+      res.json({
+        message: "Route modérateur - Rapports",
+        user: req.user,
+        level: req.user?.role,
+      });
+    },
+  );
 
   // Middleware de gestion d'erreurs (à la fin)
   app.use(errorLogger);
