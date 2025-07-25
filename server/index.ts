@@ -89,13 +89,11 @@ export function createServer() {
     });
   });
 
-  app.get("/api/superadmin/all-users", authenticateToken, requireSuperAdmin, (req, res) => {
-    res.json({
-      message: "Route SUPER ADMIN - Tous les utilisateurs + admins",
-      user: req.user,
-      note: "Seul le super admin peut voir cette route"
-    });
-  });
+  app.get("/api/superadmin/admins", authenticateToken, requireSuperAdmin, getAllAdmins);
+  app.post("/api/superadmin/create-admin", authenticateToken, requireSuperAdmin, createAdmin);
+  app.post("/api/superadmin/promote-admin", authenticateToken, requireSuperAdmin, promoteToAdmin);
+  app.post("/api/superadmin/promote-superadmin", authenticateToken, requireSuperAdmin, promoteToSuperAdmin);
+  app.post("/api/superadmin/demote-admin", authenticateToken, requireSuperAdmin, demoteAdmin);
 
   // Routes admin normaux et super admins
   app.get("/api/admin/users", authenticateToken, requireAdmin, (req, res) => {
