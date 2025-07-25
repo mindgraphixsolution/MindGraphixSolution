@@ -1,6 +1,6 @@
 import express from "express";
 import { handleDemo } from "./routes/demo";
-import { handleImageUpload, handleGetImages } from "./routes/upload";
+import { handleImageUpload, handleGetImages, handleDeleteImage, handleLegacyImageUpload } from "./routes/upload";
 import {
   handleRegister,
   handleLogin,
