@@ -29,7 +29,7 @@ export default function Services() {
         'Illustrations personnalisées',
         'Retouche et montage photo'
       ],
-      pricing: 'À partir de 150€',
+      pricing: 'À partir de 98.000 FCFA',
       duration: '3-7 jours',
       gradient: 'from-pink-500 to-purple-600',
       image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
@@ -48,7 +48,7 @@ export default function Services() {
         'Optimisation SEO technique',
         'Maintenance et support'
       ],
-      pricing: 'À partir de 800€',
+      pricing: 'À partir de 525.000 FCFA',
       duration: '2-6 semaines',
       gradient: 'from-blue-500 to-cyan-600',
       image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
@@ -67,7 +67,7 @@ export default function Services() {
         'Design systems et composants',
         'Optimisation mobile'
       ],
-      pricing: 'À partir de 600€',
+      pricing: 'À partir de 394.000 FCFA',
       duration: '1-4 semaines',
       gradient: 'from-green-500 to-teal-600',
       image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
@@ -86,7 +86,7 @@ export default function Services() {
         'Montage vidéo professionnel',
         'Post-production et effets'
       ],
-      pricing: 'À partir de 400€',
+      pricing: 'À partir de 262.000 FCFA',
       duration: '1-3 semaines',
       gradient: 'from-orange-500 to-red-600',
       image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
@@ -105,7 +105,7 @@ export default function Services() {
         'Optimisation conversions',
         'Support multi-devises'
       ],
-      pricing: 'À partir de 1200€',
+      pricing: 'À partir de 787.000 FCFA',
       duration: '3-8 semaines',
       gradient: 'from-indigo-500 to-purple-600',
       image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
@@ -124,7 +124,7 @@ export default function Services() {
         'Analytics et reporting',
         'Social media management'
       ],
-      pricing: 'À partir de 300€/mois',
+      pricing: 'À partir de 197.000 FCFA/mois',
       duration: 'Suivi continu',
       gradient: 'from-yellow-500 to-orange-600',
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'

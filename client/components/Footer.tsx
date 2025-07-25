@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Phone, MapPin, Send, Facebook, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isAdmin } = useAuth();
+
+  // Masquer le footer si un administrateur est connecté
+  if (isAdmin) {
+    return null;
+  }
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,9 +124,11 @@ export const Footer: React.FC = () => {
             {/* Brand */}
             <div className="lg:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">MG</span>
-                </div>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F4871d4fcbac047999c8a4dbe551aa7ef%2Faa0f68d60ade45f69d38a41cc2d1e34f?format=webp&width=800"
+                  alt="Mind Graphix Solution Logo"
+                  className="w-12 h-12 rounded-full object-cover"
+                />
                 <span className="text-2xl font-bold">
                   Mind <span className="text-accent">Graphix</span> Solution
                 </span>
@@ -130,20 +139,26 @@ export const Footer: React.FC = () => {
               </p>
               
               {/* Contact Info */}
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-gray-400">
-                  <MapPin size={18} className="text-accent" />
-                  <span>Bobo-Dioulasso, Sect N°4</span>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3 text-gray-400">
+                  <MapPin size={18} className="text-accent flex-shrink-0 mt-1" />
+                  <span className="leading-relaxed">Bobo-Dioulasso, Sect N°4</span>
                 </div>
-                <div className="flex items-center space-x-3 text-gray-400">
-                  <Phone size={18} className="text-accent" />
-                  <a href="tel:+22601511146" className="hover:text-accent transition-colors">
+                <div className="flex items-start space-x-3 text-gray-400">
+                  <Phone size={18} className="text-accent flex-shrink-0 mt-1" />
+                  <a
+                    href="tel:+22601511146"
+                    className="hover:text-accent transition-colors leading-relaxed font-medium"
+                  >
                     +226 01 51 11 46
                   </a>
                 </div>
-                <div className="flex items-center space-x-3 text-gray-400">
-                  <Mail size={18} className="text-accent" />
-                  <a href="mailto:mindgraphixsolution@gmail.com" className="hover:text-accent transition-colors">
+                <div className="flex items-start space-x-3 text-gray-400">
+                  <Mail size={18} className="text-accent flex-shrink-0 mt-1" />
+                  <a
+                    href="mailto:mindgraphixsolution@gmail.com"
+                    className="hover:text-accent transition-colors leading-relaxed font-medium break-all"
+                  >
                     mindgraphixsolution@gmail.com
                   </a>
                 </div>

@@ -14,6 +14,10 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import { AdminRoute } from "./components/AdminRoute";
 
+import { SystemValidator } from "./components/SystemValidator";
+import { SecurityEnforcer } from "./components/SecurityEnforcer";
+import { HybridChatSystem } from "./components/HybridChatSystem";
+
 const queryClient = new QueryClient();
 
 export default function App() {
@@ -39,6 +43,9 @@ export default function App() {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <HybridChatSystem />
+            <SecurityEnforcer />
+            <SystemValidator />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>

@@ -170,21 +170,21 @@ const services = [
 
 const budgetRanges = [
   {
-    value: "1000-5000",
-    label: "1 000€ - 5 000€",
+    value: "650000-3250000",
+    label: "650.000 - 3.250.000 FCFA",
     description: "Projet simple",
   },
   {
-    value: "5000-15000",
-    label: "5 000€ - 15 000€",
+    value: "3250000-9750000",
+    label: "3.250.000 - 9.750.000 FCFA",
     description: "Projet standard",
   },
   {
-    value: "15000-30000",
-    label: "15 000€ - 30 000€",
+    value: "9750000-19500000",
+    label: "9.750.000 - 19.500.000 FCFA",
     description: "Projet avancé",
   },
-  { value: "30000+", label: "30 000€+", description: "Projet complexe" },
+  { value: "19500000+", label: "19.500.000 FCFA+", description: "Projet complexe" },
   { value: "to-discuss", label: "À discuter", description: "Budget flexible" },
 ];
 
@@ -276,7 +276,6 @@ export const QuoteRequest: React.FC<QuoteRequestProps> = ({
 
   const handleSubmit = () => {
     // Logique d'envoi du formulaire
-    console.log("Devis soumis:", formData);
     alert(
       "Votre demande de devis a été envoyée ! Nous vous répondrons sous 24h.",
     );
@@ -483,6 +482,42 @@ export const QuoteRequest: React.FC<QuoteRequestProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-3">
                   Type de service souhaité *
                 </label>
+
+                {/* Liste déroulante pour sélection rapide */}
+                <div className="mb-4">
+                  <select
+                    value={formData.projectDetails.service}
+                    onChange={(e) => updateFormData("projectDetails", "service", e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
+                  >
+                    <option value="">-- Sélectionnez un service --</option>
+                    <optgroup label="🎨 Design & Créativité">
+                      <option value="design-graphique">🎨 Design Graphique - À partir de 98.000 FCFA</option>
+                      <option value="motion-design">🎬 Motion Design - À partir de 262.000 FCFA</option>
+                      <option value="ui-ux-design">📱 UI/UX Design - À partir de 394.000 FCFA</option>
+                    </optgroup>
+                    <optgroup label="💻 Développement & Web">
+                      <option value="developpement-web">💻 Développement Web - À partir de 525.000 FCFA</option>
+                      <option value="e-commerce">🛒 E-commerce - À partir de 787.000 FCFA</option>
+                    </optgroup>
+                    <optgroup label="📈 Marketing & Promotion">
+                      <option value="seo-marketing">📈 SEO & Marketing Digital - À partir de 197.000 FCFA/mois</option>
+                    </optgroup>
+                    <optgroup label="🔧 Services Spécialisés">
+                      <option value="audit-existant">🔍 Audit de l'existant</option>
+                      <option value="formation">🎓 Formation équipe</option>
+                      <option value="maintenance">⚙️ Maintenance & Support</option>
+                      <option value="consulting">💡 Consulting stratégique</option>
+                      <option value="integration">🔗 Intégration systèmes</option>
+                      <option value="custom">🛠️ Projet sur mesure</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+                {/* Sélection visuelle (optionnelle mais plus attractive) */}
+                <div className="text-center mb-3">
+                  <span className="text-sm text-gray-500">ou choisissez visuellement :</span>
+                </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {services.map((service) => (
                     <button

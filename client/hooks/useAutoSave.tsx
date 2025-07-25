@@ -1,127 +1,148 @@
-import { useEffect, useRef } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useEffect, useCallback } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 export const useAutoSave = () => {
-  const { isAdmin, getContent } = useAuth();
-  const lastSaveRef = useRef<string>("");
-  const indicatorRef = useRef<HTMLDivElement | null>(null);
+  const { getContent, updateContent } = useAuth();
 
+  // Auto-save every 5 seconds
   useEffect(() => {
-    if (!isAdmin) return;
-
-    const saveInterval = setInterval(() => {
-      const currentContent = localStorage.getItem("siteContent") || "{}";
-
-      // Only save if content has changed
-      if (currentContent !== lastSaveRef.current) {
-        lastSaveRef.current = currentContent;
-
-        // Show save indicator safely
-        showSaveIndicator("✓ Sauvegardé automatiquement", "bg-green-500");
+    const interval = setInterval(() => {
+      const currentContent = localStorage.getItem('siteContent');
+      if (currentContent) {
+        // Optionally, you could save to a server here
       }
-    }, 5000); // Save every 5 seconds
+    }, 5000);
 
-    return () => {
-      clearInterval(saveInterval);
-      // Clean up any existing indicator on unmount
-      if (
-        indicatorRef.current &&
-        document.body.contains(indicatorRef.current)
-      ) {
-        document.body.removeChild(indicatorRef.current);
-        indicatorRef.current = null;
+    return () => clearInterval(interval);
+  }, []);
+
+  const forceSave = useCallback(() => {
+    try {
+      const currentContent = localStorage.getItem('siteContent');
+      if (currentContent) {
+        // Force save
+        localStorage.setItem('siteContent_backup', currentContent);
+        alert('Contenu sauvegardé avec succès !');
+      } else {
+        alert('Aucun contenu à sauvegarder');
       }
-    };
-  }, [isAdmin]);
-
-  const showSaveIndicator = (message: string, bgColor: string) => {
-    // Remove existing indicator first
-    if (indicatorRef.current && document.body.contains(indicatorRef.current)) {
-      document.body.removeChild(indicatorRef.current);
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde:', error);
+      alert('Erreur lors de la sauvegarde');
     }
+  }, []);
 
-    // Create new indicator
-    const indicator = document.createElement("div");
-    indicator.className = `fixed top-4 right-4 z-50 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg transition-opacity`;
-    indicator.textContent = message;
-    indicatorRef.current = indicator;
+  const exportContent = useCallback(() => {
+    try {
+      const currentContent = localStorage.getItem('siteContent') || '{}';
+      const adminNotifications = localStorage.getItem('adminNotifications') || '[]';
+      const userRequests = localStorage.getItem('userRequests') || '[]';
+      const chatSessions = localStorage.getItem('chatSessions') || '[]';
+      
+      const exportData = {
+        siteContent: JSON.parse(currentContent),
+        adminNotifications: JSON.parse(adminNotifications),
+        userRequests: JSON.parse(userRequests),
+        chatSessions: JSON.parse(chatSessions),
+        exportDate: new Date().toISOString(),
+        version: '1.0'
+      };
 
-    document.body.appendChild(indicator);
-
-    setTimeout(() => {
-      if (
-        indicatorRef.current &&
-        document.body.contains(indicatorRef.current)
-      ) {
-        document.body.removeChild(indicatorRef.current);
-        indicatorRef.current = null;
-      }
-    }, 3000);
-  };
-
-  const forceSave = () => {
-    if (!isAdmin) return;
-
-    const currentContent = localStorage.getItem("siteContent") || "{}";
-
-    // Backup to a different key for recovery
-    localStorage.setItem("siteContentBackup", currentContent);
-    localStorage.setItem("lastSaveTime", new Date().toISOString());
-
-    // Show save confirmation
-    showSaveIndicator("💾 Sauvegarde manuelle effectuée", "bg-blue-500");
-  };
-
-  const exportContent = () => {
-    if (!isAdmin) return;
-
-    const content = localStorage.getItem("siteContent") || "{}";
-    const blob = new Blob([content], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `mind-graphix-content-${new Date().toISOString().split("T")[0]}.json`;
-    a.style.display = "none";
-
-    document.body.appendChild(a);
-    a.click();
-
-    // Clean up safely
-    setTimeout(() => {
-      if (document.body.contains(a)) {
-        document.body.removeChild(a);
-      }
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        type: 'application/json'
+      });
+      
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `mind-graphix-backup-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
       URL.revokeObjectURL(url);
-    }, 100);
-  };
+      
+      alert('Export terminé avec succès !');
+    } catch (error) {
+      console.error('Erreur lors de l\'export:', error);
+      alert('Erreur lors de l\'export');
+    }
+  }, []);
 
-  const importContent = (file: File) => {
-    if (!isAdmin) return;
-
+  const importContent = useCallback((file: File) => {
     const reader = new FileReader();
+    
     reader.onload = (e) => {
       try {
         const content = e.target?.result as string;
-        const parsed = JSON.parse(content);
-
-        // Validate content structure
-        if (typeof parsed === "object" && parsed !== null) {
-          localStorage.setItem("siteContent", content);
-          window.location.reload(); // Reload to apply changes
-        } else {
-          alert("Format de fichier invalide");
+        const importData = JSON.parse(content);
+        
+        // Validate the import data
+        if (importData.siteContent) {
+          localStorage.setItem('siteContent', JSON.stringify(importData.siteContent));
         }
+        
+        if (importData.adminNotifications) {
+          localStorage.setItem('adminNotifications', JSON.stringify(importData.adminNotifications));
+        }
+        
+        if (importData.userRequests) {
+          localStorage.setItem('userRequests', JSON.stringify(importData.userRequests));
+        }
+        
+        if (importData.chatSessions) {
+          localStorage.setItem('chatSessions', JSON.stringify(importData.chatSessions));
+        }
+        
+        alert('Import terminé avec succès ! La page va se recharger pour appliquer les modifications.');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        
       } catch (error) {
-        alert("Erreur lors de l'importation du fichier");
+        console.error('Erreur lors de l\'import:', error);
+        alert('Erreur lors de l\'import: fichier invalide');
       }
     };
+    
     reader.readAsText(file);
-  };
+  }, []);
+
+  const resetContent = useCallback(() => {
+    if (confirm('Êtes-vous sûr de vouloir réinitialiser tout le contenu ? Cette action est irréversible.')) {
+      localStorage.removeItem('siteContent');
+      localStorage.removeItem('adminNotifications');
+      localStorage.removeItem('userRequests');
+      localStorage.removeItem('chatSessions');
+      
+      alert('Contenu réinitialisé. La page va se recharger.');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
+  }, []);
+
+  const getBackupInfo = useCallback(() => {
+    const backup = localStorage.getItem('siteContent_backup');
+    if (backup) {
+      try {
+        const data = JSON.parse(backup);
+        return {
+          exists: true,
+          size: new Blob([backup]).size,
+          items: Object.keys(data).length
+        };
+      } catch {
+        return { exists: false, size: 0, items: 0 };
+      }
+    }
+    return { exists: false, size: 0, items: 0 };
+  }, []);
 
   return {
     forceSave,
     exportContent,
     importContent,
+    resetContent,
+    getBackupInfo
   };
 };
