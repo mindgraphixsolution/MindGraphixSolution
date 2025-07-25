@@ -90,11 +90,14 @@ export const requireRole = (roles: Role[]) => {
   };
 };
 
-// Middleware pour les admins uniquement
-export const requireAdmin = requireRole([Role.ADMIN]);
+// Middleware pour les admins normaux et super admins
+export const requireAdmin = requireRole([Role.ADMIN, Role.SUPER_ADMIN]);
+
+// Middleware pour les super admins uniquement
+export const requireSuperAdmin = requireRole([Role.SUPER_ADMIN]);
 
 // Middleware pour les admins et modérateurs
-export const requireModerator = requireRole([Role.ADMIN, Role.MODERATOR]);
+export const requireModerator = requireRole([Role.ADMIN, Role.SUPER_ADMIN, Role.MODERATOR]);
 
 // Middleware optionnel d'authentification (n'échoue pas si pas de token)
 export const optionalAuth = async (req: Request, res: Response, next: NextFunction) => {
