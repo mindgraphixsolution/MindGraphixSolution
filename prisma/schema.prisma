@@ -62,6 +62,7 @@ model Upload {
 // Énumération des rôles
 enum Role {
   USER
-  ADMIN
   MODERATOR
+  ADMIN
+  SUPER_ADMIN
 }
