@@ -67,7 +67,9 @@ export function createServer() {
 
   // Routes d'upload protégées
   app.post("/api/upload/image", authenticateToken, handleImageUpload);
+  app.post("/api/upload/legacy", authenticateToken, handleLegacyImageUpload); // Compatibilité base64
   app.get("/api/upload/images", authenticateToken, handleGetImages);
+  app.delete("/api/upload/image/:id", authenticateToken, handleDeleteImage);
 
   // Routes admin (exemple)
   app.get("/api/admin/users", authenticateToken, requireAdmin, (req, res) => {
