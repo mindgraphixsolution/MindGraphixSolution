@@ -2,6 +2,14 @@ import express from "express";
 import { handleDemo } from "./routes/demo";
 import { handleImageUpload, handleGetImages, handleDeleteImage, handleLegacyImageUpload } from "./routes/upload";
 import {
+  getPrivilegeHierarchy,
+  getAllAdmins,
+  promoteToAdmin,
+  promoteToSuperAdmin,
+  demoteAdmin,
+  createAdmin
+} from "./routes/admin";
+import {
   handleRegister,
   handleLogin,
   handleLogout,
