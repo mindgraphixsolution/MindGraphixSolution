@@ -8,7 +8,7 @@ Votre API Fusion est maintenant équipée d'une stack backend complète et sécu
 - **🛡️ Sécurité renforcée** (Helmet, CORS, Rate Limiting)
 - **👥 Gestion des rôles** (USER, MODERATOR, ADMIN)
 - **📁 Upload sécurisé** avec Multer + validation
-- **💾 Base de données** PostgreSQL via Prisma ORM
+- **💾 Base de données** Base de données en mémoire (sans persistance externe)
 - **✅ Validation** des données avec express-validator
 
 ## 🔧 Configuration
@@ -16,10 +16,7 @@ Votre API Fusion est maintenant équipée d'une stack backend complète et sécu
 ### Variables d'environnement (.env)
 
 ```bash
-# Base de données
-DATABASE_URL="postgresql://username:password@localhost:5432/fusiondb?schema=public"
-
-# JWT
+# JWT (obligatoire)
 JWT_SECRET="your-super-secret-jwt-key-change-in-production"
 JWT_EXPIRES_IN="7d"
 
@@ -38,16 +35,13 @@ UPLOAD_DIR="./public/uploads"
 # Développement
 npm run dev              # Démarrer le serveur de développement
 
-# Base de données
-npm run db:generate      # Générer le client Prisma
-npm run db:push          # Pousser le schéma vers la DB
-npm run db:migrate       # Créer une migration
-npm run db:studio        # Interface graphique Prisma
-npm run db:seed          # Créer les données de test
-
 # Build & production
 npm run build            # Build complet
 npm run start            # Démarrer en production
+
+# Tests et validation
+npm run typecheck        # Vérifier les types TypeScript
+npm run format.fix       # Formater le code
 ```
 
 ## 🔐 Authentification
@@ -212,7 +206,9 @@ const response = await fetch("/api/upload/legacy", {
 
 ## 📊 Base de données
 
-### Modèles Prisma
+### Structure des données (Base en mémoire)
+
+Les données sont stockées en mémoire avec la structure suivante :
 
 ```typescript
 // User
@@ -220,20 +216,19 @@ const response = await fetch("/api/upload/legacy", {
   id: string
   email: string (unique)
   username: string (unique)
-  password: string (hashed)
-  role: Role (USER | MODERATOR | ADMIN)
-  isActive: boolean
-  createdAt: DateTime
-  updatedAt: DateTime
+  password: string (hashed avec bcrypt)
+  role: "USER" | "MODERATOR" | "ADMIN" | "SUPER_ADMIN"
+  createdAt: Date
+  updatedAt: Date
 }
 
 // Session
 {
   id: string
-  token: string (unique)
   userId: string
-  expiresAt: DateTime
-  createdAt: DateTime
+  token: string (JWT)
+  expiresAt: Date
+  createdAt: Date
 }
 
 // Upload
@@ -244,10 +239,18 @@ const response = await fetch("/api/upload/legacy", {
   mimetype: string
   size: number
   path: string
-  userId?: string
-  createdAt: DateTime
+  userId: string
+  createdAt: Date
 }
 ```
+
+### ⚠️ Important : Base de données en mémoire
+- Les données sont **perdues au redémarrage** du serveur
+- Un **super admin par défaut** est créé automatiquement :
+  - Email: `superadmin@fusion.com`
+  - Mot de passe: `admin123`
+- Adapté pour le développement et les démonstrations
+- Pour la production, envisagez une base de données persistante
 
 ## 🚀 Déploiement
 

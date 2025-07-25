@@ -1,10 +1,8 @@
-import { RequestHandler } from "express";
+import { Request, Response, RequestHandler } from "express";
 import multer from "multer";
-import fs from "fs";
 import path from "path";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import fs from "fs";
+import { db } from "../services/database";
 
 // Configuration Multer avec sécurité
 const storage = multer.diskStorage({
@@ -97,15 +95,13 @@ export const handleImageUpload: RequestHandler = async (req, res) => {
         // Sauvegarder les informations en base de données
         const uploadedFiles = await Promise.all(
           files.map(async (file) => {
-            const uploadRecord = await prisma.upload.create({
-              data: {
-                filename: file.filename,
-                originalName: file.originalname,
-                mimetype: file.mimetype,
-                size: file.size,
-                path: file.path,
-                userId: req.user?.id || null,
-              },
+            const uploadRecord = await db.createUpload({
+              filename: file.filename,
+              originalName: file.originalname,
+              mimetype: file.mimetype,
+              size: file.size,
+              path: file.path,
+              userId: req.user?.id || "anonymous",
             });
 
             return {
@@ -157,38 +153,42 @@ export const handleGetImages: RequestHandler = async (req, res) => {
     const skip = (page - 1) * limit;
 
     // Récupérer uniquement les uploads de l'utilisateur connecté (ou tous si admin)
-    const where =
-      req.user?.role === "ADMIN" ? {} : { userId: req.user?.id || null };
+    const whereOptions = req.user?.role === "ADMIN" 
+      ? undefined 
+      : { userId: req.user?.id || "anonymous" };
 
-    const [uploads, total] = await Promise.all([
-      prisma.upload.findMany({
-        where,
-        orderBy: { createdAt: "desc" },
-        skip,
-        take: limit,
-        include: {
-          user: {
-            select: { username: true, email: true },
-          },
-        },
-      }),
-      prisma.upload.count({ where }),
-    ]);
+    const uploads = await db.findManyUploads({
+      where: whereOptions,
+      skip,
+      take: limit,
+    });
+    
+    const total = await db.countUploads(whereOptions);
 
-    const images = uploads.map((upload) => ({
-      id: upload.id,
-      filename: upload.filename,
-      originalName: upload.originalName,
-      size: upload.size,
-      url: `/uploads/${upload.filename}`,
-      createdAt: upload.createdAt,
-      uploader: upload.user
-        ? {
-            username: upload.user.username,
-            email: upload.user.email,
+    const images = await Promise.all(
+      uploads.map(async (upload) => {
+        let uploader = null;
+        if (upload.userId && upload.userId !== "anonymous") {
+          const user = await db.findUserById(upload.userId);
+          if (user) {
+            uploader = {
+              username: user.username,
+              email: user.email,
+            };
           }
-        : null,
-    }));
+        }
+
+        return {
+          id: upload.id,
+          filename: upload.filename,
+          originalName: upload.originalName,
+          size: upload.size,
+          url: `/uploads/${upload.filename}`,
+          createdAt: upload.createdAt,
+          uploader,
+        };
+      })
+    );
 
     res.json({
       success: true,
@@ -217,9 +217,7 @@ export const handleDeleteImage: RequestHandler = async (req, res) => {
     const { id } = req.params;
 
     // Récupérer l'upload
-    const upload = await prisma.upload.findUnique({
-      where: { id },
-    });
+    const upload = await db.findUploadById(id);
 
     if (!upload) {
       return res.status(404).json({
@@ -243,9 +241,7 @@ export const handleDeleteImage: RequestHandler = async (req, res) => {
     }
 
     // Supprimer l'enregistrement en base
-    await prisma.upload.delete({
-      where: { id },
-    });
+    await db.deleteUpload(id);
 
     res.json({
       success: true,
@@ -296,15 +292,13 @@ export const handleLegacyImageUpload: RequestHandler = async (req, res) => {
     let uploadRecord = null;
     if (req.user) {
       try {
-        uploadRecord = await prisma.upload.create({
-          data: {
-            filename: uniqueFileName,
-            originalName: fileName,
-            mimetype: "image/png", // Par défaut pour base64
-            size: imageBuffer.length,
-            path: filePath,
-            userId: req.user.id,
-          },
+        uploadRecord = await db.createUpload({
+          filename: uniqueFileName,
+          originalName: fileName,
+          mimetype: "image/png", // Par défaut pour base64
+          size: imageBuffer.length,
+          path: filePath,
+          userId: req.user.id,
         });
       } catch (dbError) {
         console.error("Erreur DB pour upload legacy:", dbError);

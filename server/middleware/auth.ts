@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient } from "@prisma/client";
-import { AuthUser, Role } from "../../shared/auth.js";
+import { db } from "../services/database";
+import { AuthUser } from "../services/auth";
 
-const prisma = new PrismaClient();
+type UserRole = "USER" | "MODERATOR" | "ADMIN" | "SUPER_ADMIN";
 
 // Étendre l'interface Request pour inclure l'utilisateur
 declare global {
@@ -32,10 +32,7 @@ export const authenticateToken = async (
     }
 
     // Vérifier si le token existe en base et n'est pas expiré
-    const session = await prisma.session.findUnique({
-      where: { token },
-      include: { user: true },
-    });
+    const session = await db.findSessionByToken(token);
 
     if (!session || session.expiresAt < new Date()) {
       return res.status(401).json({
@@ -45,22 +42,24 @@ export const authenticateToken = async (
     }
 
     // Vérifier le JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    const JWT_SECRET = process.env.JWT_SECRET || "default-secret-key";
+    const decoded = jwt.verify(token, JWT_SECRET) as any;
 
-    // Vérifier que l'utilisateur est toujours actif
-    if (!session.user.isActive) {
+    // Récupérer l'utilisateur
+    const user = await db.findUserById(session.userId);
+    if (!user) {
       return res.status(401).json({
-        error: "Compte désactivé",
-        message: "Votre compte a été désactivé",
+        error: "Utilisateur non trouvé",
+        message: "Utilisateur associé au token non trouvé",
       });
     }
 
     // Ajouter l'utilisateur à la requête
     req.user = {
-      id: session.user.id,
-      email: session.user.email,
-      username: session.user.username,
-      role: session.user.role as Role,
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
     };
 
     next();
@@ -74,7 +73,7 @@ export const authenticateToken = async (
 };
 
 // Middleware pour vérifier les rôles
-export const requireRole = (roles: Role[]) => {
+export const requireRole = (roles: UserRole[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
       return res.status(401).json({
@@ -95,16 +94,16 @@ export const requireRole = (roles: Role[]) => {
 };
 
 // Middleware pour les admins normaux et super admins
-export const requireAdmin = requireRole([Role.ADMIN, Role.SUPER_ADMIN]);
+export const requireAdmin = requireRole(["ADMIN", "SUPER_ADMIN"]);
 
 // Middleware pour les super admins uniquement
-export const requireSuperAdmin = requireRole([Role.SUPER_ADMIN]);
+export const requireSuperAdmin = requireRole(["SUPER_ADMIN"]);
 
 // Middleware pour les admins et modérateurs
 export const requireModerator = requireRole([
-  Role.ADMIN,
-  Role.SUPER_ADMIN,
-  Role.MODERATOR,
+  "ADMIN",
+  "SUPER_ADMIN",
+  "MODERATOR",
 ]);
 
 // Middleware optionnel d'authentification (n'échoue pas si pas de token)
@@ -118,18 +117,18 @@ export const optionalAuth = async (
     const token = authHeader && authHeader.split(" ")[1];
 
     if (token) {
-      const session = await prisma.session.findUnique({
-        where: { token },
-        include: { user: true },
-      });
+      const session = await db.findSessionByToken(token);
 
-      if (session && session.expiresAt > new Date() && session.user.isActive) {
-        req.user = {
-          id: session.user.id,
-          email: session.user.email,
-          username: session.user.username,
-          role: session.user.role as Role,
-        };
+      if (session && session.expiresAt > new Date()) {
+        const user = await db.findUserById(session.userId);
+        if (user) {
+          req.user = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+          };
+        }
       }
     }
   } catch (error) {

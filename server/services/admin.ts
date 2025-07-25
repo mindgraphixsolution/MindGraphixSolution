@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { Role } from "../../shared/auth.js";
+import { db, User } from "./database";
 
-const prisma = new PrismaClient();
+type UserRole = "USER" | "MODERATOR" | "ADMIN" | "SUPER_ADMIN";
 
 export class AdminService {
   private static readonly SALT_ROUNDS = 12;
@@ -13,19 +12,14 @@ export class AdminService {
     promotedBy: string,
   ): Promise<void> {
     // Vérifier que celui qui promeut est un super admin
-    const promoter = await prisma.user.findUnique({
-      where: { id: promotedBy },
-    });
+    const promoter = await db.findUserById(promotedBy);
 
     if (!promoter || promoter.role !== "SUPER_ADMIN") {
       throw new Error("Seul un super admin peut promouvoir un utilisateur");
     }
 
     // Promouvoir l'utilisateur
-    await prisma.user.update({
-      where: { id: userId },
-      data: { role: "ADMIN" },
-    });
+    await db.updateUser(userId, { role: "ADMIN" });
   }
 
   // Promouvoir un admin à super admin (très restreint)
@@ -34,35 +28,26 @@ export class AdminService {
     promotedBy: string,
   ): Promise<void> {
     // Vérifier que celui qui promeut est un super admin
-    const promoter = await prisma.user.findUnique({
-      where: { id: promotedBy },
-    });
+    const promoter = await db.findUserById(promotedBy);
 
     if (!promoter || promoter.role !== "SUPER_ADMIN") {
       throw new Error("Seul un super admin peut créer un autre super admin");
     }
 
     // Vérifier que l'utilisateur est déjà admin
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
+    const user = await db.findUserById(userId);
 
     if (!user || user.role !== "ADMIN") {
       throw new Error("Seul un admin peut être promu super admin");
     }
 
     // Promouvoir à super admin
-    await prisma.user.update({
-      where: { id: userId },
-      data: { role: "SUPER_ADMIN" },
-    });
+    await db.updateUser(userId, { role: "SUPER_ADMIN" });
   }
 
   // Rétrograder un admin (seul super admin peut le faire)
   static async demoteAdmin(userId: string, demotedBy: string): Promise<void> {
-    const demoter = await prisma.user.findUnique({
-      where: { id: demotedBy },
-    });
+    const demoter = await db.findUserById(demotedBy);
 
     if (!demoter || demoter.role !== "SUPER_ADMIN") {
       throw new Error("Seul un super admin peut rétrograder un admin");
@@ -74,10 +59,7 @@ export class AdminService {
     }
 
     // Rétrograder à utilisateur normal
-    await prisma.user.update({
-      where: { id: userId },
-      data: { role: "USER" },
-    });
+    await db.updateUser(userId, { role: "USER" });
   }
 
   // Obtenir la hiérarchie des privilèges
@@ -119,7 +101,7 @@ export class AdminService {
   }
 
   // Vérifier si un utilisateur peut gérer un autre
-  static canUserManage(managerRole: Role, targetRole: Role): boolean {
+  static canUserManage(managerRole: UserRole, targetRole: UserRole): boolean {
     const hierarchy = this.getPrivilegeHierarchy();
     const managerLevel = hierarchy[managerRole]?.level || 0;
     const targetLevel = hierarchy[targetRole]?.level || 0;
@@ -129,9 +111,7 @@ export class AdminService {
 
   // Lister tous les admins (seul super admin peut voir cette liste complète)
   static async getAllAdmins(requesterId: string) {
-    const requester = await prisma.user.findUnique({
-      where: { id: requesterId },
-    });
+    const requester = await db.findUserById(requesterId);
 
     if (!requester || requester.role !== "SUPER_ADMIN") {
       throw new Error(
@@ -139,27 +119,25 @@ export class AdminService {
       );
     }
 
-    return await prisma.user.findMany({
-      where: {
-        role: {
-          in: ["ADMIN", "SUPER_ADMIN"],
-        },
-      },
-      select: {
-        id: true,
-        email: true,
-        username: true,
-        firstName: true,
-        lastName: true,
-        role: true,
-        isActive: true,
-        createdAt: true,
-      },
-      orderBy: [
-        { role: "desc" }, // SUPER_ADMIN en premier
-        { createdAt: "asc" },
-      ],
+    const users = await db.findManyUsers();
+    const admins = users.filter(user => 
+      user.role === "ADMIN" || user.role === "SUPER_ADMIN"
+    );
+
+    // Trier par rôle (SUPER_ADMIN en premier) puis par date de création
+    admins.sort((a, b) => {
+      if (a.role === "SUPER_ADMIN" && b.role !== "SUPER_ADMIN") return -1;
+      if (a.role !== "SUPER_ADMIN" && b.role === "SUPER_ADMIN") return 1;
+      return a.createdAt.getTime() - b.createdAt.getTime();
     });
+
+    return admins.map(admin => ({
+      id: admin.id,
+      email: admin.email,
+      username: admin.username,
+      role: admin.role,
+      createdAt: admin.createdAt,
+    }));
   }
 
   // Créer un admin directement (seul super admin)
@@ -168,33 +146,25 @@ export class AdminService {
       email: string;
       username: string;
       password: string;
-      firstName?: string;
-      lastName?: string;
       role: "ADMIN" | "SUPER_ADMIN";
     },
     createdBy: string,
   ): Promise<any> {
-    const creator = await prisma.user.findUnique({
-      where: { id: createdBy },
-    });
+    const creator = await db.findUserById(createdBy);
 
     if (!creator || creator.role !== "SUPER_ADMIN") {
       throw new Error("Seul un super admin peut créer directement un admin");
     }
 
     // Vérifier si l'email existe déjà
-    const existingEmail = await prisma.user.findUnique({
-      where: { email: data.email },
-    });
+    const existingEmail = await db.findUserByEmail(data.email);
 
     if (existingEmail) {
       throw new Error("Cet email est déjà utilisé");
     }
 
     // Vérifier si le nom d'utilisateur existe déjà
-    const existingUsername = await prisma.user.findUnique({
-      where: { username: data.username },
-    });
+    const existingUsername = await db.findUserByUsername(data.username);
 
     if (existingUsername) {
       throw new Error("Ce nom d'utilisateur est déjà pris");
@@ -204,15 +174,11 @@ export class AdminService {
     const hashedPassword = await bcrypt.hash(data.password, this.SALT_ROUNDS);
 
     // Créer l'admin
-    const admin = await prisma.user.create({
-      data: {
-        email: data.email,
-        username: data.username,
-        password: hashedPassword,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        role: data.role,
-      },
+    const admin = await db.createUser({
+      email: data.email,
+      username: data.username,
+      password: hashedPassword,
+      role: data.role,
     });
 
     return {
