@@ -20,6 +20,7 @@ import {
 import {
   authenticateToken,
   requireAdmin,
+  requireSuperAdmin,
   requireModerator,
   optionalAuth
 } from "./middleware/auth";
