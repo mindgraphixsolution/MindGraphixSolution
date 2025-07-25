@@ -283,17 +283,21 @@ const response = await fetch('/api/upload/legacy', {
 ### Comptes de test (après seeding)
 
 ```
-Admin:
+SUPER ADMIN (privilèges maximum):
+- Email: superadmin@fusion.dev
+- Password: SuperAdmin123!
+
+ADMIN NORMAL:
 - Email: admin@fusion.dev
 - Password: Admin123!
 
-User:
-- Email: user@test.com  
-- Password: User123!
-
-Moderator:
+MODERATOR:
 - Email: moderator@test.com
 - Password: Mod123!
+
+USER:
+- Email: user@test.com
+- Password: User123!
 ```
 
 ### Prisma Studio
