@@ -119,8 +119,9 @@ const response = await fetch('/api/auth/profile', {
 ### Rôles disponibles
 
 - **USER** : Utilisateur standard
-- **MODERATOR** : Modérateur avec privilèges étendus  
-- **ADMIN** : Administrateur avec tous les privilèges
+- **MODERATOR** : Modérateur avec privilèges étendus
+- **ADMIN** : Administrateur normal - Gestion des utilisateurs
+- **SUPER_ADMIN** : Administrateur suprême - Privilèges maximum
 
 ### Middleware de protection
 
