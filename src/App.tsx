@@ -6,7 +6,6 @@ import { Footer } from './components/Footer'
 import About from './components/pages/About'
 import Services from './components/pages/Services'
 import Portfolio from './components/pages/Portfolio'
-import './App.css'
 
 function HomePage() {
   return (
@@ -36,10 +35,9 @@ function HomePage() {
 }
 
 function App() {
-  console.log("App Rendering (with Debug Style)...");
   return (
     <Router>
-      <div className="min-h-screen" style={{ backgroundColor: 'red' }}>
+      <div className="min-h-screen bg-[var(--bg-primary)]">
         <Navbar />
         <main>
           <Routes>

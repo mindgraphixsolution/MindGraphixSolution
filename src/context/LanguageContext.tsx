@@ -9,12 +9,17 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const STORAGE_KEY = 'mindgraphix-language';
+
 export const LanguageProvider: React.FC<{ children?: ReactNode }> = ({ children }) => {
-  console.log("LanguageProvider Rendering...");
-  const [language, setLanguageState] = useState<Language>('fr');
+  const [language, setLanguageState] = useState<Language>(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored === 'en' ? 'en' : 'fr';
+  });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
+    localStorage.setItem(STORAGE_KEY, lang);
   };
 
   const t = (path: string): string => {
