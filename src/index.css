@@ -1,35 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-surface: #ffffff;
-  --text-main: #020617;
-  --text-secondary: #64748b;
-  --text-muted: #64748b;
-  --border-subtle: #e2e8f0;
-  --border-color: #e2e8f0;
-  --primary-color: #5e35b1;
-  --primary-fg: #ffffff;
-  --accent-color: #ffab00;
-  --accent-glow: rgba(255, 171, 0, 0.15);
-  --bg-accent: rgba(255, 171, 0, 0.08);
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0a;
+  --bg-surface: #121212;
+  --text-main: #f5f5f5;
+  --text-secondary: #a3a3a3;
+  --text-muted: #737373;
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --primary-color: #ffffff;
+  --primary-fg: #000000;
+  --accent-color: #3b82f6; /* Electric Blue */
+  --accent-glow: rgba(59, 130, 246, 0.2);
+  --bg-accent: rgba(59, 130, 246, 0.1);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
   --radius-lg: 1rem;
-}
-
-[data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #020617;
-  --bg-surface: #1e293b;
-  --text-main: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #94a3b8;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --primary-color: #7c4dff;
-  --accent-color: #ffab00;
 }
 
 body {
@@ -38,26 +25,65 @@ body {
   margin: 0;
   font-family: "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: "Outfit", system-ui, sans-serif;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(18, 18, 18, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border-color);
 }
 
 .btn-architect {
-  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+  background: var(--text-main);
   color: var(--primary-fg);
-  padding: 0.9rem 1.2rem;
-  border-radius: var(--radius-lg);
-  font-weight: 800;
-  transition: all 0.3s ease;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-architect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-architect:hover {
+  color: #fff;
+}
+
+.btn-architect:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .outline-text {
-  -webkit-text-stroke: 1px var(--border-color);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  color: transparent;
+}
+
+.outline-text-hover:hover {
+  -webkit-text-stroke: 1px transparent;
+  color: var(--text-main);
 }
 
 .bg-noise {
@@ -68,8 +94,26 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 50;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 @keyframes gradient-xy {
@@ -80,7 +124,14 @@ body {
 
 .animate-gradient-xy {
   background-size: 200% 200%;
-  animation: gradient-xy 6s ease infinite;
+  animation: gradient-xy 8s ease infinite;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #fff, #737373);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 #root {

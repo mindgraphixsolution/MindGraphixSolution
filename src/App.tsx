@@ -6,25 +6,29 @@ import { Footer } from './components/Footer'
 import About from './components/pages/About'
 import Services from './components/pages/Services'
 import Portfolio from './components/pages/Portfolio'
+import { CustomCursor } from './components/CustomCursor'
 
 function HomePage() {
   return (
     <>
       <Hero />
       <Features />
-      <section className="px-6 py-24 max-w-[1440px] mx-auto">
-        <div className="glass p-12 md:p-24 rounded-[3rem] border border-[var(--border-color)] text-center relative overflow-hidden group">
-          <h2 className="text-4xl md:text-7xl font-black mb-8 relative z-10 uppercase tracking-tighter">
-            Bâtissons votre <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-color)] to-[var(--primary-color)]">Prochaine Vision.</span>
+      <section className="px-6 py-32 max-w-[1440px] mx-auto relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--bg-accent)] opacity-20 pointer-events-none" />
+        <div className="p-12 md:p-32 rounded-[2rem] border border-[var(--border-subtle)] text-center relative overflow-hidden group bg-[#0a0a0a]">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-1/2 bg-[var(--accent-glow)] blur-[100px] pointer-events-none" />
+          
+          <h2 className="text-5xl md:text-8xl font-black mb-8 relative z-10 uppercase tracking-tighter font-display leading-[0.9]">
+            Bâtissons <br /> <span className="text-gradient">L'Avenir.</span>
           </h2>
-          <p className="text-[var(--text-muted)] text-lg mb-12 max-w-2xl mx-auto relative z-10 font-medium">
+          <p className="text-[var(--text-muted)] text-lg md:text-xl mb-12 max-w-2xl mx-auto relative z-10 font-light">
             Prêt à transformer votre idée en un produit numérique d'exception ? Notre équipe d'architectes est là pour vous accompagner.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6 relative z-10">
-            <button className="btn-architect px-12 py-5 text-lg">
-              Démarrer un Devis
+            <button className="btn-architect text-lg">
+              Démarrer un Projet
             </button>
-            <button className="px-12 py-5 rounded-2xl border border-[var(--border-color)] font-bold hover:bg-[var(--bg-accent)] transition-all glass">
+            <button className="px-10 py-4 rounded-full border border-[var(--border-subtle)] font-medium hover:bg-white/5 transition-all text-[var(--text-main)] uppercase tracking-wider text-sm">
               Nous Contacter
             </button>
           </div>
@@ -37,7 +41,8 @@ function HomePage() {
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-[var(--bg-primary)]">
+      <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-main)] selection:bg-[var(--accent-color)] selection:text-white">
+        <CustomCursor />
         <Navbar />
         <main>
           <Routes>

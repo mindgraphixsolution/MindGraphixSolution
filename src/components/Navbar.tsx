@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
@@ -15,20 +14,23 @@ const Navbar: React.FC = () => {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        isScrolled ? 'py-4 glass border-b' : 'py-8 bg-transparent'
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
+        isScrolled ? 'py-4 bg-[#050505]/80 backdrop-blur-md border-b border-white/5' : 'py-8 bg-transparent'
       }`}
     >
-      <div className="mx-auto w-full max-w-[1440px] px-10 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group cursor-pointer">
-          <div className="h-10 w-10 bg-gradient-to-br from-[var(--accent-color)] to-[var(--primary-color)] rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg group-hover:rotate-12 transition-transform">M</div>
+      <div className="mx-auto w-full max-w-[1440px] px-8 md:px-12 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-4 group cursor-pointer">
+          <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center text-black font-black text-xl overflow-hidden relative">
+            <span className="relative z-10 group-hover:scale-110 transition-transform duration-500 font-display">M</span>
+            <div className="absolute inset-0 bg-gradient-to-tr from-[var(--accent-color)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </div>
           <div className="flex flex-col leading-none">
-            <div className="text-xl font-black tracking-tighter text-[var(--text-main)]">MIND GRAPHIX</div>
-            <div className="text-[8px] font-bold tracking-[0.4em] uppercase text-[var(--accent-color)]">Architects</div>
+            <div className="text-xl font-black tracking-tight text-white font-display uppercase">Mind Graphix</div>
+            <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-[var(--text-muted)] mt-1">Studio</div>
           </div>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-12">
+        <div className="hidden lg:flex items-center gap-10">
           {[
             { label: 'Accueil', path: '/' },
             { label: 'Services', path: '/services' },
@@ -38,20 +40,20 @@ const Navbar: React.FC = () => {
             <Link
               key={item.path}
               to={item.path}
-              className="text-[11px] font-black uppercase tracking-[0.25em] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors relative group"
+              className="text-xs font-medium uppercase tracking-[0.1em] text-[var(--text-muted)] hover:text-white transition-colors relative group py-2"
             >
               {item.label}
-              <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-[var(--accent-color)] transition-all group-hover:w-full" />
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
         </div>
 
         <div className="flex items-center gap-6">
-          <button className="hidden sm:block text-[11px] font-black uppercase tracking-[0.25em] text-[var(--text-main)] hover:text-[var(--accent-color)] transition-colors">
+          <button className="hidden sm:block text-xs font-medium uppercase tracking-[0.1em] text-white hover:text-[var(--accent-color)] transition-colors">
             Login
           </button>
-          <button className="btn-architect text-[10px] uppercase tracking-widest px-8 py-3">
-            Contact Us
+          <button className="btn-architect text-xs uppercase tracking-widest px-6 py-2.5 !rounded-full">
+            Contact
           </button>
         </div>
       </div>
